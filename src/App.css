@@ -2,6 +2,12 @@
   border: 1px solid;
 } */
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --main-color: rgb(235, 193, 103);
   --text-color: rgb(115, 6, 4);
@@ -23,6 +29,12 @@ body {
   min-height: 100vh;
 }
 
+#root {
+  margin: auto;
+  max-width: 900px;
+  width: 100%;
+}
+
 h1 {
   color: var(--main-color);
   text-align: center;
@@ -31,6 +43,7 @@ h1 {
 
 .label-container {
   box-shadow: var(--shadow);
+  margin: auto;
 }
 
 .input-element,
@@ -104,54 +117,47 @@ h1 {
   }
 }
 
-div {
-  margin: auto;
+.single-book h2 {
+  text-align: center;
+  grid-area: header;
 }
 
-ul {
-  list-style: none;
-  padding-left: 0;
-  margin-left: 0;
+.single-book {
+  margin: 20px auto;
+  width: 70%;
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.384);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+   'header header'
+   'img details';
 }
 
-li {
-  background-color: rgb(235, 193, 103);
-  padding: 5px;
-  border-radius: 5px;
-  box-shadow: var(--shadow);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
-  cursor: pointer;
-  color: var(--text-color);
-  text-shadow: var(--shadow);
-}
-
-li:focus {
-  outline: 3px solid var(--text-color);
-  outline-offset: 3px;
-  background-color: rgba(235, 193, 103, 0.9);
-  color: white;
-  transform: scale(1.1);
-  transition: outline 0.3s ease, color 0.3s ease, transform 0.3s ease;
-}
-
-li:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
-}
-
-li:active {
-  transform: scale(0.9);
+.thumb-btn {
+  background-color: transparent;
+  width: fit-content;
+  justify-self: end;
 }
 
 .thumbnail {
-  width: 40px;
-  height: 60px;
+  height: 300px;
+  display: block;
+  margin: 10px auto;
   object-fit: cover;
   box-shadow: var(--shadow);    
   border-radius: 3px;
+  grid-area: img;
+}
+
+hr {
+  width: 60%;
+  /* color: blue;
+  background-color: orange; */
+}
+
+.book-detail {
+  grid-area: details;
 }
 
 a {
@@ -251,4 +257,16 @@ a {
 
 .skip-link:focus {
   top: 10px;
+}
+
+@media (max-width: 380px) {
+  .single-book {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .thumbnail {
+    display: block;
+    margin: 10px auto;
+  }
 }

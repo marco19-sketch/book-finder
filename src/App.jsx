@@ -3,9 +3,7 @@ import Modal from "./components/Modal";
 import CustomRadio from "./components/CustomRadio";
 import "./App.css";
 
-
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
-
 
 const languageMap = {
   eng: "English",
@@ -17,7 +15,6 @@ const languageMap = {
 };
 
 function App() {
-
   const [bookList, setBookList] = useState([]);
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [bookDetail, setBookDetail] = useState(null);
@@ -39,59 +36,79 @@ function App() {
     setHasSearched(false);
   }, [searchMode]);
 
-  useEffect(() => {
-    const typingTimer = setTimeout(() => {
-      // encodeURIComponent() is used to allow chars like '&' or '=' in the query search
-      const url = `https://openlibrary.org/search.json?${searchMode}=${encodeURIComponent(
-        query
-      )}`;
-
-      const fetchData = async () => {
-        if (!searchMode) return;
-        if (query.trim().length < 2) return;
-        try {
-          setLoading(true);
-
-          setHasSearched(false);
-
-          const res = await fetch(url);
-
-          console.log("author or title url", url);
-          if (res.ok) {
-            const data = await res.json();
-            //sorting by year(if first_publish_date is present in data.docs)
-            const sortedDocs = data.docs.sort(
-              (a, b) =>
-                (a.first_publish_year || 0) - (b.first_publish_year || 0)
-            );
-            setBookList(sortedDocs);
-          }
-          // prolonges the "loading..." showing for debugging
-          await new Promise(resolve => setTimeout(resolve, 1500));
-        } catch (error) {
-          console.error("Failed to fetch resource: ", error);
-        }
-        setLoading(false);
-        setHasSearched(true);
-      };
-      fetchData();
-    }, 500);
-    return () => clearTimeout(typingTimer);
+  const handleFetch = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${query}`
+      );
+      if (!res.ok) {
+        alert("Your search produced no results, try again");
+        return;
+      }
+      const data = await res.json();
+      setLoading(false);
+      setBookList(data.items);
+      console.log(data.items);
+    } catch (error) {
+      console.error("Impossible to fetch data:", error);
+    }
   }, [query, searchMode]);
+  console.log("Book list", bookList);
+
+  // useEffect(() => {
+  //   const typingTimer = setTimeout(() => {
+  //     // encodeURIComponent() is used to allow chars like '&' or '=' in the query search
+  //     const url = `https://openlibrary.org/search.json?${searchMode}=${encodeURIComponent(
+  //       query
+  //     )}`;
+
+  //     const fetchData = async () => {
+  //       if (!searchMode) return;
+  //       if (query.trim().length < 2) return;
+  //       try {
+  //         setLoading(true);
+
+  //         setHasSearched(false);
+
+  //         const res = await fetch(url);
+
+  //         console.log("author or title url", url);
+  //         if (res.ok) {
+  //           const data = await res.json();
+  //           //sorting by year(if first_publish_date is present in data.docs)
+  //           const sortedDocs = data.docs.sort(
+  //             (a, b) =>
+  //               (a.first_publish_year || 0) - (b.first_publish_year || 0)
+  //           );
+  //           setBookList(sortedDocs);
+  //         }
+  //         // prolonges the "loading..." showing for debugging
+  //         await new Promise(resolve => setTimeout(resolve, 1500));
+  //       } catch (error) {
+  //         console.error("Failed to fetch resource: ", error);
+  //       }
+  //       setLoading(false);
+  //       setHasSearched(true);
+  //     };
+  //     fetchData();
+  //   }, 500);
+  //   return () => clearTimeout(typingTimer);
+  // }, [query, searchMode]);
 
   // displaying only books with cover
-  const bookWithCovers = bookList.filter(book => book.cover_i);
+  // const bookWithCovers = bookList.filter(book => book.cover_i);
 
-  useEffect(() => {
-    if (!loading && hasSearched && bookWithCovers.length === 0) {
-      const timer = setTimeout(() => {
-        setShowNoResultsModal(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    } else {
-      setShowNoResultsModal(false);
-    }
-  }, [bookWithCovers, loading, hasSearched]);
+  // useEffect(() => {
+  //   if (!loading && hasSearched && bookWithCovers.length === 0) {
+  //     const timer = setTimeout(() => {
+  //       setShowNoResultsModal(true);
+  //     }, 1000);
+  //     return () => clearTimeout(timer);
+  //   } else {
+  //     setShowNoResultsModal(false);
+  //   }
+  // }, [bookWithCovers, loading, hasSearched]);
 
   const imageSrc = useMemo(() => {
     return selectedTitle
@@ -110,7 +127,7 @@ function App() {
       setNoDetailsFound(true);
       setAnnounceNoDetails(false);
       setTimeout(() => setAnnounceNoDetails(true), 100);
-      
+
       return;
     }
     try {
@@ -126,17 +143,15 @@ function App() {
         setBookDetail(null);
         setNoDetailsFound(true);
         setShowModal(false);
-        
+
         console.warn(`Fetch failed with status ${res.status}`);
       }
     } catch (error) {
       console.error("Error fetching book detail: ", error);
-      
     }
- 
-  }, [])
+  }, []);
 
-  const handleFocus = useCallback(() => inputRef.current.focus(), []);
+  // const handleFocus = useCallback(() => inputRef.current.focus(), []);
 
   const handleReset = useCallback(() => {
     setBookList([]);
@@ -146,12 +161,13 @@ function App() {
     setSearchMode("title");
     setHasSearched(false);
     setShowNoResultsModal(false);
+    setLoading(false);
   }, []);
 
   useEffect(() => console.log("imageSrc updated", imageSrc), [imageSrc]);
 
   return (
-    <div>
+    <div className='root'>
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
@@ -169,10 +185,7 @@ function App() {
           ? "Sorry, no details present!"
           : loading
           ? "Searching books..."
-          : !loading &&
-            query.length > 1 &&
-            hasSearched &&
-            bookWithCovers.length === 0
+          : !loading && query.length > 1 && hasSearched && bookList.length === 0
           ? "No results found."
           : ""}
       </div>
@@ -184,7 +197,7 @@ function App() {
       )}
       <main role="main" id="main-content">
         <div className="label-container">
-          {["title", "author", "subject"].map(mode => (
+          {["intitle", "inauthor", "subject"].map(mode => (
             <CustomRadio
               key={mode}
               label={`Search by ${mode.charAt(0).toUpperCase()}${mode.slice(
@@ -204,17 +217,17 @@ function App() {
           value={query}
           onChange={handleInputChange}
         />
-        <button className="btn-element" type="button" onClick={handleFocus}>
-          Focus Input
+        <button className="btn-element" type="button" onClick={handleFetch}>
+          Start search
         </button>
         <button className="reset-btn" type="button" onClick={handleReset}>
           Reset
         </button>
-      
+
         {!loading &&
           query.length > 1 &&
           hasSearched === true &&
-          bookWithCovers.length === 0 &&
+          bookList.length === 0 &&
           showNoResultsModal && (
             <Modal
               onClose={() => {
@@ -224,41 +237,80 @@ function App() {
               <p className="no-results">😕 No results found.</p>
             </Modal>
           )}
-        {loading && bookWithCovers.length === 0 && (
+        {loading && bookList.length === 0 && (
           <p className="loading">Searching books...</p>
         )}
 
-        <ul role="list">
+        <div className='book-rslt-container' role="list">
           {/*tab-index for accessibility */}
           {/*e.preventDefault() on space bar prevents browser default scroll action */}
           {/*e.prevent on click it's a defensive move; on Enter too */}
-          {bookWithCovers.map(book => (
-            <li
-              role="button"
-              aria-label={`Book: ${book.title}`}
-              tabIndex="0"
-              onKeyDown={e => {
-                if (e.key === "Enter" || e.key === " ") {
+          {bookList.map(book => {
+            const thumbnail = book.volumeInfo.imageLinks?.thumbnail.replace(
+              "https",
+              "http"
+            );
+            return (
+              <div
+                className="book-results"
+                role="listen"
+                aria-label={`Book: ${book.volumeInfo.title}`}
+                tabIndex="0"
+                onKeyDown={e => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleSelected(book);
+                  }
+                }}
+                key={book.id}
+                onClick={e => {
                   e.preventDefault();
                   handleSelected(book);
-                }
-              }}
-              key={book.key}
-              onClick={e => {
-                e.preventDefault();
-                handleSelected(book);
-              }}>
-              {book.cover_i && (
-                <img
-                  className="thumbnail"
-                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg`}
-                  alt={`Cover of ${book.title}`}
-                />
-              )}
-              {book.title}
-            </li>
-          ))}
-        </ul>
+                }}>
+                {thumbnail && (
+                  <div className="single-book">
+                    <h2>{book.volumeInfo.title}</h2>
+                    <button className='thumb-btn'
+                      onClick={handleSelected}
+                      aria-labels="View book details">
+                      <img
+                        className="thumbnail"
+                        src={thumbnail}
+                        // src={`https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg`}
+                        alt={`Cover of ${book.volumeInfo.title}`}
+                      />
+                    </button>
+                    <div className="book-detail">
+                      <p>
+                        <strong>Author/s: </strong>
+                        {book.volumeInfo.authors || 'N/A'}
+                      </p>
+                      
+                      <p>
+                        <strong>Published: </strong>
+                        {book.volumeInfo?.publishedDate && !isNaN(new Date(book.volumeInfo.publishedDate))
+                          ? new Date(book.volumeInfo.publishedDate).getFullYear()
+                          : 'Unknown'}
+                      </p>
+                      <p>
+                        <strong>Genre: </strong>
+                        {book.volumeInfo.categories || 'N/A'} 
+                      </p>
+                      <p>
+                        <strong>Description: </strong>
+                        {book.volumeInfo?.description
+                          ? book.volumeInfo.description.slice(0, 150) + "..."
+                          : "No description available."}
+                      </p>
+                    </div>
+                  
+                  </div>
+                )}
+                <hr />
+              </div>
+            );
+          })}
+        </div>
 
         {showModal && (
           <Modal onClose={() => setShowModal(false)}>
