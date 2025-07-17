@@ -1,9 +1,9 @@
 {
   "title": "Trova Libri",
-  "startSearch": "Avvia Ricerca",
+  "startSearch": "Ricerca",
   "reset": "Reimposta",
   "searchby": "Cerca per",
-  "enterSearchTerm": "Inserisci termine da ricercare...",
+  "enterSearchTerm": "Inserisci termine...",
   "loading": "Ricerca libri in corso...",
   "noResults": "😕 Nessun risultato",
   "buyNow": "Compra ora",

@@ -241,15 +241,19 @@ function App() {
                       </p>
                       <p>
                         <strong>Description: </strong>
-                        {book.volumeInfo?.description
-                          ? book.volumeInfo.description.slice(0, 150) + "..."
-                          : "No description available."}
-                        <button
-                          type="button"
-                          className="more"
-                          onClick={() => handleSelected(book)}>
-                          more
-                        </button>
+                        {book.volumeInfo?.description ? (
+                          <>
+                            {book.volumeInfo.description.slice(0, 150)}...
+                            <button
+                              type="button"
+                              className="read-more"
+                              onClick={() => handleSelected(book)}>
+                              read more
+                            </button>
+                          </>
+                        ) : (
+                          "No description available."
+                        )}
                       </p>
                       {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
                       {book.saleInfo?.buyLink ? (

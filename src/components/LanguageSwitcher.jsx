@@ -10,8 +10,8 @@ export default function LanguageSwitcher() {
 
   return (
     <div>
-      <button onClick={() => changeLanguage("en")}>English</button>
-      <button onClick={() => changeLanguage("it")}>Italiano</button>
+      <button className={`english ${i18n.language === 'en' ? 'selected' : ''}`} onClick={() => changeLanguage("en")}>Eng</button>
+      <button className={`italiano ${i18n.language === 'it' ? 'selected' : ''}`} onClick={() => changeLanguage("it")}>Ita</button>
     </div>
   );
 }
