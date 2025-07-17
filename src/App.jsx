@@ -1,7 +1,9 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
+import {useTranslation } from 'react-i18next';
 import Modal from "./components/Modal";
 import CustomRadio from "./components/CustomRadio";
 import "./App.css";
+import LanguageSwitcher from "./components/LanguageSwitcher";
 
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
 
@@ -41,6 +43,8 @@ function App() {
   const [amazonItLink, setAmazonItLink] = useState("");
 
   const handleInputChange = useCallback(e => setQuery(e.target.value), []);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     setQuery("");
@@ -121,15 +125,16 @@ function App() {
   return (
     <div className="root">
       <a href="#main-content" className="skip-link">
-        Skip to main content
+        {t("skipToMain")}
       </a>
+      <LanguageSwitcher />
       <header role="banner">
-        <h1>Book Finder</h1>
+        <h1>{t("title")}</h1>
       </header>
 
       {noDetailsFound && (
         <Modal onClose={() => setNoDetailsFound(false)}>
-          <p className="no-detail-found">Sorry, no details present!</p>
+          <p className="no-detail-found">{t("noDetailsFound")}</p>
         </Modal>
       )}
       <main role="main" id="main-content">
@@ -137,7 +142,7 @@ function App() {
           {["intitle", "inauthor", "subject"].map(mode => (
             <CustomRadio
               key={mode}
-              label={`Search by ${labelsMap[mode]}`}
+              label={`${t("searchBy")} ${labelsMap[mode]}`}
               name="searchMode"
               value={mode}
               checked={searchMode === mode}
@@ -151,12 +156,13 @@ function App() {
           ref={inputRef}
           value={query}
           onChange={handleInputChange}
+          placeholder={t("enterSearchTerm")}
         />
         <button className="btn-element" type="button" onClick={handleFetch}>
-          Start search
+          {t("startSearch")}
         </button>
         <button className="reset-btn" type="button" onClick={handleReset}>
-          Reset
+          {t("reset")}
         </button>
 
         {!loading &&
@@ -169,11 +175,11 @@ function App() {
                 setHasSearched(false);
                 setShowNoResultsModal(false);
               }}>
-              <p className="no-results">😕 No results found.</p>
+              <p className="no-results">{t("noResults")}</p>
             </Modal>
           )}
         {loading && bookList.length === 0 && (
-          <p className="loading">Searching books...</p>
+          <p className="loading">{t("loading")}</p>
         )}
 
         <div className="book-rslt-container" role="list">
@@ -253,7 +259,7 @@ function App() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="buy-now">
-                          Buy Now {book.saleInfo?.listPrice?.amount}{" "}
+                          {t("buyNow")} {book.saleInfo?.listPrice?.amount}{" "}
                           {book.saleInfo?.listPrice?.currencyCode}
                         </a>
                       ) : (
@@ -284,21 +290,24 @@ function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="buy-now">
-                  Buy Now on Google Store
+                  {t("buyOnGoogle")}
                   {selectedTitle.saleInfo?.listPrice?.amount}{" "}
                   {selectedTitle.saleInfo?.listPrice?.currencyCode}
                 </a>
               )}
               {selectedTitle && amazonItLink && (
-                <a href={amazonItLink} rel="noopener noreferrer" target='_blank'>
-                  See it on Amazon
+                <a
+                  href={amazonItLink}
+                  rel="noopener noreferrer"
+                  target="_blank">
+                  {t("seeOnAmazon")}
                 </a>
               )}
 
               {/* {console.log("Amazon link", selectedTitle.saleInfo)} */}
               {console.log("SelectedTitle", selectedTitle)}
               <p className="full-description">
-                <strong>Full description: </strong>
+                <strong>{"fullDescription"}:</strong>
                 {selectedTitle.volumeInfo?.description ||
                   "No description available"}
               </p>

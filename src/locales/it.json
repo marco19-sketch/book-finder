@@ -1,0 +1,17 @@
+{
+  "title": "Trova Libri",
+  "startSearch": "Avvia Ricerca",
+  "reset": "Reimposta",
+  "searchby": "Cerca per",
+  "enterSearchTerm": "Inserisci termine da ricercare...",
+  "loading": "Ricerca libri in corso...",
+  "noResults": "😕 Nessun risultato",
+  "buyNow": "Compra ora",
+  "noPurchase": "Non acquistabile",
+  "buyOnGoogle": "Acquista su Google Store",
+  "seeOnAmazon": "Vedi su Amazon",
+  "description": "Descrizione",
+  "fullDescription": "Descrizione completa",
+  "skipToMain": "Vai al contenuto principale",
+  "noDetails": "Nessuna info trovata"
+}

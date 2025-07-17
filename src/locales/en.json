@@ -1,0 +1,17 @@
+{
+    "title": "Book Finder",
+    "startSearch": "Start Search",
+    "reset": "Reset",
+    "searchBy": "Search by",
+    "enterSearchTerm": "Enter key word...",
+    "loading": "Searching books...",
+    "noResults": "😕 No results found.",
+    "buyNow": "Buy Now",
+    "noPurchase": "No purchase available",
+    "buyOnGoogle": "Buy Now on Google Store",
+    "seeOnAmazon": "See it on Amazon",
+    "description": "Description",
+    "fullDescription": "Full description",
+    "skipToMain": "Skip to main content",
+    "noDetailsFound": "Sorry, no details present!"
+}
