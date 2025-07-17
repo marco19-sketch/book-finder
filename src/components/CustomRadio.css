@@ -3,10 +3,11 @@
 } */
 
 .label-container {
+  display: flex;
   background-color: var(--main-color);
   border-radius: 5px;
   padding: 5px;
-  width: 170px;
+  width: fit-content;
 }
 
 .custom-radio {
@@ -61,10 +62,10 @@
 .custom-radio input[type="radio"]:checked + .radio-mark::after {
   content: "";
   position: absolute;
-  top: 1px;
-  left: 1px;
-  height: 13px;
-  width: 13px;
+  top: 2px;
+  left: 2px;
+  height: 7px;
+  width: 7px;
   background-color: #555;
   border-radius: 50%;
 }

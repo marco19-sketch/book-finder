@@ -269,4 +269,8 @@ a {
     display: block;
     margin: 10px auto;
   }
+
+  .label-container {
+    display: block;
+  }
 }
