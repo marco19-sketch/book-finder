@@ -6,28 +6,39 @@ import "./App.css";
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
 
 const languageMap = {
-  eng: "English",
-  fre: "French",
-  ita: "Italian",
-  spa: "Spanish",
-  deu: "German",
-  // Add more as needed
+  en: "English",
+  fr: "French",
+  it: "Italian",
+  es: "Spanish",
+  de: "German",
+  pt: "Portuguese",
+  ru: "Russian",
+  zh: "Chinese",
+  ja: "Japanese",
+  ar: "Arabic",
+  nl: "Dutch",
+  sv: "Swedish",
+  hi: "Hindi",
+};
+
+const labelsMap = {
+  intitle: "Title",
+  inauthor: "Author",
+  subject: "Subject",
 };
 
 function App() {
   const [bookList, setBookList] = useState([]);
   const [selectedTitle, setSelectedTitle] = useState(null);
-  const [bookDetail, setBookDetail] = useState(null);
   const inputRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [isInvalidKey, setIsInvalidKey] = useState(false);
   const [noDetailsFound, setNoDetailsFound] = useState(false);
   const [query, setQuery] = useState("");
   const [searchMode, setSearchMode] = useState("title");
   const [hasSearched, setHasSearched] = useState(false);
   const [showNoResultsModal, setShowNoResultsModal] = useState(false); //for accessibility, it makes the screen reader read the 'No results found'
-  const [announceNoDetails, setAnnounceNoDetails] = useState(false); //for accessibility, it makes the screen reader read the 'Sorry, no details present!'
+  const [amazonItLink, setAmazonItLink] = useState("");
 
   const handleInputChange = useCallback(e => setQuery(e.target.value), []);
 
@@ -49,125 +60,66 @@ function App() {
       const data = await res.json();
       setLoading(false);
       setBookList(data.items);
-      console.log(data.items);
+      setHasSearched(true);
+      // console.log("book list", data.items);
     } catch (error) {
       console.error("Impossible to fetch data:", error);
     }
   }, [query, searchMode]);
-  console.log("Book list", bookList);
 
-  // useEffect(() => {
-  //   const typingTimer = setTimeout(() => {
-  //     // encodeURIComponent() is used to allow chars like '&' or '=' in the query search
-  //     const url = `https://openlibrary.org/search.json?${searchMode}=${encodeURIComponent(
-  //       query
-  //     )}`;
-
-  //     const fetchData = async () => {
-  //       if (!searchMode) return;
-  //       if (query.trim().length < 2) return;
-  //       try {
-  //         setLoading(true);
-
-  //         setHasSearched(false);
-
-  //         const res = await fetch(url);
-
-  //         console.log("author or title url", url);
-  //         if (res.ok) {
-  //           const data = await res.json();
-  //           //sorting by year(if first_publish_date is present in data.docs)
-  //           const sortedDocs = data.docs.sort(
-  //             (a, b) =>
-  //               (a.first_publish_year || 0) - (b.first_publish_year || 0)
-  //           );
-  //           setBookList(sortedDocs);
-  //         }
-  //         // prolonges the "loading..." showing for debugging
-  //         await new Promise(resolve => setTimeout(resolve, 1500));
-  //       } catch (error) {
-  //         console.error("Failed to fetch resource: ", error);
-  //       }
-  //       setLoading(false);
-  //       setHasSearched(true);
-  //     };
-  //     fetchData();
-  //   }, 500);
-  //   return () => clearTimeout(typingTimer);
-  // }, [query, searchMode]);
-
-  // displaying only books with cover
-  // const bookWithCovers = bookList.filter(book => book.cover_i);
-
-  // useEffect(() => {
-  //   if (!loading && hasSearched && bookWithCovers.length === 0) {
-  //     const timer = setTimeout(() => {
-  //       setShowNoResultsModal(true);
-  //     }, 1000);
-  //     return () => clearTimeout(timer);
-  //   } else {
-  //     setShowNoResultsModal(false);
-  //   }
-  // }, [bookWithCovers, loading, hasSearched]);
-
-  const imageSrc = useMemo(() => {
-    return selectedTitle
-      ? `https://covers.openlibrary.org/b/id/${selectedTitle?.cover_i}-M.jpg`
-      : null;
-  }, [selectedTitle]);
-
-  const handleSelected = useCallback(async title => {
-    setSelectedTitle(title);
-    const editionKey = title.cover_edition_key || title.edition_key?.[0];
-
-    if (!editionKey) {
-      console.warn("No valid edition key found for this title.");
-      setBookDetail(null);
-      setIsInvalidKey(true);
-      setNoDetailsFound(true);
-      setAnnounceNoDetails(false);
-      setTimeout(() => setAnnounceNoDetails(true), 100);
-
-      return;
-    }
-    try {
-      const res = await fetch(
-        `https://openlibrary.org/books/${editionKey}.json`
-      );
-
-      if (res.ok) {
-        const data = await res.json();
-        setBookDetail(data);
-        setShowModal(true);
-      } else {
-        setBookDetail(null);
-        setNoDetailsFound(true);
-        setShowModal(false);
-
-        console.warn(`Fetch failed with status ${res.status}`);
-      }
-    } catch (error) {
-      console.error("Error fetching book detail: ", error);
-    }
+  const handleSelected = useCallback(book => {
+    setShowModal(true);
+    setSelectedTitle(book);
   }, []);
 
-  // const handleFocus = useCallback(() => inputRef.current.focus(), []);
+  //prevent duplicate book ids, Set() keeps tracks of all the item already passed through the filter. So just one loop, very efficient.
+  const uniqueBooks = useMemo(() => {
+    const seen = new Set();
+    return bookList.filter(book => {
+      if (seen.has(book.id)) return false;
+      seen.add(book.id);
+      return true;
+    });
+  }, [bookList]);
+
+  //Amazon Link building
+  useEffect(() => {
+    if (!selectedTitle) {
+      setAmazonItLink("");
+      return;
+    }
+
+    const identifiers = selectedTitle.volumeInfo?.industryIdentifiers || [];
+
+    const isbn13 =
+      identifiers.find(id => id.type === "ISBN_13")?.identifier || "";
+    const isbn10 =
+      identifiers.find(id => id.type === "ISBN_10")?.identifier || "";
+
+    const isbn = isbn13 || isbn10;
+    if (isbn) {
+      setAmazonItLink(`https://www.amazon.it/s?k=${isbn}`);
+      console.log("ISBN_13", isbn);
+    } else {
+      setAmazonItLink("");
+      
+    }
+  }, [selectedTitle]);
+  console.log("amazon it link", amazonItLink);
 
   const handleReset = useCallback(() => {
     setBookList([]);
     setSelectedTitle(null);
-    setBookDetail(null);
     setQuery("");
     setSearchMode("title");
     setHasSearched(false);
     setShowNoResultsModal(false);
     setLoading(false);
+    setAmazonItLink("");
   }, []);
 
-  useEffect(() => console.log("imageSrc updated", imageSrc), [imageSrc]);
-
   return (
-    <div className='root'>
+    <div className="root">
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
@@ -175,22 +127,7 @@ function App() {
         <h1>Book Finder</h1>
       </header>
 
-      {/*live region all modal announcements are here */}
-      <div
-        aria-live="polite"
-        aria-atomic="true"
-        className="sr-only"
-        role="status">
-        {announceNoDetails
-          ? "Sorry, no details present!"
-          : loading
-          ? "Searching books..."
-          : !loading && query.length > 1 && hasSearched && bookList.length === 0
-          ? "No results found."
-          : ""}
-      </div>
-
-      {noDetailsFound && isInvalidKey && (
+      {noDetailsFound && (
         <Modal onClose={() => setNoDetailsFound(false)}>
           <p className="no-detail-found">Sorry, no details present!</p>
         </Modal>
@@ -200,9 +137,7 @@ function App() {
           {["intitle", "inauthor", "subject"].map(mode => (
             <CustomRadio
               key={mode}
-              label={`Search by ${mode.charAt(0).toUpperCase()}${mode.slice(
-                1
-              )}`}
+              label={`Search by ${labelsMap[mode]}`}
               name="searchMode"
               value={mode}
               checked={searchMode === mode}
@@ -241,69 +176,92 @@ function App() {
           <p className="loading">Searching books...</p>
         )}
 
-        <div className='book-rslt-container' role="list">
+        <div className="book-rslt-container" role="list">
           {/*tab-index for accessibility */}
           {/*e.preventDefault() on space bar prevents browser default scroll action */}
           {/*e.prevent on click it's a defensive move; on Enter too */}
-          {bookList.map(book => {
+          {uniqueBooks.map(book => {
             const thumbnail = book.volumeInfo.imageLinks?.thumbnail.replace(
               "https",
               "http"
             );
             return (
-              <div
-                className="book-results"
-                role="listen"
-                aria-label={`Book: ${book.volumeInfo.title}`}
-                tabIndex="0"
-                onKeyDown={e => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleSelected(book);
-                  }
-                }}
-                key={book.id}
-                onClick={e => {
-                  e.preventDefault();
-                  handleSelected(book);
-                }}>
+              <div className="book-results" key={book.id}>
                 {thumbnail && (
-                  <div className="single-book">
+                  <div
+                    role="listen"
+                    aria-label={`Book: ${book.volumeInfo.title}`}
+                    className="single-book"
+                    tabIndex="0">
                     <h2>{book.volumeInfo.title}</h2>
-                    <button className='thumb-btn'
-                      onClick={handleSelected}
-                      aria-labels="View book details">
+                    <button
+                      className="thumb-btn"
+                      onClick={() => handleSelected(book)}
+                      onKeyDown={e => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          handleSelected(book);
+                        }
+                      }}
+                      aria-label="View book full description">
                       <img
                         className="thumbnail"
                         src={thumbnail}
-                        // src={`https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg`}
                         alt={`Cover of ${book.volumeInfo.title}`}
                       />
                     </button>
                     <div className="book-detail">
                       <p>
                         <strong>Author/s: </strong>
-                        {book.volumeInfo.authors || 'N/A'}
+                        {book.volumeInfo.authors || "N/A"}
                       </p>
-                      
+
                       <p>
                         <strong>Published: </strong>
-                        {book.volumeInfo?.publishedDate && !isNaN(new Date(book.volumeInfo.publishedDate))
-                          ? new Date(book.volumeInfo.publishedDate).getFullYear()
-                          : 'Unknown'}
+                        {book.volumeInfo?.publishedDate &&
+                        !isNaN(new Date(book.volumeInfo.publishedDate))
+                          ? new Date(
+                              book.volumeInfo.publishedDate
+                            ).getFullYear()
+                          : "Unknown"}
                       </p>
                       <p>
                         <strong>Genre: </strong>
-                        {book.volumeInfo.categories || 'N/A'} 
+                        {book.volumeInfo.categories || "N/A"}
+                      </p>
+                      <p>
+                        <strong>Languages</strong>:{" "}
+                        {languageMap[book.volumeInfo.language] ||
+                          book.volumeInfo.language}
                       </p>
                       <p>
                         <strong>Description: </strong>
                         {book.volumeInfo?.description
                           ? book.volumeInfo.description.slice(0, 150) + "..."
                           : "No description available."}
+                        <button
+                          type="button"
+                          className="more"
+                          onClick={() => handleSelected(book)}>
+                          more
+                        </button>
                       </p>
+                      {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
+                      {book.saleInfo?.buyLink ? (
+                        <a
+                          href={book.saleInfo.buyLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="buy-now">
+                          Buy Now {book.saleInfo?.listPrice?.amount}{" "}
+                          {book.saleInfo?.listPrice?.currencyCode}
+                        </a>
+                      ) : (
+                        <p>No purchase available.</p>
+                      )}
+                      {/* {console.log("google link", book.saleInfo)}
+                      {console.log("book", book)} */}
                     </div>
-                  
                   </div>
                 )}
                 <hr />
@@ -312,61 +270,38 @@ function App() {
           })}
         </div>
 
-        {showModal && (
+        {showModal && selectedTitle && (
           <Modal onClose={() => setShowModal(false)}>
             <div className="modal">
               <h2 id="modal-title" className="header">
-                {selectedTitle?.title}
+                {selectedTitle?.volumeInfo?.title || "No title"}{" "}
               </h2>
 
               {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
-              {selectedTitle && (
+              {selectedTitle?.saleInfo?.buyLink && (
                 <a
-                  className="new-tab"
-                  href={`https://openlibrary.org${selectedTitle.key}`}
+                  href={selectedTitle.saleInfo.buyLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`More information about ${selectedTitle.title}. Open book details in a new tab`}>
-                  <img
-                    className="imgSpace"
-                    src={imageSrc}
-                    alt={selectedTitle?.title}
-                  />
+                  className="buy-now">
+                  Buy Now on Google Store
+                  {selectedTitle.saleInfo?.listPrice?.amount}{" "}
+                  {selectedTitle.saleInfo?.listPrice?.currencyCode}
                 </a>
               )}
-              <section className="details">
-                <p>
-                  <strong>Author:</strong>{" "}
-                  {selectedTitle?.author_name?.join(", ")}
-                </p>
-                <p>
-                  <strong>Description: </strong>
-                  {typeof bookDetail?.description === "string"
-                    ? bookDetail.description
-                    : bookDetail?.description?.value || " N/A"}
-                </p>
-                <p>
-                  <strong>Subject: </strong>{" "}
-                  {bookDetail?.subject?.join(". ") || "N/A"}
-                </p>
-                <p>
-                  <strong>Languages:</strong>{" "}
-                  {bookDetail?.languages
-                    ?.map(
-                      lang =>
-                        languageMap[lang.key.replace("/languages/", "")] ||
-                        lang.key
-                    )
-                    .join(", ")}
-                </p>
-                <p>
-                  <strong>Published: </strong>
-                  {selectedTitle?.first_publish_year || "N/A"}
-                </p>
-                <p>
-                  <strong>Pages:</strong> {bookDetail?.number_of_pages || "N/A"}
-                </p>
-              </section>
+              {selectedTitle && amazonItLink && (
+                <a href={amazonItLink} rel="noopener noreferrer" target='_blank'>
+                  See it on Amazon
+                </a>
+              )}
+
+              {/* {console.log("Amazon link", selectedTitle.saleInfo)} */}
+              {console.log("SelectedTitle", selectedTitle)}
+              <p className="full-description">
+                <strong>Full description: </strong>
+                {selectedTitle.volumeInfo?.description ||
+                  "No description available"}
+              </p>
             </div>
           </Modal>
         )}
