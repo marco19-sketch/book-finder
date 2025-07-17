@@ -4,6 +4,7 @@ import Modal from "./components/Modal";
 import CustomRadio from "./components/CustomRadio";
 import "./App.css";
 import LanguageSwitcher from "./components/LanguageSwitcher";
+import BookCard from "./components/BookCard";
 
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
 
@@ -58,7 +59,6 @@ function App() {
     try {
       const res = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${query}&startIndex=${startIndex}&maxResults=${maxResult}`
-        // `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${query}`
       );
       if (!res.ok) {
         alert("Your search produced no results, try again");
@@ -210,101 +210,19 @@ function App() {
           {/*tab-index for accessibility */}
           {/*e.preventDefault() on space bar prevents browser default scroll action */}
           {/*e.prevent on click it's a defensive move; on Enter too */}
-          {uniqueBooks.map((book, index) => {
-            const thumbnail = book.volumeInfo.imageLinks?.thumbnail.replace(
-              "https",
-              "http"
-            );
-            const hasThumbnail = Boolean(thumbnail);
-            return (
-              <div className="book-results" key={book.id}>
-                
-                <div
-                  role="listen"
-                  aria-label={`Book: ${book.volumeInfo.title}`}
-                  className="single-book"
-                  tabIndex="0">
-                  <h2>{book.volumeInfo.title}</h2>
-                  {hasThumbnail && (
-                    <button
-                      className="thumb-btn"
-                      onClick={() => handleSelected(book)}
-                      onKeyDown={e => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          handleSelected(book);
-                        }
-                      }}
-                      aria-label="View book full description">
-                      <img
-                        className="thumbnail"
-                        src={thumbnail}
-                        alt={`Cover of ${book.volumeInfo.title}`}
-                      />
-                    </button>
-                  )}
-                  <div className="book-detail">
-                    <p>
-                      <strong>Author/s: </strong>
-                      {book.volumeInfo.authors || "N/A"}
-                    </p>
-
-                    <p>
-                      <strong>Published: </strong>
-                      {book.volumeInfo?.publishedDate &&
-                      !isNaN(new Date(book.volumeInfo.publishedDate))
-                        ? new Date(book.volumeInfo.publishedDate).getFullYear()
-                        : "Unknown"}
-                    </p>
-                    <p>
-                      <strong>Genre: </strong>
-                      {book.volumeInfo.categories || "N/A"}
-                    </p>
-                    <p>
-                      <strong>Languages</strong>:{" "}
-                      {languageMap[book.volumeInfo.language] ||
-                        book.volumeInfo.language}
-                    </p>
-                    <p>
-                      <strong>Description: </strong>
-                      {book.volumeInfo?.description ? (
-                        <>
-                          {book.volumeInfo.description.slice(0, 150)}...
-                          <button
-                            type="button"
-                            className="read-more"
-                            onClick={() => handleSelected(book)}>
-                            read more
-                          </button>
-                        </>
-                      ) : (
-                        "No description available."
-                      )}
-                    </p>
-                    {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
-                    {book.saleInfo?.buyLink ? (
-                      <a
-                        href={book.saleInfo.buyLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="buy-now">
-                        {t("buyNow")} {book.saleInfo?.listPrice?.amount}{" "}
-                        {book.saleInfo?.listPrice?.currencyCode}
-                      </a>
-                    ) : (
-                      <p>No purchase available.</p>
-                    )}
-                    {/* {console.log("google link", book.saleInfo)}
-                      {console.log("book", book)} */}
-                  </div>
-                </div>
-
-                {index !== uniqueBooks.length - 1 && <hr />}
-                {/* ✅ only between books */}
-              </div>
-            );
-          })}
+          {uniqueBooks.map((book, index) => (
+            <div className="book-results" key={book.id}>
+              <BookCard
+                book={book}
+                onSelect={handleSelected}
+                languageMap={languageMap}
+                t={t}
+              />
+              {index !== uniqueBooks.length - 1 && <hr />}
+            </div>
+          ))}
         </div>
+
         {uniqueBooks.length > 0 && (
           <button
             className="load-more"
