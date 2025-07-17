@@ -41,6 +41,8 @@ function App() {
   const [hasSearched, setHasSearched] = useState(false);
   const [showNoResultsModal, setShowNoResultsModal] = useState(false); //for accessibility, it makes the screen reader read the 'No results found'
   const [amazonItLink, setAmazonItLink] = useState("");
+  const [startIndex, setStartIndex] = useState(0);
+  const [maxResult] = useState(10);
 
   const handleInputChange = useCallback(e => setQuery(e.target.value), []);
 
@@ -55,21 +57,31 @@ function App() {
     setLoading(true);
     try {
       const res = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${query}`
+        `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${query}&startIndex=${startIndex}&maxResults=${maxResult}`
+        // `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${query}`
       );
       if (!res.ok) {
         alert("Your search produced no results, try again");
         return;
       }
       const data = await res.json();
+
+      // If startIndex is 0, it's a new search → reset the list
+      if (startIndex === 0) {
+        setBookList(data.items || []);
+        // setHasSearched(true);
+      } else {
+        setBookList(prev => [...prev, ...(data.items || [])]);
+      }
+
       setLoading(false);
-      setBookList(data.items);
-      setHasSearched(true);
+
+      // setHasSearched(true);
       // console.log("book list", data.items);
     } catch (error) {
       console.error("Impossible to fetch data:", error);
     }
-  }, [query, searchMode]);
+  }, [query, searchMode, maxResult, startIndex]);
 
   const handleSelected = useCallback(book => {
     setShowModal(true);
@@ -85,6 +97,19 @@ function App() {
       return true;
     });
   }, [bookList]);
+
+  useEffect(() => {
+    if (hasSearched) {
+      handleFetch();
+      console.log("hasSearched", hasSearched);
+    }
+  }, [startIndex, handleFetch, hasSearched]);
+
+  const handleFetchNew = () => {
+    setStartIndex(0);
+    setHasSearched(true);
+    handleFetch();
+  };
 
   //Amazon Link building
   useEffect(() => {
@@ -157,7 +182,7 @@ function App() {
           onChange={handleInputChange}
           placeholder={t("enterSearchTerm")}
         />
-        <button className="btn-element" type="button" onClick={handleFetch}>
+        <button className="btn-element" type="button" onClick={handleFetchNew}>
           {t("startSearch")}
         </button>
         <button className="reset-btn" type="button" onClick={handleReset}>
@@ -185,20 +210,22 @@ function App() {
           {/*tab-index for accessibility */}
           {/*e.preventDefault() on space bar prevents browser default scroll action */}
           {/*e.prevent on click it's a defensive move; on Enter too */}
-          {uniqueBooks.map(book => {
+          {uniqueBooks.map((book, index) => {
             const thumbnail = book.volumeInfo.imageLinks?.thumbnail.replace(
               "https",
               "http"
             );
+            const hasThumbnail = Boolean(thumbnail);
             return (
               <div className="book-results" key={book.id}>
-                {thumbnail && (
-                  <div
-                    role="listen"
-                    aria-label={`Book: ${book.volumeInfo.title}`}
-                    className="single-book"
-                    tabIndex="0">
-                    <h2>{book.volumeInfo.title}</h2>
+                
+                <div
+                  role="listen"
+                  aria-label={`Book: ${book.volumeInfo.title}`}
+                  className="single-book"
+                  tabIndex="0">
+                  <h2>{book.volumeInfo.title}</h2>
+                  {hasThumbnail && (
                     <button
                       className="thumb-btn"
                       onClick={() => handleSelected(book)}
@@ -215,69 +242,76 @@ function App() {
                         alt={`Cover of ${book.volumeInfo.title}`}
                       />
                     </button>
-                    <div className="book-detail">
-                      <p>
-                        <strong>Author/s: </strong>
-                        {book.volumeInfo.authors || "N/A"}
-                      </p>
+                  )}
+                  <div className="book-detail">
+                    <p>
+                      <strong>Author/s: </strong>
+                      {book.volumeInfo.authors || "N/A"}
+                    </p>
 
-                      <p>
-                        <strong>Published: </strong>
-                        {book.volumeInfo?.publishedDate &&
-                        !isNaN(new Date(book.volumeInfo.publishedDate))
-                          ? new Date(
-                              book.volumeInfo.publishedDate
-                            ).getFullYear()
-                          : "Unknown"}
-                      </p>
-                      <p>
-                        <strong>Genre: </strong>
-                        {book.volumeInfo.categories || "N/A"}
-                      </p>
-                      <p>
-                        <strong>Languages</strong>:{" "}
-                        {languageMap[book.volumeInfo.language] ||
-                          book.volumeInfo.language}
-                      </p>
-                      <p>
-                        <strong>Description: </strong>
-                        {book.volumeInfo?.description ? (
-                          <>
-                            {book.volumeInfo.description.slice(0, 150)}...
-                            <button
-                              type="button"
-                              className="read-more"
-                              onClick={() => handleSelected(book)}>
-                              read more
-                            </button>
-                          </>
-                        ) : (
-                          "No description available."
-                        )}
-                      </p>
-                      {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
-                      {book.saleInfo?.buyLink ? (
-                        <a
-                          href={book.saleInfo.buyLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="buy-now">
-                          {t("buyNow")} {book.saleInfo?.listPrice?.amount}{" "}
-                          {book.saleInfo?.listPrice?.currencyCode}
-                        </a>
+                    <p>
+                      <strong>Published: </strong>
+                      {book.volumeInfo?.publishedDate &&
+                      !isNaN(new Date(book.volumeInfo.publishedDate))
+                        ? new Date(book.volumeInfo.publishedDate).getFullYear()
+                        : "Unknown"}
+                    </p>
+                    <p>
+                      <strong>Genre: </strong>
+                      {book.volumeInfo.categories || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Languages</strong>:{" "}
+                      {languageMap[book.volumeInfo.language] ||
+                        book.volumeInfo.language}
+                    </p>
+                    <p>
+                      <strong>Description: </strong>
+                      {book.volumeInfo?.description ? (
+                        <>
+                          {book.volumeInfo.description.slice(0, 150)}...
+                          <button
+                            type="button"
+                            className="read-more"
+                            onClick={() => handleSelected(book)}>
+                            read more
+                          </button>
+                        </>
                       ) : (
-                        <p>No purchase available.</p>
+                        "No description available."
                       )}
-                      {/* {console.log("google link", book.saleInfo)}
+                    </p>
+                    {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
+                    {book.saleInfo?.buyLink ? (
+                      <a
+                        href={book.saleInfo.buyLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="buy-now">
+                        {t("buyNow")} {book.saleInfo?.listPrice?.amount}{" "}
+                        {book.saleInfo?.listPrice?.currencyCode}
+                      </a>
+                    ) : (
+                      <p>No purchase available.</p>
+                    )}
+                    {/* {console.log("google link", book.saleInfo)}
                       {console.log("book", book)} */}
-                    </div>
                   </div>
-                )}
-                <hr />
+                </div>
+
+                {index !== uniqueBooks.length - 1 && <hr />}
+                {/* ✅ only between books */}
               </div>
             );
           })}
         </div>
+        {uniqueBooks.length > 0 && (
+          <button
+            className="load-more"
+            onClick={() => setStartIndex(prev => prev + maxResult)}>
+            Load More
+          </button>
+        )}
 
         {showModal && selectedTitle && (
           <Modal onClose={() => setShowModal(false)}>
