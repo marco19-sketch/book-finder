@@ -13,5 +13,8 @@
   "description": "Descrizione",
   "fullDescription": "Descrizione completa",
   "skipToMain": "Vai al contenuto principale",
-  "noDetails": "Nessuna info trovata"
+  "noDetails": "Nessuna info trovata",
+  "searchByTitle": "Cerca per titolo",
+  "searchByAuthor": "Cerca per autore",
+  "searchBySubject": "Cerca per genere"
 }

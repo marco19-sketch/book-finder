@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
-import {useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import Modal from "./components/Modal";
 import CustomRadio from "./components/CustomRadio";
 import "./App.css";
@@ -106,7 +106,6 @@ function App() {
       console.log("ISBN_13", isbn);
     } else {
       setAmazonItLink("");
-      
     }
   }, [selectedTitle]);
   console.log("amazon it link", amazonItLink);
@@ -142,7 +141,7 @@ function App() {
           {["intitle", "inauthor", "subject"].map(mode => (
             <CustomRadio
               key={mode}
-              label={`${t("searchBy")} ${labelsMap[mode]}`}
+              label={t(`searchBy${labelsMap[mode]}`)}
               name="searchMode"
               value={mode}
               checked={searchMode === mode}
