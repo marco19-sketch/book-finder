@@ -5,6 +5,8 @@ import CustomRadio from "./components/CustomRadio";
 import "./App.css";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BookCard from "./components/BookCard";
+import { FaArrowUp } from "react-icons/fa";
+import BackToTop from "./components/BackToTop";
 
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
 
@@ -270,6 +272,7 @@ function App() {
           </Modal>
         )}
       </main>
+      <BackToTop scrollContainerSelector=".root" />
     </div>
   );
 }

@@ -10,6 +10,7 @@
       aria-label={`Book: ${book.volumeInfo.title}`}
       tabIndex="0"
     >
+        
       <h2>{book.volumeInfo.title}</h2>
 
       {hasThumbnail && (

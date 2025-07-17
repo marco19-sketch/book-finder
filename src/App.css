@@ -29,11 +29,32 @@ body {
   min-height: 100vh;
 }
 
+.root {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+
 #root {
   margin: auto;
   max-width: 900px;
   width: 100%;
 }
+
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  z-index: 1000;
+}
+
 
 .english,
 .italiano {
