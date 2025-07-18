@@ -16,7 +16,7 @@ console.log("Featured books:", featuredBooks);
 const languageMap = {
   en: "English",
   fr: "French",
-  it: "Italian",
+  it: "Italiano",
   es: "Spanish",
   de: "German",
   pt: "Portuguese",
@@ -219,7 +219,7 @@ function Home({ favorites, toggleFavorite }) {
 
       {!hasSearched && (
         <div className="featured-books">
-          <h2>Recommended for You</h2>
+          <h2>{t('recommendedForYou')}</h2>
           <div className="book-rslt-container" role="list">
             {featuredBooks.map(book => (
               <div className="book-results" key={book.id}>

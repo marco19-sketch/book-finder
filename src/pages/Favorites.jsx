@@ -7,7 +7,7 @@ import LanguageSwitcher from "../components/LanguageSwitcher";
 const languageMap = {
   en: "English",
   fr: "French",
-  it: "Italian",
+  it: "Italiano",
   es: "Spanish",
   de: "German",
   pt: "Portuguese",

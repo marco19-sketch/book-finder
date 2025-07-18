@@ -12,9 +12,18 @@
   "seeOnAmazon": "Vedi su Amazon",
   "description": "Descrizione",
   "fullDescription": "Descrizione completa",
+  "noDescription": "Nessuna descrizione presente",
   "skipToMain": "Vai al contenuto principale",
   "noDetails": "Nessuna info trovata",
   "searchByTitle": "Cerca per titolo",
   "searchByAuthor": "Cerca per autore",
-  "searchBySubject": "Cerca per genere"
+  "searchBySubject": "Cerca per genere",
+  "yourFavorites": "I tuoi preferiti",
+  "author": "Autore(i)",
+  "published": "Pubblicato",
+  "genre": "Genere",
+  "language": "Lingua",
+  "removeFromFavorites": "Rimuovi dai preferiti",
+  "addToFavorites": "Aggiungi ai preferiti",
+  "recommendedForYou": "Scelti per te"
 }

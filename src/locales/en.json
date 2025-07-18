@@ -12,9 +12,18 @@
   "seeOnAmazon": "See it on Amazon",
   "description": "Description",
   "fullDescription": "Full description",
+  "noDescription": "No description available",
   "skipToMain": "Skip to main content",
   "noDetailsFound": "Sorry, no details present!",
   "searchByTitle": "Search by Title",
   "searchByAuthor": "Search by Author",
-  "searchBySubject": "Search by Subject"
+  "searchBySubject": "Search by Subject",
+  "yourFavorites": "Your favorites",
+  "author": "Author(s)",
+  "published": "Published",
+  "genre": "Genre",
+  "language": "Language",
+  "removeFromFavorites": "Remove from favorites",
+  "addToFavorites": "Add to favorites",
+  "recommendedForYou": "Recommended for You"
 }
