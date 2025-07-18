@@ -10,7 +10,6 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
 
     const toggleVisibility = () => {
       const scrollTop = container.scrollTop;
-      console.log("Scroll position:", scrollTop);
       setIsVisible(scrollTop > 300);
     };
 

@@ -46,6 +46,25 @@ function App() {
   const [amazonItLink, setAmazonItLink] = useState("");
   const [startIndex, setStartIndex] = useState(0);
   const [maxResult] = useState(10);
+  const [view, setView] = useState('home');
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem("favorites");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const toggleFavorite = book => {
+    setFavorites(prev => {
+      const exist = prev.find(b => b.id === book.id);
+      let updated;
+      if (exist) {
+        updated = prev.filter(b => b.id !== book.id);
+      } else {
+        updated = [...prev, book];
+      }
+      localStorage.setItem("favorites", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   const handleInputChange = useCallback(e => setQuery(e.target.value), []);
 
@@ -157,121 +176,158 @@ function App() {
       <header role="banner">
         <h1>{t("title")}</h1>
       </header>
+      <button
+        className="favorites-btn"
+        onClick={() => setView(view === "home" ? "favorites" : "home")}>
+        {view === "home"
+          ? `See Favorites (${favorites.length})`
+          : "Back to Search"}
+      </button>
 
       {noDetailsFound && (
         <Modal onClose={() => setNoDetailsFound(false)}>
           <p className="no-detail-found">{t("noDetailsFound")}</p>
         </Modal>
       )}
-      <main role="main" id="main-content">
-        <div className="label-container">
-          {["intitle", "inauthor", "subject"].map(mode => (
-            <CustomRadio
-              key={mode}
-              label={t(`searchBy${labelsMap[mode]}`)}
-              name="searchMode"
-              value={mode}
-              checked={searchMode === mode}
-              onChange={() => setSearchMode(mode)}
+      {view === "home" && (
+        <>
+          <main role="main" id="main-content">
+            <div className="label-container">
+              {["intitle", "inauthor", "subject"].map(mode => (
+                <CustomRadio
+                  key={mode}
+                  label={t(`searchBy${labelsMap[mode]}`)}
+                  name="searchMode"
+                  value={mode}
+                  checked={searchMode === mode}
+                  onChange={() => setSearchMode(mode)}
+                />
+              ))}
+            </div>
+            <input
+              aria-label="Search for books"
+              className="input-element"
+              ref={inputRef}
+              value={query}
+              onChange={handleInputChange}
+              placeholder={t("enterSearchTerm")}
             />
-          ))}
-        </div>
-        <input
-          aria-label="Search for books"
-          className="input-element"
-          ref={inputRef}
-          value={query}
-          onChange={handleInputChange}
-          placeholder={t("enterSearchTerm")}
-        />
-        <button className="btn-element" type="button" onClick={handleFetchNew}>
-          {t("startSearch")}
-        </button>
-        <button className="reset-btn" type="button" onClick={handleReset}>
-          {t("reset")}
-        </button>
+            <button
+              className="btn-element"
+              type="button"
+              onClick={handleFetchNew}>
+              {t("startSearch")}
+            </button>
+            <button className="reset-btn" type="button" onClick={handleReset}>
+              {t("reset")}
+            </button>
+          </main>
+        </>
+      )}
 
-        {!loading &&
-          query.length > 1 &&
-          hasSearched === true &&
-          bookList.length === 0 &&
-          showNoResultsModal && (
-            <Modal
-              onClose={() => {
-                setHasSearched(false);
-                setShowNoResultsModal(false);
-              }}>
-              <p className="no-results">{t("noResults")}</p>
-            </Modal>
+      {view === "favorites" && (
+        <div className="favorites-page">
+          <h2>Your Favorites</h2>
+          {favorites.length === 0 ? (
+            <p>No favorites yet.</p>
+          ) : (
+            <div className="book-rslt-container" role="list">
+              {favorites.map(book => (
+                <div className="book-results" key={book.id}>
+                  <BookCard
+                    book={book}
+                    onSelect={handleSelected}
+                    languageMap={languageMap}
+                    t={t}
+                    isFavorite={true}
+                    onToggleFavorite={() => toggleFavorite(book)}
+                  />
+                </div>
+              ))}
+            </div>
           )}
-        {loading && bookList.length === 0 && (
-          <p className="loading">{t("loading")}</p>
-        )}
-
-        <div className="book-rslt-container" role="list">
-          {/*tab-index for accessibility */}
-          {/*e.preventDefault() on space bar prevents browser default scroll action */}
-          {/*e.prevent on click it's a defensive move; on Enter too */}
-          {uniqueBooks.map((book, index) => (
-            <div className="book-results" key={book.id}>
-              <BookCard
-                book={book}
-                onSelect={handleSelected}
-                languageMap={languageMap}
-                t={t}
-              />
-              {index !== uniqueBooks.length - 1 && <hr />}
-            </div>
-          ))}
         </div>
-
-        {uniqueBooks.length > 0 && (
-          <button
-            className="load-more"
-            onClick={() => setStartIndex(prev => prev + maxResult)}>
-            Load More
-          </button>
-        )}
-
-        {showModal && selectedTitle && (
-          <Modal onClose={() => setShowModal(false)}>
-            <div className="modal">
-              <h2 id="modal-title" className="header">
-                {selectedTitle?.volumeInfo?.title || "No title"}{" "}
-              </h2>
-
-              {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
-              {selectedTitle?.saleInfo?.buyLink && (
-                <a
-                  href={selectedTitle.saleInfo.buyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="buy-now">
-                  {t("buyOnGoogle")}
-                  {selectedTitle.saleInfo?.listPrice?.amount}{" "}
-                  {selectedTitle.saleInfo?.listPrice?.currencyCode}
-                </a>
-              )}
-              {selectedTitle && amazonItLink && (
-                <a
-                  href={amazonItLink}
-                  rel="noopener noreferrer"
-                  target="_blank">
-                  {t("seeOnAmazon")}
-                </a>
-              )}
-
-              {/* {console.log("Amazon link", selectedTitle.saleInfo)} */}
-              {console.log("SelectedTitle", selectedTitle)}
-              <p className="full-description">
-                <strong>{"fullDescription"}:</strong>
-                {selectedTitle.volumeInfo?.description ||
-                  "No description available"}
-              </p>
-            </div>
+      )}
+      {!loading &&
+        query.length > 1 &&
+        hasSearched === true &&
+        bookList.length === 0 &&
+        showNoResultsModal && (
+          <Modal
+            onClose={() => {
+              setHasSearched(false);
+              setShowNoResultsModal(false);
+            }}>
+            <p className="no-results">{t("noResults")}</p>
           </Modal>
         )}
-      </main>
+      {loading && bookList.length === 0 && (
+        <p className="loading">{t("loading")}</p>
+      )}
+
+      <div className="book-rslt-container" role="list">
+        {/*tab-index for accessibility */}
+        {/*e.preventDefault() on space bar prevents browser default scroll action */}
+        {/*e.prevent on click it's a defensive move; on Enter too */}
+        {uniqueBooks.map((book, index) => (
+          <div className="book-results" key={book.id}>
+            <BookCard
+              book={book}
+              onSelect={handleSelected}
+              languageMap={languageMap}
+              t={t}
+              isFavorite={favorites.some(f => f.id === book.id)}
+              onToggleFavorite={() => toggleFavorite(book)}
+            />
+            {index !== uniqueBooks.length - 1 && <hr />}
+          </div>
+        ))}
+      </div>
+
+      {uniqueBooks.length > 0 && (
+        <button
+          className="load-more"
+          onClick={() => setStartIndex(prev => prev + maxResult)}>
+          Load More
+        </button>
+      )}
+
+      {showModal && selectedTitle && (
+        <Modal onClose={() => setShowModal(false)}>
+          <div className="modal">
+            <h2 id="modal-title" className="header">
+              {selectedTitle?.volumeInfo?.title || "No title"}{" "}
+            </h2>
+
+            {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
+            {selectedTitle?.saleInfo?.buyLink && (
+              <a
+                href={selectedTitle.saleInfo.buyLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="buy-now">
+                {t("buyOnGoogle")}
+                {selectedTitle.saleInfo?.listPrice?.amount}{" "}
+                {selectedTitle.saleInfo?.listPrice?.currencyCode}
+              </a>
+            )}
+            {selectedTitle && amazonItLink && (
+              <a href={amazonItLink} rel="noopener noreferrer" target="_blank">
+                {t("seeOnAmazon")}
+              </a>
+            )}
+
+            {/* {console.log("Amazon link", selectedTitle.saleInfo)} */}
+            {console.log("SelectedTitle", selectedTitle)}
+            <p className="full-description">
+              <strong>{"fullDescription"}:</strong>
+              {selectedTitle.volumeInfo?.description ||
+                "No description available"}
+            </p>
+          </div>
+        </Modal>
+      )}
+
       <BackToTop scrollContainerSelector=".root" />
     </div>
   );

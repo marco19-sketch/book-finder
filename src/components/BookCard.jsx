@@ -1,5 +1,7 @@
 
-  export default function BookCard({ book, onSelect, languageMap, t }) {
+  import { FaHeart } from 'react-icons/fa';
+  
+  export default function BookCard({ book, onSelect, languageMap, t, isFavorite, onToggleFavorite }) {
   const thumbnail = book.volumeInfo.imageLinks?.thumbnail?.replace("https", "http");
   const hasThumbnail = Boolean(thumbnail);
 
@@ -35,7 +37,7 @@
 
       <div className="book-detail">
         <p>
-          <strong>Author/s:</strong> {book.volumeInfo.authors || "N/A"}
+          <strong>Author(s):</strong> {book.volumeInfo.authors || "N/A"}
         </p>
         <p>
           <strong>Published:</strong>{" "}
@@ -77,6 +79,13 @@
         ) : (
           <p>No purchase available.</p>
         )}
+        <button
+        className='favorite-btn'
+        onClick={onToggleFavorite}
+        aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+        >
+            <FaHeart color={isFavorite ? 'red' : 'gray'} size={24} />
+        </button>
       </div>
     </div>
   );
