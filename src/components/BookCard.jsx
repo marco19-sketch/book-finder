@@ -1,7 +1,7 @@
 
   import { FaHeart } from 'react-icons/fa';
   
-  export default function BookCard({ book, onSelect, languageMap, t, isFavorite, onToggleFavorite }) {
+  export default function BookCard({ book, onSelect, languageMap, t, isFavorite, onToggleFavorite, amazonLink }) {
   const thumbnail =
     book.volumeInfo?.imageLinks?.thumbnail?.replace?.("https", "http") ||
     "https://via.placeholder.com/128x195?text=No+Image";;
@@ -15,23 +15,20 @@
       className="single-book"
       role="article"
       aria-label={`Book: ${book.volumeInfo?.title}`}
-      tabIndex="0"
-    >
-        
+      tabIndex="0">
       <h2>{book.volumeInfo?.title}</h2>
 
       {hasThumbnail && (
         <button
           className="thumb-btn"
           onClick={() => onSelect(book)}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
               onSelect(book);
             }
           }}
-          aria-label="View book full description"
-        >
+          aria-label="View book full description">
           <img
             className="thumbnail"
             src={thumbnail}
@@ -42,54 +39,66 @@
 
       <div className="book-detail">
         <p>
-          <strong>Author(s):</strong> {book.volumeInfo?.authors || "N/A"}
+          <strong>{t("author") || "Author(s):"}</strong>{" "}
+          {Array.isArray(book.volumeInfo.authors)
+            ? book.volumeInfo.authors.join(", ")
+            : book.volumeInfo.authors || "N/A"}
         </p>
         <p>
-          <strong>Published:</strong>{" "}
+          <strong>{t("published") || "Published:"}</strong>{" "}
           {book.volumeInfo?.publishedDate &&
-          !isNaN(new Date(book.volumeInfo?.publishedDate))
-            ? new Date(book.volumeInfo?.publishedDate).getFullYear()
+          !isNaN(new Date(book.volumeInfo.publishedDate))
+            ? new Date(book.volumeInfo.publishedDate).getFullYear()
             : "Unknown"}
         </p>
         <p>
-          <strong>Genre:</strong> {book.volumeInfo?.categories || "N/A"}
+          <strong>{t("genre") || "Genre:"}</strong>{" "}
+          {Array.isArray(book.volumeInfo.categories)
+            ? book.volumeInfo.categories.join(", ")
+            : book.volumeInfo.categories || "N/A"}
         </p>
         <p>
-          <strong>Languages:</strong>{" "}
-          {languageMap[book.volumeInfo?.language] || book.volumeInfo?.language}
+          <strong>{t("language") || "Language:"}</strong>{" "}
+          {languageMap[book.volumeInfo.language] || book.volumeInfo.language}
         </p>
         <p>
-          <strong>Description:</strong>{" "}
+          <strong>{t("description") || "Description:"}</strong>{" "}
           {book.volumeInfo?.description ? (
             <>
-              {book.volumeInfo?.description.slice(0, 150)}...
-              <button type="button" className="read-more" onClick={() => onSelect(book)}>
-                read more
+              {book.volumeInfo.description.slice(0, 150)}...
+              <button
+                type="button"
+                className="read-more"
+                onClick={() => onSelect(book)}
+                aria-label={t("readMore") || "Read more"}>
+                {t("readMore") || "read more"}
               </button>
             </>
           ) : (
-            "No description available."
+            t("noDescription") || "No description available."
           )}
         </p>
-        {book.saleInfo?.buyLink ? (
+        {amazonLink ? (
           <a
-            href={book.saleInfo.buyLink}
+            href={amazonLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="buy-now"
-          >
-            {t("buyNow")} {book.saleInfo?.listPrice?.amount}{" "}
-            {book.saleInfo?.listPrice?.currencyCode}
+            className="buy-now">
+            {t("seeOnAmazon") || "See on Amazon"}
           </a>
         ) : (
-          <p>No purchase available.</p>
+          <p>{t("noPurchaseAvailable") || "No purchase available."}</p>
         )}
+
         <button
-        className='favorite-btn'
-        onClick={onToggleFavorite}
-        aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-        >
-            <FaHeart color={isFavorite ? 'red' : 'gray'} size={24} />
+          className="favorite-btn"
+          onClick={onToggleFavorite}
+          aria-label={
+            isFavorite
+              ? t("removeFromFavorites") || "Remove from favorites"
+              : t("addToFavorites") || "Add to favorites"
+          }>
+          <FaHeart color={isFavorite ? "red" : "gray"} size={24} />
         </button>
       </div>
     </div>

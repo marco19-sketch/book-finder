@@ -1,5 +1,8 @@
 import BookCard from "../components/BookCard";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import Modal from "../components/Modal";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 const languageMap = {
   en: "English",
@@ -17,11 +20,30 @@ const languageMap = {
   hi: "Hindi",
 };
 
-function Favorites({ favorites, toggleFavorite}) {
-    const { t } = useTranslation();
+function getAmazonLink(book) {
+  const identifiers = book.volumeInfo?.industryIdentifiers || [];
+  const isbn13 =
+    identifiers.find(id => id.type === "ISBN_13")?.identifier || "";
+  const isbn10 =
+    identifiers.find(id => id.type === "ISBN_10")?.identifier || "";
+  const isbn = isbn13 || isbn10;
+  return isbn ? `https://www.amazon.it/s?k=${isbn}` : "";
+}
+
+function Favorites({ favorites, toggleFavorite }) {
+  const { t } = useTranslation();
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTitle, setSelectedTitle] = useState(null);
+
+  const handleSelect = book => {
+    setSelectedTitle(book);
+    setShowModal(true);
+  };
 
   return (
     <div className="favorites-page">
+      <LanguageSwitcher />
+
       <h2>{t("yourFavorites") || "Your Favorites"}</h2>
       {favorites.length === 0 ? (
         <p>{t("noFavoritesYet") || "No favorites yet."}</p>
@@ -31,15 +53,43 @@ function Favorites({ favorites, toggleFavorite}) {
             <div className="book-results" key={book.id}>
               <BookCard
                 book={book}
-                onSelect={() => {}}
+                onSelect={() => handleSelect(book)}
                 languageMap={languageMap}
                 t={t}
                 isFavorite={true}
                 onToggleFavorite={() => toggleFavorite(book)}
+                amazonLink={getAmazonLink(book)}
               />
             </div>
           ))}
         </div>
+      )}
+
+      {showModal && selectedTitle && (
+        <Modal onClose={() => setShowModal(false)}>
+          <div className="modal">
+            <h2 id="modal-title" className="header">
+              {selectedTitle?.volumeInfo?.title || "No title"}
+            </h2>
+
+            {/*Amazon link */}
+            {getAmazonLink(selectedTitle) && (
+              <a
+                href={getAmazonLink(selectedTitle)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="buy-now">
+                {t("seeOnAmazon") || "See on Amazon"}
+              </a>
+            )}
+
+            <p className="full-description">
+              <strong>{t("fullDescription") || "Full Description"}:</strong>{" "}
+              {selectedTitle.volumeInfo?.description ||
+                "No description available"}
+            </p>
+          </div>
+        </Modal>
       )}
     </div>
   );

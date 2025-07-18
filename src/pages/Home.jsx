@@ -120,12 +120,10 @@ function Home({ favorites, toggleFavorite }) {
     }
 
     const identifiers = selectedTitle.volumeInfo?.industryIdentifiers || [];
-
     const isbn13 =
       identifiers.find(id => id.type === "ISBN_13")?.identifier || "";
     const isbn10 =
       identifiers.find(id => id.type === "ISBN_10")?.identifier || "";
-
     const isbn = isbn13 || isbn10;
     if (isbn) {
       setAmazonItLink(`https://www.amazon.it/s?k=${isbn}`);
@@ -133,6 +131,17 @@ function Home({ favorites, toggleFavorite }) {
       setAmazonItLink("");
     }
   }, [selectedTitle]);
+
+  function getAmazonLink(book) {
+    const identifiers = book.volumeInfo?.industryIdentifiers || [];
+    const isbn13 =
+      identifiers.find(id => id.type === "ISBN_13")?.identifier || "";
+    const isbn10 =
+      identifiers.find(id => id.type === "ISBN_10")?.identifier || "";
+    const isbn = isbn13 || isbn10;
+
+    return isbn ? `https://www.amazon.it/s?k=${isbn}` : "";
+  }
 
   const handleReset = useCallback(() => {
     setBookList([]);
@@ -221,6 +230,7 @@ function Home({ favorites, toggleFavorite }) {
                   t={t}
                   isFavorite={favorites.some(f => f.id === book.id)}
                   onToggleFavorite={() => toggleFavorite(book)}
+                  amazonLink={getAmazonLink(book)}
                 />
               </div>
             ))}
@@ -241,6 +251,7 @@ function Home({ favorites, toggleFavorite }) {
               t={t}
               isFavorite={favorites.some(f => f.id === book.id)} // ✅ dynamic
               onToggleFavorite={() => toggleFavorite(book)} // ✅ from props
+              amazonLink={getAmazonLink(book)}
             />
             {index !== uniqueBooks.length - 1 && <hr />}
           </div>
