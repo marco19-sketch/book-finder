@@ -7,10 +7,11 @@ import CustomRadio from "../components/CustomRadio";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import BookCard from "../components/BookCard";
 import BackToTop from "../components/BackToTop";
-
-
+import featuredBooks from "../data/featuredBooks";
 
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
+
+console.log("Featured books:", featuredBooks);
 
 const languageMap = {
   en: "English",
@@ -34,7 +35,7 @@ const labelsMap = {
   subject: "Subject",
 };
 
-function Home({favorites, toggleFavorite}) {
+function Home({ favorites, toggleFavorite }) {
   const [bookList, setBookList] = useState([]);
   const [selectedTitle, setSelectedTitle] = useState(null);
   const inputRef = useRef(null);
@@ -48,8 +49,6 @@ function Home({favorites, toggleFavorite}) {
   const [amazonItLink, setAmazonItLink] = useState("");
   const [startIndex, setStartIndex] = useState(0);
   const [maxResult] = useState(10);
-  
- 
 
   const handleInputChange = useCallback(e => setQuery(e.target.value), []);
 
@@ -209,6 +208,26 @@ function Home({favorites, toggleFavorite}) {
         <p className="loading">{t("loading")}</p>
       )}
 
+      {!hasSearched && (
+        <div className="featured-books">
+          <h2>Recommended for You</h2>
+          <div className="book-rslt-container" role="list">
+            {featuredBooks.map(book => (
+              <div className="book-results" key={book.id}>
+                <BookCard
+                  book={book}
+                  onSelect={() => handleSelected(book)}
+                  languageMap={languageMap}
+                  t={t}
+                  isFavorite={favorites.some(f => f.id === book.id)}
+                  onToggleFavorite={() => toggleFavorite(book)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="book-rslt-container" role="list">
         {/*tab-index for accessibility */}
         {/*e.preventDefault() on space bar prevents browser default scroll action */}
@@ -272,7 +291,5 @@ function Home({favorites, toggleFavorite}) {
       <BackToTop scrollContainerSelector=".root" />
     </div>
   );
-
 }
 export default Home;
-
