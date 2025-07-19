@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import "../App.css";
 import { FaArrowUp } from "react-icons/fa";
 import Modal from "../components/Modal";
 import CustomRadio from "../components/CustomRadio";
