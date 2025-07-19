@@ -12,7 +12,7 @@
   --main-color: rgb(235, 193, 103);
   --text-color: rgb(115, 6, 4);
   --shadow: 4px 4px 8px rgb(7, 6, 7);
-  --overlay: rgba(0, 0, 0, 0.6);
+  --overlay: rgba(0, 0, 0, 0.507);
 }
 
 body, html { /*this rule is to stop background jumping when hovering of focusing on li elements*/
@@ -34,6 +34,27 @@ body {
   overflow-y: auto;
 }
 
+nav {
+  text-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-evenly;
+}
+
+nav > .home, .favorites {
+  background-color: var(--overlay);
+  padding: 10px;
+  border-radius: 5px;
+  color: var(--main-color);
+  width: 130px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+nav > .home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 #root {
   margin: auto;
@@ -211,7 +232,7 @@ h1 {
   margin: 20px auto;
   width: 70%;
   border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.384);
+  background-color: var(--overlay);
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: 
@@ -344,7 +365,25 @@ a {
   top: 10px;
 }
 
-@media (max-width: 380px) {
+@media screen and (max-width: 380px) {
+  .italiano {
+  position: fixed;
+  top: 75px;
+  right: 0;
+  transform: scale(0.6);
+}
+
+.english {
+  position: fixed;
+  top: 40px;
+  right: 0;
+  transform: scale(0.6);
+}
+
+.italiano.selected,
+.english.selected {
+  transform: scale(0.8)
+}
   .single-book {
     display: flex;
     flex-direction: column;
@@ -356,6 +395,6 @@ a {
   }
 
   .label-container {
-    display: block;
+    display: block ; 
   }
 }

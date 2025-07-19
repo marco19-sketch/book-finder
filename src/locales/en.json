@@ -25,5 +25,6 @@
   "language": "Language",
   "removeFromFavorites": "Remove from favorites",
   "addToFavorites": "Add to favorites",
-  "recommendedForYou": "Recommended for You"
+  "recommendedForYou": "Recommended for You",
+  "favorites": "Favorites"
 }
