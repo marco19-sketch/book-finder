@@ -8,6 +8,7 @@ import LanguageSwitcher from "../components/LanguageSwitcher";
 import BookCard from "../components/BookCard";
 import BackToTop from "../components/BackToTop";
 import featuredBooks from "../data/featuredBooks";
+import './Home.css'
 
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
 

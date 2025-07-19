@@ -1,4 +1,19 @@
+/* === Modern Reset === */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Global Variables === */
 :root {
+  --main-color: rgb(235, 193, 103);
+  --text-color: rgb(115, 6, 4);
+  --shadow: 4px 4px 8px rgb(7, 6, 7);
+  --overlay: rgba(0, 0, 0, 0.507);
+
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -13,28 +28,36 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* === Body & HTML === */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+body {
+  background-image: url("/images/pexels-tima-miroshnichenko-6550396.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === Links === */
 a {
   font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: rgb(131, 7, 156);
+  text-decoration: none;
 }
+
 a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
+/* === Buttons (optional global style) === */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -46,22 +69,27 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* === Light Mode === */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }

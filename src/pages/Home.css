@@ -2,32 +2,11 @@
   border: 1px solid;
 } */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
 
-:root {
-  --main-color: rgb(235, 193, 103);
-  --text-color: rgb(115, 6, 4);
-  --shadow: 4px 4px 8px rgb(7, 6, 7);
-  --overlay: rgba(0, 0, 0, 0.507);
-}
 
-body, html { /*this rule is to stop background jumping when hovering of focusing on li elements*/
-  height: 100%;
-  overflow-x: hidden;
-}
 
-body {
-  background-image: url("/images/pexels-tima-miroshnichenko-6550396.webp");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed; /*avoids background stretching, coupled with body-html rule*/
-  min-height: 100vh;
-}
+
+
 
 .root {
   height: 100vh;
@@ -38,6 +17,7 @@ nav {
   text-shadow: var(--shadow);
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 20px;
 }
 
 nav > .home, .favorites {
@@ -61,21 +41,6 @@ nav > .home {
   max-width: 900px;
   width: 100%;
 }
-
-.back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px;
-  border-radius: 50%;
-  background-color: #333;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  z-index: 1000;
-}
-
 
 .english,
 .italiano {
@@ -223,52 +188,13 @@ h1 {
   }
 }
 
-.single-book h2 {
-  text-align: center;
-  grid-area: header;
-}
-
-.single-book {
-  margin: 20px auto;
-  width: 70%;
-  border-radius: 20px;
-  background-color: var(--overlay);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: 
-   'header header'
-   'img details';
-}
-
-.thumb-btn {
-  background-color: transparent;
-  width: fit-content;
-  justify-self: end;
-}
-
-.thumbnail {
-  height: 300px;
-  display: block;
-  margin: 10px auto;
-  object-fit: cover;
-  box-shadow: var(--shadow);    
-  border-radius: 3px;
-  grid-area: img;
-}
-
 hr {
   width: 60%;
   /* color: blue;
   background-color: orange; */
 }
 
-.book-detail {
-  grid-area: details;
-}
 
-a {
-  color: rgb(131, 7, 156);
-}
 
 .no-detail-found {
   font-size: 3rem;

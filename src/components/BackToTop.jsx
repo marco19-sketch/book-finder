@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaArrowUp } from "react-icons/fa";
+import "./BackToTop.css";
 
 export default function BackToTop({ scrollContainerSelector = ".root" }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,26 +33,25 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
 
   return (
     <>
-      {isVisible && (
-        <button
-          onClick={scrollToTop}
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            padding: "10px",
-            borderRadius: "50%",
-            background: "#333",
-            color: "#fff",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "20px",
-            zIndex: 1000,
-          }}
-          aria-label="Back to top">
-          <FaArrowUp />
-        </button>
-      )}
+      <button
+        className={`back-to-top ${isVisible ? "show" : ""}`}
+        onClick={scrollToTop}
+        // style={{
+        //   position: "fixed",
+        //   bottom: "20px",
+        //   right: "20px",
+        //   padding: "10px",
+        //   borderRadius: "50%",
+        //   background: "#333",
+        //   color: "#fff",
+        //   border: "none",
+        //   cursor: "pointer",
+        //   fontSize: "20px",
+        //   zIndex: 1000,
+        // }}
+        aria-label="Back to top">
+        <FaArrowUp className='arrow-up'/>
+      </button>
     </>
   );
 }

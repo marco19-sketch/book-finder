@@ -1,0 +1,36 @@
+.single-book h2 {
+  text-align: center;
+  grid-area: header;
+}
+
+.single-book {
+  margin: 20px auto;
+  width: 70%;
+  border-radius: 20px;
+  background-color: var(--overlay);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+   'header header'
+   'img details';
+}
+
+.thumb-btn {
+  background-color: transparent;
+  width: fit-content;
+  justify-self: end;
+}
+
+.thumbnail {
+  height: 300px;
+  display: block;
+  margin: 10px auto;
+  object-fit: cover;
+  box-shadow: var(--shadow);    
+  border-radius: 3px;
+  grid-area: img;
+}
+
+.book-detail {
+  grid-area: details;
+}

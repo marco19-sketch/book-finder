@@ -1,0 +1,72 @@
+/* === Modern CSS Reset === */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Remove default list styles */
+ul, ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Remove default link underlines */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default button styles */
+button {
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Base HTML settings */
+html {
+  font-size: 16px; /* easy to scale using rem */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: sans-serif, Arial, Helvetica;
+  line-height: 1.5;
+  background: #fff;
+  color: #222;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Your Custom Variables === */
+:root {
+  --main-color: rgb(235, 193, 103);
+  --text-color: rgb(115, 6, 4);
+  --shadow: 4px 4px 8px rgb(7, 6, 7);
+  --overlay: rgba(0, 0, 0, 0.507);
+}
+
+/* Accessibility helper (for screen readers) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus outline visible only for keyboard users */
+:focus-visible {
+  outline: 2px solid var(--main-color);
+  outline-offset: 3px;
+}

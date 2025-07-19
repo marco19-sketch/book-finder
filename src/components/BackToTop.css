@@ -1,0 +1,25 @@
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 25px;
+    z-index: 1000;
+    background-color: var(--overlay);
+    color: white;
+    transform: translateY(200px) scale(1);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.back-to-top.show {
+    transform: translateY(-100px);
+    opacity: 1;
+    border: none;
+}
+
+.back-to-top.show:hover {
+    transform: translateY(-100px) scale(1.2);
+    border: 2px solid white;
+}
+

@@ -1,5 +1,6 @@
 
   import { FaHeart } from 'react-icons/fa';
+  import './BookCard.css';
   
   export default function BookCard({ book, onSelect, languageMap, t, isFavorite, onToggleFavorite, amazonLink }) {
   const thumbnail =
