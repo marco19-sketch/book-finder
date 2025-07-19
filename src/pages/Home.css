@@ -2,12 +2,6 @@
   border: 1px solid;
 } */
 
-
-
-
-
-
-
 .root {
   height: 100vh;
   overflow-y: auto;
@@ -20,7 +14,8 @@ nav {
   margin-bottom: 20px;
 }
 
-nav > .home, .favorites {
+nav > .home,
+.favorites {
   background-color: var(--overlay);
   padding: 10px;
   border-radius: 5px;
@@ -71,7 +66,7 @@ nav > .home {
 .italiano.selected {
   background-color: rgb(235, 226, 206);
   font-weight: bold;
-  transform: scale(1.1)
+  transform: scale(1.1);
 }
 
 .italiano {
@@ -86,15 +81,10 @@ nav > .home {
   right: 70px;
 }
 
-h1 {
-  color: var(--main-color);
-  text-align: center;
-  text-shadow: var(--shadow);
-}
-
 .label-container {
   box-shadow: var(--shadow);
-  margin: auto;
+  margin: 10px auto;
+  height: 30px;
 }
 
 .input-element,
@@ -168,7 +158,7 @@ h1 {
 
 .read-more:hover {
   transform: scale(1.1);
-  transition: transform .3s ease;
+  transition: transform 0.3s ease;
   color: white;
 }
 
@@ -176,24 +166,6 @@ h1 {
   outline: none;
   box-shadow: 0 0 3px #007bff;
 }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-hr {
-  width: 60%;
-  /* color: blue;
-  background-color: orange; */
-}
-
 
 
 .no-detail-found {
@@ -260,56 +232,28 @@ hr {
   border-bottom: 1px solid;
 }
 
-/*accessibility styles*/
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
 
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 10px;
-  background: #fff;
-  color: #000;
-  z-index: 1000;
-  text-decoration: none;
-  border: 2px solid #000;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: top 0.3s ease;
-}
 
-.skip-link:focus {
-  top: 10px;
-}
 
 @media screen and (max-width: 380px) {
   .italiano {
-  position: fixed;
-  top: 75px;
-  right: 0;
-  transform: scale(0.6);
-}
+    position: fixed;
+    top: 75px;
+    right: 0;
+    transform: scale(0.6);
+  }
 
-.english {
-  position: fixed;
-  top: 40px;
-  right: 0;
-  transform: scale(0.6);
-}
+  .english {
+    position: fixed;
+    top: 40px;
+    right: 0;
+    transform: scale(0.6);
+  }
 
-.italiano.selected,
-.english.selected {
-  transform: scale(0.8)
-}
+  .italiano.selected,
+  .english.selected {
+    transform: scale(0.8);
+  }
   .single-book {
     display: flex;
     flex-direction: column;
@@ -321,6 +265,6 @@ hr {
   }
 
   .label-container {
-    display: block ; 
+    display: block;
   }
 }
