@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import Modal from "../components/Modal";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import BackToTop from "../components/BackToTop";
+import './Favorites.css';
 
 const languageMap = {
   en: "English",
@@ -91,6 +93,7 @@ function Favorites({ favorites, toggleFavorite }) {
           </div>
         </Modal>
       )}
+      <BackToTop scrollContainerSelector=".favorites-page" />
     </div>
   );
 }
