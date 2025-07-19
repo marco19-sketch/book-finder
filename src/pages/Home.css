@@ -33,7 +33,6 @@ nav > .home {
 
 #root {
   margin: auto;
-  max-width: 900px;
   width: 100%;
 }
 
@@ -48,6 +47,7 @@ nav > .home {
   height: 30px;
   display: flex;
   justify-content: center;
+  padding-bottom: 13px;
   align-items: center;
   font-weight: normal;
 }
@@ -121,6 +121,10 @@ nav > .home {
 .btn-element:active,
 .reset-btn:active {
   transform: scale(0.9);
+}
+
+.recommended-for-you {
+    text-align: center;
 }
 
 .loading {
@@ -235,7 +239,7 @@ nav > .home {
 
 
 
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 550px) {
   .italiano {
     position: fixed;
     top: 75px;
@@ -254,17 +258,10 @@ nav > .home {
   .english.selected {
     transform: scale(0.8);
   }
-  .single-book {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .thumbnail {
-    display: block;
-    margin: 10px auto;
-  }
-
+  
   .label-container {
     display: block;
+    margin-bottom: 20px;
+    height: fit-content;
   }
 }

@@ -99,7 +99,7 @@ h1 {
   color: var(--main-color);
   text-align: center;
   text-shadow: var(--shadow);
-  font-size: 4.5rem;
+  font-size: 4rem;
   line-height: 1.1;
   margin-bottom: 30px;
 }
@@ -151,3 +151,4 @@ hr {
     transform: translateY(0);
   }
 }
+

@@ -1,11 +1,18 @@
+import { FaHeart } from "react-icons/fa";
+import "./BookCard.css";
 
-  import { FaHeart } from 'react-icons/fa';
-  import './BookCard.css';
-  
-  export default function BookCard({ book, onSelect, languageMap, t, isFavorite, onToggleFavorite, amazonLink }) {
+export default function BookCard({
+  book,
+  onSelect,
+  languageMap,
+  t,
+  isFavorite,
+  onToggleFavorite,
+  amazonLink,
+}) {
   const thumbnail =
     book.volumeInfo?.imageLinks?.thumbnail?.replace?.("https", "http") ||
-    "https://via.placeholder.com/128x195?text=No+Image";;
+    "https://via.placeholder.com/128x195?text=No+Image";
   const hasThumbnail =
     thumbnail !== "https://via.placeholder.com/128x195?text=No+Image";
 
@@ -17,7 +24,7 @@
       role="article"
       aria-label={`Book: ${book.volumeInfo?.title}`}
       tabIndex="0">
-      <h2>{book.volumeInfo?.title}</h2>
+      <h2 className="single-book-title">{book.volumeInfo?.title}</h2>
 
       {hasThumbnail && (
         <button
@@ -31,6 +38,7 @@
           }}
           aria-label="View book full description">
           <img
+            tabIndex="0"
             className="thumbnail"
             src={thumbnail}
             alt={`Cover of ${book.volumeInfo?.title}`}
@@ -66,7 +74,7 @@
           <strong>{t("description") || "Description:"}</strong>{" "}
           {book.volumeInfo?.description ? (
             <>
-              {book.volumeInfo.description.slice(0, 150)}...
+              {book.volumeInfo.description.slice(0, 100)}...
               <button
                 type="button"
                 className="read-more"
@@ -79,18 +87,19 @@
             t("noDescription") || "No description available."
           )}
         </p>
-        {amazonLink ? (
-          <a
-            href={amazonLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="buy-now">
-            {t("seeOnAmazon") || "See on Amazon"}
-          </a>
-        ) : (
-          <p>{t("noPurchaseAvailable") || "No purchase available."}</p>
-        )}
-
+        <div className='buy-now-container'>
+          {amazonLink ? (
+            <a
+              href={amazonLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="buy-now">
+              {t("seeOnAmazon") || "See on Amazon"}
+            </a>
+          ) : (
+            <p>{t("noPurchaseAvailable") || "No purchase available."}</p>
+          )}
+        </div>
         <button
           className="favorite-btn"
           onClick={onToggleFavorite}
