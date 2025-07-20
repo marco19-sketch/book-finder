@@ -1,10 +1,7 @@
-.favorites-page {
-  height: 100vh;
-  overflow-y: auto;
-}
-
 .favorites-header {
   text-align: center;
   color: var(--main-color);
   text-shadow: var(--shadow);
+  margin: 60px auto 20px;
+  font-size: 3.5rem;
 }

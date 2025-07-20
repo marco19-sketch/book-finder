@@ -3,9 +3,7 @@ import { useTranslation } from "react-i18next";
 import { FaArrowUp } from "react-icons/fa";
 import Modal from "../components/Modal";
 import CustomRadio from "../components/CustomRadio";
-import LanguageSwitcher from "../components/LanguageSwitcher";
 import BookCard from "../components/BookCard";
-import BackToTop from "../components/BackToTop";
 import featuredBooks from "../data/featuredBooks";
 import './Home.css'
 
@@ -13,21 +11,21 @@ import './Home.css'
 
 console.log("Featured books:", featuredBooks);
 
-const languageMap = {
-  en: "English",
-  fr: "French",
-  it: "Italiano",
-  es: "Spanish",
-  de: "German",
-  pt: "Portuguese",
-  ru: "Russian",
-  zh: "Chinese",
-  ja: "Japanese",
-  ar: "Arabic",
-  nl: "Dutch",
-  sv: "Swedish",
-  hi: "Hindi",
-};
+// const languageMap = {
+//   en: "English",
+//   fr: "French",
+//   it: "Italiano",
+//   es: "Spanish",
+//   de: "German",
+//   pt: "Portuguese",
+//   ru: "Russian",
+//   zh: "Chinese",
+//   ja: "Japanese",
+//   ar: "Arabic",
+//   nl: "Dutch",
+//   sv: "Swedish",
+//   hi: "Hindi",
+// };
 
 const labelsMap = {
   intitle: "Title",
@@ -35,7 +33,7 @@ const labelsMap = {
   subject: "Subject",
 };
 
-function Home({ favorites, toggleFavorite }) {
+function Home({ favorites, toggleFavorite, languageMap }) {
   const [bookList, setBookList] = useState([]);
   const [selectedTitle, setSelectedTitle] = useState(null);
   const inputRef = useRef(null);
@@ -155,14 +153,11 @@ function Home({ favorites, toggleFavorite }) {
   }, []);
 
   return (
-    <div className="root">
-      <a href="#main-content" className="skip-link">
-        {t("skipToMain")}
-      </a>
+    <div className="home-page">
 
-      <LanguageSwitcher />
+    
       <header role="banner">
-        <h1>{t("title")}</h1>
+        <h1 className='main-title' >{t("title")}</h1>
       </header>
 
       {/* {noDetailsFound && (
@@ -296,7 +291,7 @@ function Home({ favorites, toggleFavorite }) {
           </div>
         </Modal>
       )}
-      <BackToTop scrollContainerSelector=".root" />
+      {/* <BackToTop scrollContainerSelector=".root" /> */}
     </div>
   );
 }

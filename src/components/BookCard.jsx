@@ -1,10 +1,26 @@
 import { FaHeart } from "react-icons/fa";
 import "./BookCard.css";
 
+const languageMap = {
+  en: "English",
+  fr: "French",
+  it: "Italiano",
+  es: "Spanish",
+  de: "German",
+  pt: "Portuguese",
+  ru: "Russian",
+  zh: "Chinese",
+  ja: "Japanese",
+  ar: "Arabic",
+  nl: "Dutch",
+  sv: "Swedish",
+  hi: "Hindi",
+};
+
 export default function BookCard({
   book,
   onSelect,
-  languageMap,
+  // languageMap,
   t,
   isFavorite,
   onToggleFavorite,

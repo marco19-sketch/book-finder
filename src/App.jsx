@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
+import BackToTop from './components/BackToTop';
 
 export default function App() {
   const [favorites, setFavorites] = useState(() => {
@@ -26,11 +27,19 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div className="root">
+      <a href="#main-content" className="skip-link">
+        {t("skipToMain")}
+      </a>
       <nav>
-        <Link className='home' to="/">Home</Link>
-        <Link className='favorites' to="/favorites">{t('favorites')} ({favorites.length})</Link>
+        <Link className="home" to="/">
+          Home
+        </Link>
+        <Link className="favorites" to="/favorites">
+          {t("favorites")} ({favorites.length})
+        </Link>
       </nav>
+      <LanguageSwitcher />
 
       <Routes>
         <Route
@@ -46,6 +55,7 @@ export default function App() {
           }
         />
       </Routes>
+      <BackToTop scrollContainerSelector=".root" />
     </div>
   );
 }

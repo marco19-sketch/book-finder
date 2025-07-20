@@ -46,7 +46,7 @@ function Favorites({ favorites, toggleFavorite }) {
     <div className="favorites-page">
       <LanguageSwitcher />
 
-      <h2 className='favorites-header' >{t("yourFavorites") || "Your Favorites"}:</h2>
+      <h1 className='favorites-header' >{t("yourFavorites") || "Your Favorites"}:</h1>
       {favorites.length === 0 ? (
         <p>{t("noFavoritesYet") || "No favorites yet."}</p>
       ) : (
