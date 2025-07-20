@@ -20,7 +20,6 @@ const languageMap = {
 export default function BookCard({
   book,
   onSelect,
-  // languageMap,
   t,
   isFavorite,
   onToggleFavorite,

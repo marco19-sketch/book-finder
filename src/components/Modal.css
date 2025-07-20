@@ -18,7 +18,9 @@
   }
 
   .modal-content {
-    background: var(--main-color);
+    display: block;
+    background: black;
+    /* background: var(--main-color); */
     padding: 1rem 2rem;
     border-radius: 8px;
     width: 100%;
@@ -27,7 +29,8 @@
     max-height: 80%;
     overflow-y: auto;
     position: relative;
-    color: var(--text-color);
+    color: white;
+    /* color: var(--text-color); */
     opacity: 0;
     transform: translateY(30px);
     transition: transform 0.3s ease, opacity 0.5s ease-in;
@@ -49,8 +52,10 @@
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    background-color: var(--main-color);
-    color: var(--text-color);
+    background-color: black;
+    /* background-color: var(--main-color); */
+    color: white;
+    /* color: var(--text-color); */
     width: 20px;
     height: 20px;
     line-height: 1;
@@ -63,14 +68,17 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    color: var(--text-color);
-    font-size: 1.5rem;
+    color: white;
+    /* color: var(--text-color); */
+    font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
   }
     
   .modal-close:hover {
     color: white;
+    text-shadow: 3px 3px 6px  yellow;
+    transform: scale(1.2);
   }
 
   .modal-close:focus {
@@ -78,3 +86,67 @@
     outline: none;
     text-shadow: 3px 3px 6px white;
   }
+
+  .no-detail-found {
+  font-size: 3rem;
+  text-align: center;
+  text-shadow: 1px 1px 3px white;
+  border: 4px double;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.no-results {
+  border: 4px double;
+  padding: 50px;
+}
+
+.modal {
+  padding: 0;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "header header"
+    "cover details"; */
+  border: 4px double;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.header {
+  grid-area: header;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  text-shadow: 1px 1px 3px white;
+}
+
+/* .imgSpace {
+  grid-area: cover;
+  height: 280px;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  border: 4px double;
+} */
+
+.new-tab {
+  display: inline-block;
+  justify-self: start;
+}
+
+.imgSpace:hover {
+  outline: 2px solid white;
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.details {
+  grid-area: details;
+  text-shadow: 1px 1px 3px white;
+  padding: 10px;
+}
+
+.details > * {
+  border-bottom: 1px solid;
+}

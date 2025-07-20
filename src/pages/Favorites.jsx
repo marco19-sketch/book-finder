@@ -46,7 +46,9 @@ function Favorites({ favorites, toggleFavorite }) {
     <div className="favorites-page">
       <LanguageSwitcher />
 
-      <h1 className='favorites-header' >{t("yourFavorites") || "Your Favorites"}:</h1>
+      <h1 className="favorites-header">
+        {t("yourFavorites") || "Your Favorites"}:
+      </h1>
       {favorites.length === 0 ? (
         <p>{t("noFavoritesYet") || "No favorites yet."}</p>
       ) : (
@@ -74,6 +76,11 @@ function Favorites({ favorites, toggleFavorite }) {
               {selectedTitle?.volumeInfo?.title || "No title"}
             </h2>
 
+            <p className="full-description">
+              <strong>{t("fullDescription") || "Full Description"}:</strong>{" "}
+              {selectedTitle.volumeInfo?.description ||
+                "No description available"}
+            </p>
             {/*Amazon link */}
             {getAmazonLink(selectedTitle) && (
               <a
@@ -84,12 +91,6 @@ function Favorites({ favorites, toggleFavorite }) {
                 {t("seeOnAmazon") || "See on Amazon"}
               </a>
             )}
-
-            <p className="full-description">
-              <strong>{t("fullDescription") || "Full Description"}:</strong>{" "}
-              {selectedTitle.volumeInfo?.description ||
-                "No description available"}
-            </p>
           </div>
         </Modal>
       )}
