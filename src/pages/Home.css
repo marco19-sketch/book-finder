@@ -14,7 +14,17 @@ h1.main-title {
 .label-container {
   box-shadow: var(--shadow);
   margin: 10px auto;
+  padding: 10px;
   height: 30px;
+}
+
+.label-container label {
+  font-size: 1.2rem;
+}
+
+.label-container label:hover {
+  transform: scale(1.1);
+  transition: transform .3s ease;
 }
 
 .input-element,

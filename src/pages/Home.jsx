@@ -5,27 +5,11 @@ import Modal from "../components/Modal";
 import CustomRadio from "../components/CustomRadio";
 import BookCard from "../components/BookCard";
 import featuredBooks from "../data/featuredBooks";
-import './Home.css'
+import "./Home.css";
 
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
 
 console.log("Featured books:", featuredBooks);
-
-// const languageMap = {
-//   en: "English",
-//   fr: "French",
-//   it: "Italiano",
-//   es: "Spanish",
-//   de: "German",
-//   pt: "Portuguese",
-//   ru: "Russian",
-//   zh: "Chinese",
-//   ja: "Japanese",
-//   ar: "Arabic",
-//   nl: "Dutch",
-//   sv: "Swedish",
-//   hi: "Hindi",
-// };
 
 const labelsMap = {
   intitle: "Title",
@@ -51,6 +35,12 @@ function Home({ favorites, toggleFavorite, languageMap }) {
   const handleInputChange = useCallback(e => setQuery(e.target.value), []);
 
   const { t } = useTranslation();
+
+  const placeholderMap = {
+    intitle: t("searchPlaceholder.intitle"),
+    inauthor: t("searchPlaceholder.inauthor"),
+    subject: t("searchPlaceholder.subject"),
+  };
 
   useEffect(() => {
     setQuery("");
@@ -158,12 +148,6 @@ function Home({ favorites, toggleFavorite, languageMap }) {
         <h1 className="main-title">{t("title")}</h1>
       </header>
 
-      {/* {noDetailsFound && (
-        <Modal onClose={() => setNoDetailsFound(false)}>
-          <p className="no-detail-found">{t("noDetailsFound")}</p>
-        </Modal>
-      )} */}
-
       <main role="main" id="main-content">
         <div className="label-container">
           {["intitle", "inauthor", "subject"].map(mode => (
@@ -183,7 +167,8 @@ function Home({ favorites, toggleFavorite, languageMap }) {
           ref={inputRef}
           value={query}
           onChange={handleInputChange}
-          placeholder={t("enterSearchTerm")}
+          placeholder={placeholderMap[searchMode] || t('selectCriteria')}
+          // placeholder={t("enterSearchTerm")}
         />
         <button className="btn-element" type="button" onClick={handleFetchNew}>
           {t("startSearch")}
@@ -281,12 +266,16 @@ function Home({ favorites, toggleFavorite, languageMap }) {
               {selectedTitle.volumeInfo?.description ||
                 "No description available"}
             </p>
-            <div className='buy-now-container'>
-            {selectedTitle && amazonItLink && (
-              <a className='buy-now' href={amazonItLink} rel="noopener noreferrer" target="_blank">
-                {t("seeOnAmazon")}
-              </a>
-            )}
+            <div className="buy-now-container">
+              {selectedTitle && amazonItLink && (
+                <a
+                  className="buy-now"
+                  href={amazonItLink}
+                  rel="noopener noreferrer"
+                  target="_blank">
+                  {t("seeOnAmazon")}
+                </a>
+              )}
             </div>
           </div>
         </Modal>

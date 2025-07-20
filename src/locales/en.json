@@ -27,5 +27,9 @@
   "addToFavorites": "Add to favorites",
   "recommendedForYou": "Recommended for You",
   "favorites": "Favorites",
-  "readMore": "read more"
+  "readMore": "read more",
+  "searchPlaceholder.intitle": "Enter title...",
+  "searchPlaceholder.inauthor": "Enter name...",
+  "searchPlaceholder.subject": "Enter subject...",
+  "selectCriteria": "Select search by..."
 }
