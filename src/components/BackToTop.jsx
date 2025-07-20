@@ -4,8 +4,18 @@ import "./BackToTop.css";
 
 export default function BackToTop({ scrollContainerSelector = ".root" }) {
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' && window.innerWidth < 500); 'to avoid errors'
 
   useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 500);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [])
+
+  useEffect(() => {
+    if (isMobile) return;
+
     const container = document.querySelector(scrollContainerSelector);
     if (!container) return;
 
@@ -19,7 +29,9 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     return () => {
       container.removeEventListener("scroll", toggleVisibility);
     };
-  }, [scrollContainerSelector]);
+  }, [scrollContainerSelector, isMobile]);
+
+  if (isMobile) return null
 
   const scrollToTop = () => {
     const container = document.querySelector(scrollContainerSelector);
