@@ -41,7 +41,7 @@ function Home({ favorites, toggleFavorite }) {
   const inputRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [noDetailsFound, setNoDetailsFound] = useState(false);
+  // const [noDetailsFound, setNoDetailsFound] = useState(false);
   const [query, setQuery] = useState("");
   const [searchMode, setSearchMode] = useState("title");
   const [hasSearched, setHasSearched] = useState(false);
@@ -165,11 +165,11 @@ function Home({ favorites, toggleFavorite }) {
         <h1>{t("title")}</h1>
       </header>
 
-      {noDetailsFound && (
+      {/* {noDetailsFound && (
         <Modal onClose={() => setNoDetailsFound(false)}>
           <p className="no-detail-found">{t("noDetailsFound")}</p>
         </Modal>
-      )}
+      )} */}
 
       <main role="main" id="main-content">
         <div className="label-container">
@@ -239,9 +239,6 @@ function Home({ favorites, toggleFavorite }) {
       )}
 
       <div className="book-rslt-container" role="list">
-        {/*tab-index for accessibility */}
-        {/*e.preventDefault() on space bar prevents browser default scroll action */}
-        {/*e.prevent on click it's a defensive move; on Enter too */}
         {uniqueBooks.map((book, index) => (
           <div className="book-results" key={book.id}>
             <BookCard

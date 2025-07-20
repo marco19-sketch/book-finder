@@ -48,30 +48,30 @@ export default function BookCard({
 
       <div className="book-detail">
         <p>
-          <strong>{t("author") || "Author(s):"}</strong>{" "}
+          <strong>{t("author") || "Author(s)"}:</strong>{" "}
           {Array.isArray(book.volumeInfo.authors)
             ? book.volumeInfo.authors.join(", ")
             : book.volumeInfo.authors || "N/A"}
         </p>
         <p>
-          <strong>{t("published") || "Published:"}</strong>{" "}
+          <strong>{t("published") || "Published"}:</strong>{" "}
           {book.volumeInfo?.publishedDate &&
           !isNaN(new Date(book.volumeInfo.publishedDate))
             ? new Date(book.volumeInfo.publishedDate).getFullYear()
             : "Unknown"}
         </p>
         <p>
-          <strong>{t("genre") || "Genre:"}</strong>{" "}
+          <strong>{t("genre") || "Genre"}:</strong>{" "}
           {Array.isArray(book.volumeInfo.categories)
             ? book.volumeInfo.categories.join(", ")
             : book.volumeInfo.categories || "N/A"}
         </p>
         <p>
-          <strong>{t("language") || "Language:"}</strong>{" "}
+          <strong>{t("language") || "Language"}:</strong>{" "}
           {languageMap[book.volumeInfo.language] || book.volumeInfo.language}
         </p>
         <p>
-          <strong>{t("description") || "Description:"}</strong>{" "}
+          <strong>{t("description") || "Description"}:</strong>{" "}
           {book.volumeInfo?.description ? (
             <>
               {book.volumeInfo.description.slice(0, 100)}...

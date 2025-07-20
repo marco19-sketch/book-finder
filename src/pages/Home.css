@@ -242,14 +242,14 @@ nav > .home {
 @media screen and (max-width: 550px) {
   .italiano {
     position: fixed;
-    top: 75px;
+    top: 35px;
     right: 0;
     transform: scale(0.6);
   }
 
   .english {
     position: fixed;
-    top: 40px;
+    top: 5px;
     right: 0;
     transform: scale(0.6);
   }
