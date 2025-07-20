@@ -1,10 +1,11 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from './components/BackToTop';
+
 
 export default function App() {
   const [favorites, setFavorites] = useState(() => {
@@ -32,12 +33,14 @@ export default function App() {
         {t("skipToMain")}
       </a>
       <nav>
-        <Link className="home" to="/">
+        <NavLink className={({isActive}) => (isActive ? 'home-active-link': 'home')} to="/">
+        
           Home
-        </Link>
-        <Link className="favorites" to="/favorites">
+        </NavLink>
+        <NavLink className={({isActive}) => (isActive ? 'favorites-active-link' : 'favorites')} to="/favorites">
+        
           {t("favorites")} ({favorites.length})
-        </Link>
+        </NavLink>
       </nav>
       <LanguageSwitcher />
 

@@ -168,6 +168,27 @@ nav > .home {
   justify-content: center;
 }
 
+nav > .home-active-link,
+nav > .favorites-active-link {
+  background-color: var(--overlay);
+  /* background-color: rgba(0, 0, 0, 0.4); */
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  backdrop-filter: blur(5px); /* glass effect */
+  width: 130px;
+  text-align: center;
+  font-size: 1.2rem;
+  transform: scale(1.1);
+  text-decoration: underline white 2px;
+}
+
+.home:hover,
+.favorites:hover {
+  color: var(--main-color);
+  text-shadow: 6px 6px 6px white;
+}
+
 
 .english,
 .italiano {
