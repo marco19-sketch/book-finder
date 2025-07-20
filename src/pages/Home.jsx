@@ -154,10 +154,8 @@ function Home({ favorites, toggleFavorite, languageMap }) {
 
   return (
     <div className="home-page">
-
-    
       <header role="banner">
-        <h1 className='main-title' >{t("title")}</h1>
+        <h1 className="main-title">{t("title")}</h1>
       </header>
 
       {/* {noDetailsFound && (
@@ -214,7 +212,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
 
       {!hasSearched && (
         <div className="featured-books">
-          <h2 className='recommended-for-you' >{t('recommendedForYou')}</h2>
+          <h2 className="recommended-for-you">{t("recommendedForYou")}</h2>
           <div className="book-rslt-container" role="list">
             {featuredBooks.map(book => (
               <div className="book-results" key={book.id}>
@@ -277,17 +275,19 @@ function Home({ favorites, toggleFavorite, languageMap }) {
                 {selectedTitle.saleInfo?.listPrice?.currencyCode}
               </a>
             )}
-            {selectedTitle && amazonItLink && (
-              <a href={amazonItLink} rel="noopener noreferrer" target="_blank">
-                {t("seeOnAmazon")}
-              </a>
-            )}
 
             <p className="full-description">
               <strong>{"fullDescription"}:</strong>
               {selectedTitle.volumeInfo?.description ||
                 "No description available"}
             </p>
+            <div className='buy-now-container'>
+            {selectedTitle && amazonItLink && (
+              <a className='buy-now' href={amazonItLink} rel="noopener noreferrer" target="_blank">
+                {t("seeOnAmazon")}
+              </a>
+            )}
+            </div>
           </div>
         </Modal>
       )}

@@ -99,7 +99,7 @@ button.read-more {
 .buy-now {
   position: relative;
   color: yellow;
-  display: inline-block;
+  /* display: inline-block; */
   /* margin: 10px 0 0 50px; */
   text-decoration: none;
   transition: color 0.3s ease;

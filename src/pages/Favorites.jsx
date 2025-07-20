@@ -81,7 +81,7 @@ function Favorites({ favorites, toggleFavorite }) {
               {selectedTitle.volumeInfo?.description ||
                 "No description available"}
             </p>
-            {/*Amazon link */}
+            <div className='buy-now-container'>
             {getAmazonLink(selectedTitle) && (
               <a
                 href={getAmazonLink(selectedTitle)}
@@ -91,6 +91,7 @@ function Favorites({ favorites, toggleFavorite }) {
                 {t("seeOnAmazon") || "See on Amazon"}
               </a>
             )}
+            </div>
           </div>
         </Modal>
       )}
