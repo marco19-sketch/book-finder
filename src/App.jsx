@@ -58,7 +58,7 @@ export default function App() {
           }
         />
       </Routes>
-      <BackToTop scrollContainerSelector=".root" />
+      <BackToTop  scrollContainerSelector="body" />
     </div>
   );
 }

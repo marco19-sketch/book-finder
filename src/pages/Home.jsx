@@ -9,8 +9,6 @@ import "./Home.css";
 
 // import useLiveAnnouncement from './hooks/useLiveAnnouncement'; // not working?
 
-console.log("Featured books:", featuredBooks);
-
 const labelsMap = {
   intitle: "Title",
   inauthor: "Author",
@@ -31,8 +29,28 @@ function Home({ favorites, toggleFavorite, languageMap }) {
   const [amazonItLink, setAmazonItLink] = useState("");
   const [startIndex, setStartIndex] = useState(0);
   const [maxResult] = useState(10);
+  const [suggestions, setSuggestions] = useState([]);
 
-  const handleInputChange = useCallback(e => setQuery(e.target.value), []);
+  //dropdown suggestions
+  const getSuggestions = useCallback(input => {
+    if (!input) return [];
+    return featuredBooks.filter(book => {
+      const category = book.volumeInfo?.categories[0];
+      if (!category) return false;
+      console.log("input", input);
+      console.log("category", book.volumeInfo?.categories[0]);
+      return category.toLowerCase().includes(input.toLowerCase());
+    });
+  }, []);
+
+  const handleInputChange = useCallback(
+    e => {
+      const value = e.target.value;
+      setQuery(value);
+      setSuggestions(value.length > 1 ? getSuggestions(value) : []);
+    },
+    [getSuggestions]
+  );
 
   const { t } = useTranslation();
 
@@ -58,7 +76,11 @@ function Home({ favorites, toggleFavorite, languageMap }) {
         return;
       }
       const data = await res.json();
-
+      console.log(
+        "Subject ?",
+        data.items.map(book => book.volumeInfo?.categories)
+      );
+      // console.log('Subject ?', data.items.volumeInfo?.categories)
       // If startIndex is 0, it's a new search → reset the list
       if (startIndex === 0) {
         setBookList(data.items || []);
@@ -162,14 +184,32 @@ function Home({ favorites, toggleFavorite, languageMap }) {
           ))}
         </div>
         <input
+          name="search"
           aria-label="Search for books"
           className="input-element"
           ref={inputRef}
           value={query}
           onChange={handleInputChange}
           placeholder={placeholderMap[searchMode] || t("selectCriteria")}
-          // placeholder={t("enterSearchTerm")}
         />
+
+        {suggestions.length > 0 && (
+          <ul className="suggestion-item">
+            {suggestions.map(book => (
+              <li
+                key={book.id}
+                tabindex="0"
+                onClick={() => {
+                  setQuery(book.volumeInfo?.categories[0]);
+                  setSuggestions([]);
+                }}>
+                {book.volumeInfo?.categories[0]}
+              </li>
+            ))}
+          </ul>
+        )}
+        {console.log("query", query)}
+
         <button className="btn-element" type="button" onClick={handleFetchNew}>
           {t("startSearch")}
         </button>
@@ -247,19 +287,6 @@ function Home({ favorites, toggleFavorite, languageMap }) {
               {selectedTitle?.volumeInfo?.title || "No title"}{" "}
             </h2>
 
-            {/*rel='noopener noreferrer' add security by blocking the targeted page to act on our page */}
-            {selectedTitle?.saleInfo?.buyLink && (
-              <a
-                href={selectedTitle.saleInfo.buyLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="buy-now">
-                {t("buyOnGoogle")}
-                {selectedTitle.saleInfo?.listPrice?.amount}{" "}
-                {selectedTitle.saleInfo?.listPrice?.currencyCode}
-              </a>
-            )}
-
             <p className="full-description">
               <strong>{t("fullDescription") || "Full description"}: </strong>
               {selectedTitle.volumeInfo?.description ||
@@ -279,7 +306,6 @@ function Home({ favorites, toggleFavorite, languageMap }) {
           </div>
         </Modal>
       )}
-      {/* <BackToTop scrollContainerSelector=".root" /> */}
     </div>
   );
 }

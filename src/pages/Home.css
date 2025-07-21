@@ -44,6 +44,28 @@ h1.main-title {
   text-align: center;
 }
 
+
+.suggestion-item {
+  display: block;
+  margin: -18px auto 20px;
+  text-align: center;
+  list-style: none;
+  background: var(--overlay);
+  /* border: 1px solid #ccc; */
+  backdrop-filter: blur(5px);
+  border-radius: 5px;
+  padding: 0;
+  color: var(--main-color);
+  width: 200px;
+}
+
+.suggestion-item li {
+  cursor: pointer;
+  padding: 8px;
+}
+.suggestion-item li:hover {
+  transform: scale(1.1);
+}
 .btn-element,
 .reset-btn {
   background-color: var(--main-color);
@@ -111,6 +133,20 @@ h1.main-title {
 .read-more:focus {
   outline: none;
   box-shadow: 0 0 3px #007bff;
+}
+
+.load-more {
+  display: block;
+  margin: 10px auto 40px;
+  color: var(--main-color);
+  background-color: var(--overlay);
+  backdrop-filter: blur(5px);
+}
+
+.load-more:hover {
+  transform: scale(1.1);
+  transition: transform .3s ease;
+  border: none;
 }
 
 

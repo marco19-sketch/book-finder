@@ -5,9 +5,9 @@
   "searchBy": "Search by",
   "enterSearchTerm": "Enter key word...",
   "loading": "Searching books...",
-  "noResults": "😕 No results found.",
+  "noResults": "No results found.",
   "buyNow": "Buy Now",
-  "noPurchase": "No purchase available",
+  "noPurchaseAvailable": "No purchase available",
   "buyOnGoogle": "Buy Now on Google Store",
   "seeOnAmazon": "See it on Amazon",
   "description": "Description",
@@ -17,7 +17,7 @@
   "noDetailsFound": "Sorry, no details present!",
   "searchByTitle": "Search by Title",
   "searchByAuthor": "Search by Author",
-  "searchBySubject": "Search by Subject",
+  "searchBySubject": "Search by Genre",
   "yourFavorites": "Your favorites",
   "author": "Author(s)",
   "published": "Published",
@@ -30,6 +30,6 @@
   "readMore": "read more",
   "searchPlaceholder.intitle": "Enter title...",
   "searchPlaceholder.inauthor": "Enter name...",
-  "searchPlaceholder.subject": "Enter subject...",
+  "searchPlaceholder.subject": "Enter genre...",
   "selectCriteria": "Select search by..."
 }
