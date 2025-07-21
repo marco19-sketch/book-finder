@@ -91,18 +91,18 @@ function Home({ favorites, toggleFavorite, languageMap }) {
       // );
       // console.log('Subject ?', data.items.volumeInfo?.categories)
       // If startIndex is 0, it's a new search → reset the list
-      if (startIndex === 0) {
+      if (startIndex === 0 ) {
         setBookList(items || []);
         // setHasSearched(true);
       } else {
         setBookList(prev => [...prev, ...(data.items || [])]);
 
+        // Scroll only after the fetch
         setTimeout(() => {
-          document.body.scrollBy({
-            top: 400,
-            behavior: "smooth",
-          });
+          document.body.scrollBy({ top: 400, behavior: "smooth" });
         }, 50);
+
+        
       }
       if (items.length === 0) {
         setShowNoResultsModal(true);
@@ -121,6 +121,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
     setSelectedTitle(book);
   }, []);
 
+
   //prevent duplicate book ids, Set() keeps tracks of all the item already passed through the filter. So just one loop, very efficient.
   const uniqueBooks = useMemo(() => {
     const seen = new Set();
@@ -130,6 +131,21 @@ function Home({ favorites, toggleFavorite, languageMap }) {
       return true;
     });
   }, [bookList]);
+
+    useEffect(() => {
+      if (!hasSearched || loading) return;
+       
+
+      if (bookList.length === 0) return;
+
+      setTimeout(() => {
+          document.body.scrollBy({
+            top: 400,
+            behavior: "smooth",
+          });
+        }, 50);
+    }, [bookList.length , hasSearched, loading]);
+    // console.log('bookLis', bookList)
 
   useEffect(() => {
     if (hasSearched) {
