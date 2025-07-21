@@ -5,7 +5,7 @@ import "./BackToTop.css";
 export default function BackToTop({ scrollContainerSelector = ".root" }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(
-    typeof window !== 'undefined' && window.innerWidth < 500); 'to avoid errors'
+    typeof window !== 'undefined' && window.innerWidth < 500); //'to avoid errors'
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 500);
@@ -43,6 +43,9 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     }
   };
 
+
+
+  
   return (
     <>
       <button

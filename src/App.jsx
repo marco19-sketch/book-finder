@@ -27,18 +27,24 @@ export default function App() {
     });
   };
 
+ 
+
   return (
     <div className="root">
       <a href="#main-content" className="skip-link">
         {t("skipToMain")}
       </a>
       <nav>
-        <NavLink className={({isActive}) => (isActive ? 'home-active-link': 'home')} to="/">
-        
+        <NavLink
+          className={({ isActive }) => (isActive ? "home-active-link" : "home")}
+          to="/">
           Home
         </NavLink>
-        <NavLink className={({isActive}) => (isActive ? 'favorites-active-link' : 'favorites')} to="/favorites">
-        
+        <NavLink
+          className={({ isActive }) =>
+            isActive ? "favorites-active-link" : "favorites"
+          }
+          to="/favorites">
           {t("favorites")} ({favorites.length})
         </NavLink>
       </nav>
@@ -58,7 +64,7 @@ export default function App() {
           }
         />
       </Routes>
-      <BackToTop  scrollContainerSelector="body" />
+      <BackToTop scrollContainerSelector="body" />
     </div>
   );
 }

@@ -23,13 +23,14 @@ function Home({ favorites, toggleFavorite, languageMap }) {
   const [showModal, setShowModal] = useState(false);
   // const [noDetailsFound, setNoDetailsFound] = useState(false);
   const [query, setQuery] = useState("");
-  const [searchMode, setSearchMode] = useState("title");
+  const [searchMode, setSearchMode] = useState("intitle");
   const [hasSearched, setHasSearched] = useState(false);
   const [showNoResultsModal, setShowNoResultsModal] = useState(false); //for accessibility, it makes the screen reader read the 'No results found'
   const [amazonItLink, setAmazonItLink] = useState("");
   const [startIndex, setStartIndex] = useState(0);
   const [maxResult] = useState(10);
   const [suggestions, setSuggestions] = useState([]);
+  const loadMoreRef = useRef(null);
 
   //dropdown suggestions
   const getSuggestions = useCallback(input => {
@@ -37,8 +38,8 @@ function Home({ favorites, toggleFavorite, languageMap }) {
     return featuredBooks.filter(book => {
       const category = book.volumeInfo?.categories[0];
       if (!category) return false;
-      console.log("input", input);
-      console.log("category", book.volumeInfo?.categories[0]);
+      // console.log("input", input);
+      // console.log("category", book.volumeInfo?.categories[0]);
       return category.toLowerCase().includes(input.toLowerCase());
     });
   }, []);
@@ -66,32 +67,52 @@ function Home({ favorites, toggleFavorite, languageMap }) {
   }, [searchMode]);
 
   const handleFetch = useCallback(async () => {
+    const encoded = encodeURIComponent(query.trim());
     setLoading(true);
     try {
       const res = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${query}&startIndex=${startIndex}&maxResults=${maxResult}`
+        `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&startIndex=${startIndex}&maxResults=${maxResult}`
       );
       if (!res.ok) {
-        alert("Your search produced no results, try again");
+        setLoading(false);
+        setShowNoResultsModal(true); //optional
+        alert("Your search produced no results, try again"); //not good for accessibility
         return;
       }
+
       const data = await res.json();
-      console.log(
-        "Subject ?",
-        data.items.map(book => book.volumeInfo?.categories)
-      );
+      const items = data.items ?? [];
+      if (items.length === 0) {
+        setShowNoResultsModal(true);
+      }
+      // console.log(
+      //   "Subject ?",
+      //   items.map(book => book.volumeInfo?.categories)
+      // );
       // console.log('Subject ?', data.items.volumeInfo?.categories)
       // If startIndex is 0, it's a new search → reset the list
       if (startIndex === 0) {
-        setBookList(data.items || []);
+        setBookList(items || []);
         // setHasSearched(true);
       } else {
         setBookList(prev => [...prev, ...(data.items || [])]);
+
+        setTimeout(() => {
+          document.body.scrollBy({
+            top: 400,
+            behavior: "smooth",
+          });
+        }, 50);
+      }
+      if (items.length === 0) {
+        setShowNoResultsModal(true);
       }
 
       setLoading(false);
     } catch (error) {
       console.error("Impossible to fetch data:", error);
+      setLoading(false);
+      setShowNoResultsModal(true);
     }
   }, [query, searchMode, maxResult, startIndex]);
 
@@ -119,7 +140,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
   const handleFetchNew = () => {
     setStartIndex(0);
     setHasSearched(true);
-    handleFetch();
+    // handleFetch(); it causes a double fetch, says gpt
   };
 
   //Amazon Link building
@@ -149,7 +170,6 @@ function Home({ favorites, toggleFavorite, languageMap }) {
     const isbn10 =
       identifiers.find(id => id.type === "ISBN_10")?.identifier || "";
     const isbn = isbn13 || isbn10;
-
     return isbn ? `https://www.amazon.it/s?k=${isbn}` : "";
   }
 
@@ -157,7 +177,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
     setBookList([]);
     setSelectedTitle(null);
     setQuery("");
-    setSearchMode("title");
+    setSearchMode("intitle");
     setHasSearched(false);
     setShowNoResultsModal(false);
     setLoading(false);
@@ -198,7 +218,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
             {suggestions.map(book => (
               <li
                 key={book.id}
-                tabindex="0"
+                tabIndex="0"
                 onClick={() => {
                   setQuery(book.volumeInfo?.categories[0]);
                   setSuggestions([]);
@@ -208,7 +228,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
             ))}
           </ul>
         )}
-        {console.log("query", query)}
+        {/* {console.log("query", query)} */}
 
         <button className="btn-element" type="button" onClick={handleFetchNew}>
           {t("startSearch")}
@@ -274,6 +294,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
 
       {uniqueBooks.length > 0 && (
         <button
+          ref={loadMoreRef}
           className="load-more"
           onClick={() => setStartIndex(prev => prev + maxResult)}>
           Load More
