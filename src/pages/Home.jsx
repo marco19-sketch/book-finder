@@ -167,7 +167,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
           ref={inputRef}
           value={query}
           onChange={handleInputChange}
-          placeholder={placeholderMap[searchMode] || t('selectCriteria')}
+          placeholder={placeholderMap[searchMode] || t("selectCriteria")}
           // placeholder={t("enterSearchTerm")}
         />
         <button className="btn-element" type="button" onClick={handleFetchNew}>
@@ -217,7 +217,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
       )}
 
       <div className="book-rslt-container" role="list">
-        {uniqueBooks.map((book, index) => (
+        {uniqueBooks.map(book => (
           <div className="book-results" key={book.id}>
             <BookCard
               book={book}
@@ -228,7 +228,6 @@ function Home({ favorites, toggleFavorite, languageMap }) {
               onToggleFavorite={() => toggleFavorite(book)} // ✅ from props
               amazonLink={getAmazonLink(book)}
             />
-            {index !== uniqueBooks.length - 1 && <hr />}
           </div>
         ))}
       </div>
@@ -262,7 +261,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
             )}
 
             <p className="full-description">
-              <strong>{"fullDescription"}:</strong>
+              <strong>{t("fullDescription") || "Full description"}: </strong>
               {selectedTitle.volumeInfo?.description ||
                 "No description available"}
             </p>

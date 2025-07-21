@@ -77,7 +77,7 @@ function Favorites({ favorites, toggleFavorite }) {
             </h2>
 
             <p className="full-description">
-              <strong>{t("fullDescription") || "Full Description"}:</strong>{" "}
+              <strong>{t("fullDescription") || "Full Description"}: </strong>{" "}
               {selectedTitle.volumeInfo?.description ||
                 "No description available"}
             </p>
