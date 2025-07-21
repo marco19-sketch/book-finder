@@ -1,22 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import "./BackToTop.css";
 
 export default function BackToTop({ scrollContainerSelector = ".root" }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(
-    typeof window !== 'undefined' && window.innerWidth < 500); //'to avoid errors'
+    typeof window !== "undefined" && window.innerWidth < 500
+  ); //'to avoid errors'
+
+  const containerRef = useRef(null); //trying and keep if it works
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 500);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
+  // Attach scroll listener
   useEffect(() => {
     if (isMobile) return;
 
-    const container = document.querySelector(scrollContainerSelector);
+    // const container = document.querySelector(scrollContainerSelector);
+   
+    const container = //trying and keep it it works
+      document.querySelector(scrollContainerSelector) ||
+      document.documentElement;
+    containerRef.current = container;
+
     if (!container) return;
 
     const toggleVisibility = () => {
@@ -25,16 +35,18 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     };
 
     container.addEventListener("scroll", toggleVisibility);
+    toggleVisibility(); //keep if it works. Checks initial position
 
     return () => {
       container.removeEventListener("scroll", toggleVisibility);
     };
   }, [scrollContainerSelector, isMobile]);
 
-  if (isMobile) return null
+  if (isMobile) return null;
 
   const scrollToTop = () => {
-    const container = document.querySelector(scrollContainerSelector);
+    const container = containerRef.current; //keep if it works
+    // const container = document.querySelector(scrollContainerSelector);
     if (container) {
       container.scrollTo({
         top: 0,
@@ -43,16 +55,13 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     }
   };
 
-
-
-  
   return (
     <>
       <button
         className={`back-to-top ${isVisible ? "show" : ""}`}
         onClick={scrollToTop}
         aria-label="Back to top">
-        <FaArrowUp className='arrow-up'/>
+        <FaArrowUp className="arrow-up" />
       </button>
     </>
   );

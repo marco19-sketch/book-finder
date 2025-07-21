@@ -1,3 +1,11 @@
+/*independent scroll from home page*/
+.favorites-page {
+  height: 100vh;        /* fill viewport */
+  overflow-y: auto;     /* enable scrolling */
+  overscroll-behavior: contain; /* prevent body scroll chaining */
+}
+
+
 .favorites-header {
   text-align: center;
   color: var(--main-color);
