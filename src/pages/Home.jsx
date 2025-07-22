@@ -179,7 +179,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
     }
   }, [selectedTitle]);
 
-  function getAmazonLink(book) {
+  const getAmazonLink = useMemo(() => (book) => {
     const identifiers = book.volumeInfo?.industryIdentifiers || [];
     const isbn13 =
       identifiers.find(id => id.type === "ISBN_13")?.identifier || "";
@@ -187,7 +187,7 @@ function Home({ favorites, toggleFavorite, languageMap }) {
       identifiers.find(id => id.type === "ISBN_10")?.identifier || "";
     const isbn = isbn13 || isbn10;
     return isbn ? `https://www.amazon.it/s?k=${isbn}` : "";
-  }
+  }, [])
 
   const handleReset = useCallback(() => {
     setBookList([]);

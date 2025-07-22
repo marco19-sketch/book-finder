@@ -8,18 +8,22 @@
     z-index: 1000;
     background-color: var(--overlay);
     color: white;
-    transform: translateY(200px) scale(1);
-    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    /* transform: translateY(200px) scale(1); */
+    transition: opacity 0.5s ease-in-out;
+    /* transition: transform 0.5s ease, opacity 0.5s ease-in-out; */
+    pointer-events: none;
 }
 
 .back-to-top.show {
-    transform: translateY(-50px);
+    /* transform: translateY(-50px); */
     opacity: 1;
     border: none;
+    pointer-events: auto;
 }
 
 .back-to-top.show:hover {
-    transform: translateY(-50px) scale(1.2);
+    /* transform: translateY(-50px) scale(1.2); */
     border: 2px solid white;
 }
 
