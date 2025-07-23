@@ -29,7 +29,7 @@
     max-height: 80%;
     overflow-y: auto;
     position: relative;
-    color: white;
+    color: var(--main-color);
     /* color: var(--text-color); */
     opacity: 0;
     transform: translateY(30px);
@@ -97,7 +97,7 @@
 }
 
 .no-results {
-  border: 4px double;
+  /* border: 4px double; */
   padding: 50px;
 }
 

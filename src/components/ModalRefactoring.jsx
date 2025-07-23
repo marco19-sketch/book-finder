@@ -6,37 +6,49 @@ export default function Modal({ onClose, children }) {
   const [isVisible, setIsVisible] = useState(false);
   const closeButtonRef = useRef(null);
 
-  // Attiva animazione e focus
   useEffect(() => {
-    setIsVisible(true);
-    const timeout = setTimeout(() => closeButtonRef.current?.focus(), 300);
+    const timeout = setTimeout(() => {
+    closeButtonRef.current?.focus();
+    }, 2000);
     return () => clearTimeout(timeout);
   }, []);
 
-  // Chiudi su ESC
+  //   gives time for the animation
   useEffect(() => {
-    const handleKeydown = e => e.key === "Escape" && onClose();
+      setIsVisible(true);
+  }, []);
+
+  useEffect(() => {
+    const handleKeydown = e => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
     document.addEventListener("keydown", handleKeydown);
-    return () => document.removeEventListener("keydown", handleKeydown);
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
   }, [onClose]);
 
   return (
     <FocusTrap>
       <div className="modal-overlay" onClick={onClose}>
+        {/*page background clickable, closes the modal */}
         <div
           className={`modal-content ${isVisible ? "slide-in" : ""}`}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
+          role='dialog'
+          aria-modal='true'
+          aria-labelledby='modal-title'
           onClick={e => e.stopPropagation()}>
+          {/*stops modal closing when clicking on its background*/}
           <button
             ref={closeButtonRef}
             onClick={onClose}
             className="modal-close"
             aria-label="Close modal">
-            ×
+            x
           </button>
-          {children}
+          {children} {/*content added inside Modal tags in App.jsx*/}
         </div>
       </div>
     </FocusTrap>

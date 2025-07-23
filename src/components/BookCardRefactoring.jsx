@@ -1,6 +1,5 @@
 import { FaHeart } from "react-icons/fa";
 import "./BookCard.css";
-import { getAmazonLink } from "../utils/getAmazonLink";
 
 const languageMap = {
   en: "English",
@@ -24,6 +23,7 @@ export default function BookCard({
   t,
   isFavorite,
   onToggleFavorite,
+  amazonLink,
 }) {
   const thumbnail =
     book.volumeInfo?.imageLinks?.thumbnail?.replace?.("https", "http") ||
@@ -31,42 +31,32 @@ export default function BookCard({
   const hasThumbnail =
     thumbnail !== "https://via.placeholder.com/128x195?text=No+Image";
 
-  const {
-    title = "Untitled",
-    authors = "N/A",
-    publishedDate,
-    categories = "N/A",
-    language,
-    description,
-  } = book.volumeInfo || {};
-
-  const publishedYear =
-    publishedDate && !isNaN(new Date(publishedDate))
-      ? new Date(publishedDate).getFullYear()
-      : "Unknown";
-
-  const amazonLink = getAmazonLink(book);
+  // const hasThumbnail = Boolean(thumbnail);
 
   return (
     <div
       className="single-book"
       role="article"
-      aria-label={`Book: ${title}`}
+      aria-label={`Book: ${book.volumeInfo?.title}`}
       tabIndex="0">
-      <h2 className="single-book-title">{title}</h2>
+      <h2 className="single-book-title">{book.volumeInfo?.title}</h2>
 
       {hasThumbnail && (
         <button
           className="thumb-btn"
           onClick={() => onSelect(book)}
-          onKeyDown={e =>
-            (e.key === "Enter" || e.key === " ") && onSelect(book)
-          }
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onSelect(book);
+            }
+          }}
           aria-label="View book full description">
           <img
+            tabIndex="0"
             className="thumbnail"
             src={thumbnail}
-            alt={`Cover of ${title}`}
+            alt={`Cover of ${book.volumeInfo?.title}`}
           />
         </button>
       )}
@@ -74,25 +64,32 @@ export default function BookCard({
       <div className="book-detail">
         <p>
           <strong>{t("author") || "Author(s)"}:</strong>{" "}
-          {Array.isArray(authors) ? authors.join(", ") : authors}
+          {Array.isArray(book.volumeInfo.authors)
+            ? book.volumeInfo.authors.join(", ")
+            : book.volumeInfo.authors || "N/A"}
         </p>
         <p>
-          <strong>{t("published") || "Published"}:</strong> {publishedYear}
+          <strong>{t("published") || "Published"}:</strong>{" "}
+          {book.volumeInfo?.publishedDate &&
+          !isNaN(new Date(book.volumeInfo.publishedDate))
+            ? new Date(book.volumeInfo.publishedDate).getFullYear()
+            : "Unknown"}
         </p>
         <p>
           <strong>{t("genre") || "Genre"}:</strong>{" "}
-          {Array.isArray(categories) ? categories.join(", ") : categories}
+          {Array.isArray(book.volumeInfo.categories)
+            ? book.volumeInfo.categories.join(", ")
+            : book.volumeInfo.categories || "N/A"}
         </p>
         <p>
           <strong>{t("language") || "Language"}:</strong>{" "}
-          {languageMap[language] || language}
+          {languageMap[book.volumeInfo.language] || book.volumeInfo.language}
         </p>
-
         <p>
           <strong>{t("description") || "Description"}:</strong>{" "}
-          {description ? (
+          {book.volumeInfo?.description ? (
             <>
-              {description.slice(0, 100)}...
+              {book.volumeInfo.description.slice(0, 100)}...
               <button
                 type="button"
                 className="read-more"
@@ -105,8 +102,7 @@ export default function BookCard({
             t("noDescription") || "No description available."
           )}
         </p>
-
-        <div className="buy-now-container">
+        <div className='buy-now-container'>
           {amazonLink ? (
             <a
               href={amazonLink}
@@ -119,7 +115,6 @@ export default function BookCard({
             <p>{t("noPurchaseAvailable") || "No purchase available."}</p>
           )}
         </div>
-
         <button
           className="favorite-btn"
           onClick={onToggleFavorite}
