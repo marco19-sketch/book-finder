@@ -150,14 +150,14 @@ nav {
 }
 
 nav > .home,
-.favorites {
+nav > .favorites {
   background-color: var(--overlay);
   /* background-color: rgba(0, 0, 0, 0.4); */
   padding: 10px;
   border-radius: 5px;
   color: var(--main-color);
   backdrop-filter: blur(5px); /* glass effect */
-  width: 130px;
+  width: 150px;
   text-align: center;
   font-size: 1.2rem;
 }
@@ -176,7 +176,7 @@ nav > .favorites-active-link {
   border-radius: 5px;
   color: white;
   backdrop-filter: blur(5px); /* glass effect */
-  width: 130px;
+  width: 150px;
   text-align: center;
   font-size: 1.2rem;
   transform: scale(1.1);
