@@ -18,13 +18,12 @@ export default function BookResults({
             onSelect={() => onSelect(book)}
             languageMap={languageMap}
             t={t}
-            isFavorite={favorites?.some(f => f.id === book.id) }
+            isFavorite={favorites?.some(f => f.id === book.id)}
             onToggleFavorite={() => toggleFavorite(book)}
             amazonLink={book.amazonLink}
           />
         </div>
       ))}
-      
     </div>
   );
 }

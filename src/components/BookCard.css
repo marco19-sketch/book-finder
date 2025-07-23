@@ -12,7 +12,7 @@
 
 .single-book {
   margin: 20px auto;
-  width: 80%;
+  width: 60%;
   border-radius: 5px;
   background-color: var(--overlay);
   padding: 20px 0;
@@ -146,7 +146,9 @@ button.read-more {
 } */
 
 .favorite-btn {
-  background-color: transparent;
+  background-color: black;
+  width: 50px;
+  height: 40px;
   padding: 0;
   display: block;
   margin: 10px auto;

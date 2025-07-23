@@ -256,3 +256,20 @@ nav > .favorites-active-link {
   }
 }
 
+@media screen and (max-width: 500px) {
+  nav {
+    justify-content: space-evenly;
+  }
+
+  nav > .home,
+  .favorites {
+    width: 100px;
+    font-size: .8rem;
+  }
+
+  nav > .home-active-link,
+  nav > .favorites-active-link {
+    /* transform: scale(0.8); */
+    font-size: .9rem;
+  }
+}

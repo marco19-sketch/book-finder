@@ -4,8 +4,7 @@ import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
-import BackToTop from './components/BackToTop';
-
+import BackToTop from "./components/BackToTop";
 
 export default function App() {
   const [favorites, setFavorites] = useState(() => {
@@ -20,14 +19,31 @@ export default function App() {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
+  // const toggleFavorite = book => {
+  //   const isAlreadyFavorite = favorites.some(fav => fav.id === book.id);
+
+  //   if (isAlreadyFavorite) {
+  //     //flag book for removal
+  //     setFavorites(prev =>
+  //       prev.map(fav => (fav.id === book.id ? { ...fav, removing: true } : fav))
+  //     );
+  //     //physical removal after delay
+  //     const removalDelay = setTimeout(() => {
+  //       setFavorites(prev => prev.filter(fav => fav.id !== book.id));
+  //     }, 300);
+  //     return () => clearTimeout(removalDelay);
+  //   } else {
+  //     //adding the book
+  //     setFavorites(prev => [...prev, book])
+  //   }
+  // };
+
   const toggleFavorite = book => {
     setFavorites(prev => {
       const exists = prev.find(b => b.id === book.id);
       return exists ? prev.filter(b => b.id !== book.id) : [...prev, book];
     });
   };
-
- 
 
   return (
     <div className="root">
