@@ -1,0 +1,25 @@
+.loading {
+  border: 2px solid grey;
+  background-color: transparent;
+  border-radius: 50% !important;
+  border-bottom: 4px solid #0077cc;
+  width: 40px;
+  height: 40px;
+  margin: 10px auto;
+  animation: spin 1s linear infinite;
+  box-shadow: var(--shadow);
+}
+
+@keyframes spin {
+  /* 0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+} */
+  to {
+    transform: rotate(360deg);
+  }
+}

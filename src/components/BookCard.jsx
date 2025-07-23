@@ -64,6 +64,7 @@ export default function BookCard({
           }
           aria-label="View book full description">
           <img
+            tabIndex= '0'
             className="thumbnail"
             src={thumbnail}
             alt={`Cover of ${title}`}

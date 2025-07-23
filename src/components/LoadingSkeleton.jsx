@@ -1,3 +1,5 @@
-export default function LoadingSkeleton({ t }) {
-  return <p className="loading">{t("loading")}</p>;
+import './LoadingSkeleton.css';
+
+export default function LoadingSkeleton() {
+  return <div className="loading"></div>;
 }

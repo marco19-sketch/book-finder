@@ -92,18 +92,6 @@ h1.main-title {
     font-size: 2rem;
 }
 
-.loading {
-  display: block;
-  background-color: var(--main-color);
-  background-color: #555;
-  color: white;
-  font-size: 2rem;
-  padding: 10px;
-  margin: 20px;
-  text-align: center;
-  border-radius: 5px;
-}
-
 .no-results {
   color: var(--main-color);
   font-size: 2.5rem;
@@ -120,6 +108,7 @@ h1.main-title {
   background-color: transparent;
   color: blue;
   border: none;
+  border-radius: none;
   width: fit-content;
   padding: 0;
   text-decoration: underline;
@@ -132,14 +121,14 @@ h1.main-title {
 }
 
 .read-more:focus {
-  outline: none;
-  box-shadow: 0 0 3px #007bff;
+  outline: auto;
+  box-shadow: 0 0 3px white;
 }
 
 .load-more {
   /* scroll-margin-top: 100px; or any offset you want */
   display: block;
-  margin: 10px auto 40px;
+  margin: 50px auto 100px;
   color: var(--main-color);
   background-color: var(--overlay);
   backdrop-filter: blur(5px);

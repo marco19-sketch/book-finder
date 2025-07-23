@@ -51,7 +51,8 @@
 }
 
 .thumbnail:focus {
-  outline: 1px solid yellow;
+  outline: 2px solid white;
+  transform: scale(1.1);
 }
 
 .thumbnail:hover {
@@ -70,6 +71,10 @@
 
 button.read-more {
   color: yellow;
+}
+
+.read-more:focus {
+  outline: white;
 }
 
 .buy-now-container {
