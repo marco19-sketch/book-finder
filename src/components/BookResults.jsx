@@ -22,6 +22,7 @@ export default function BookResults({
             onToggleFavorite={() => toggleFavorite(book)}
             amazonLink={book.amazonLink}
           />
+          {console.log('favorites', favorites)}
         </div>
       ))}
     </div>

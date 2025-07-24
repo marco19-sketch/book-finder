@@ -28,17 +28,16 @@ export default function App() {
         prev.map(fav => (fav.id === book.id ? { ...fav, removing: true } : fav))
       );
       //physical removal after delay
-      const removalDelay = setTimeout(() => {
+      setTimeout(() => {
+        console.log("Removing book:", book.id);
         setFavorites(prev => prev.filter(fav => fav.id !== book.id));
+        document.querySelectorAll('.book-rslt.removing').remove();
       }, 300);
-      return () => clearTimeout(removalDelay);
     } else {
       //adding the book
-      setFavorites(prev => [...prev, book])
+      setFavorites(prev => [...prev, book]);
     }
   };
-
-  
 
   return (
     <div className="root">
