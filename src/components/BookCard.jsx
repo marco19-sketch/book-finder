@@ -140,7 +140,7 @@ export default function BookCard({
         <FavoriteButton
           isFavorite={isFavorite(book)}
           onToggle={onToggleFavorite}
-          t={t}
+          t={ t }
           />
         {/* <button
           className="favorite-btn"
