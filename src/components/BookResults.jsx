@@ -12,7 +12,7 @@ export default function BookResults({
   return (
     <div className="book-rslt-container" role="list">
       {books.map(book => (
-        <div className={`book-results ${favorites.find(f => f.id === book.id && f.removing) ? 'removing' : ''}`} key={book.id}>
+        <div className={`book-results ${book.removing ? 'removing' : ''}`} key={book.id}>
           <BookCard
             book={book}
             onSelect={() => onSelect(book)}

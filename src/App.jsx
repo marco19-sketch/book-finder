@@ -1,4 +1,4 @@
-import { Routes, Route, NavLink } from "react-router-dom";
+import { Routes, Route, NavLink, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
@@ -14,6 +14,9 @@ export default function App() {
 
   const { t } = useTranslation();
 
+  const location = useLocation();
+  const isFavoritesPage = location.pathname === "/favorites";
+
   // Save favorites in localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -23,16 +26,22 @@ export default function App() {
     const isAlreadyFavorite = favorites.some(fav => fav.id === book.id);
 
     if (isAlreadyFavorite) {
-      //flag book for removal
-      setFavorites(prev =>
-        prev.map(fav => (fav.id === book.id ? { ...fav, removing: true } : fav))
-      );
-      //physical removal after delay
-      setTimeout(() => {
-        console.log("Removing book:", book.id);
-        setFavorites(prev => prev.filter(fav => fav.id !== book.id));
-        document.querySelectorAll('.book-rslt.removing').remove();
-      }, 300);
+      if (isFavoritesPage) {
+        //flag book for removal and animation
+        setFavorites(prev =>
+          prev.map(fav =>
+            fav.id === book.id ? { ...fav, removing: true } : fav
+          )
+        );
+        //physical removal after delay
+        setTimeout(() => {
+          console.log("Removing book:", book.id);
+          setFavorites(prev => prev.filter(fav => fav.id !== book.id));
+        }, 300);
+      } else {
+        //remove immediately in Home
+        setFavorites(prev => prev.filter(f => f.id !== book.id));
+      }
     } else {
       //adding the book
       setFavorites(prev => [...prev, book]);
