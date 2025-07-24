@@ -55,7 +55,7 @@ export default function BookCard({
       tabIndex="0">
       <h2 className="single-book-title">{title}</h2>
 
-      {hasThumbnail && (
+      {hasThumbnail ? (
         <button
           className="thumb-btn"
           onClick={() => onSelect(book)}
@@ -64,12 +64,14 @@ export default function BookCard({
           }
           aria-label="View book full description">
           <img
-            tabIndex= '0'
+            tabIndex="0"
             className="thumbnail"
             src={thumbnail}
             alt={`Cover of ${title}`}
           />
         </button>
+      ) : (
+        <p className="no-thumbnail-para">No cover image available</p>
       )}
 
       <div className="book-detail">
@@ -129,7 +131,9 @@ export default function BookCard({
               ? t("removeFromFavorites") || "Remove from favorites"
               : t("addToFavorites") || "Add to favorites"
           }>
-          <FaHeart color={isFavorite ? "red" : "gray"} size={24} />
+          <FaHeart className={`heart-icon ${isFavorite ? "active" : ""}`} />
+
+          {/* <FaHeart color={isFavorite ? "red" : "gray"} size={24} /> */}
         </button>
       </div>
     </div>

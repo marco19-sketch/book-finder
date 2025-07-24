@@ -7,7 +7,7 @@ import LoadingSkeleton from "../components/LoadingSkeleton";
 import featuredBooks from "../data/featuredBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
-import { scrollUp } from '../utils/ScrollUp';
+import { scrollUp } from "../utils/ScrollUp";
 
 function Home({ favorites, toggleFavorite }) {
   const [bookList, setBookList] = useState([]);
@@ -36,11 +36,10 @@ function Home({ favorites, toggleFavorite }) {
     if (!activeQuery) return;
     const encoded = encodeURIComponent(activeQuery.trim());
     setLoading(true);
-    
-    console.log({ startIndex, maxResult, activeQuery });
+
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       const res = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${activeMode}:${encoded}&startIndex=${startIndex}&maxResults=${maxResult}`
       );
@@ -133,8 +132,7 @@ function Home({ favorites, toggleFavorite }) {
       <h2 className="recommended-for-you">{t("recommendedForYou")}</h2>
 
       {loading && <LoadingSkeleton t={t} />}
-      
-      {console.log("loading", loading)}
+
       {!hasSearched && (
         <BookResults
           books={featuredBooks}

@@ -4,7 +4,6 @@ import Modal from "../components/Modal";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import BookResults from "../components/BookResults";
 import BackToTop from "../components/BackToTop";
-// import { getAmazonLink } from "../utils/getAmazonLink";
 import "./Favorites.css";
 
 function Favorites({ favorites, toggleFavorite, languageMap }) {

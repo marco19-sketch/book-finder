@@ -12,7 +12,9 @@ export default function BookResults({
   return (
     <div className="book-rslt-container" role="list">
       {books.map(book => (
-        <div className={`book-results ${book.removing ? 'removing' : ''}`} key={book.id}>
+        <div
+          className={`book-results ${book.removing ? "removing" : ""}`}
+          key={book.id}>
           <BookCard
             book={book}
             onSelect={() => onSelect(book)}
@@ -22,7 +24,6 @@ export default function BookResults({
             onToggleFavorite={() => toggleFavorite(book)}
             amazonLink={book.amazonLink}
           />
-          {console.log('favorites', favorites)}
         </div>
       ))}
     </div>
