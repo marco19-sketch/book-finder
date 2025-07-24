@@ -7,7 +7,7 @@ import LoadingSkeleton from "../components/LoadingSkeleton";
 import featuredBooks from "../data/featuredBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
-import { scrollUp } from "../utils/ScrollUp";
+import { scrollUp } from "../utils/scrollup";
 import FavoriteButton from '../components/FavoriteButton';
 
 function Home({ favorites, toggleFavorite }) {
