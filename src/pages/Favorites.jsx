@@ -24,7 +24,7 @@ function Favorites({ favorites, toggleFavorite, languageMap }) {
       </h1>
 
       {favorites.length === 0 ? (
-        <p>{t("noFavoritesYet") || "No favorites yet."}</p>
+        <h2 className='no-favorites-yet' >{t("noFavoritesYet") || "No favorites yet."}</h2>
       ) : (
         <BookResults
           books={favorites}

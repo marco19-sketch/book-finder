@@ -31,5 +31,6 @@
   "searchPlaceholder.intitle": "Inserisci titolo...",
   "searchPlaceholder.inauthor": "Inserisci nome...",
   "searchPlaceholder.subject": "Inserisci genere...",
-  "selectCriteria": "Seleziona ricerca per..."
+  "selectCriteria": "Seleziona ricerca per...",
+  "noFavoritesYet": "Ancora nessun preferito "
 }

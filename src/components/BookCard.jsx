@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 import { FaHeart } from "react-icons/fa";
 import "./BookCard.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
@@ -50,7 +50,7 @@ export default function BookCard({
     sound.play();
 
     onToggleFavorite();
-  }
+  };
 
   const publishedYear =
     publishedDate && !isNaN(new Date(publishedDate))

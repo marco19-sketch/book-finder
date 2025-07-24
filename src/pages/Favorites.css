@@ -14,6 +14,14 @@
   font-size: 3rem;
 }
 
+.no-favorites-yet {
+  text-align: center;
+  color: var(--main-color);
+  font-size: 2rem;
+  text-shadow: var(--shadow);
+  margin-top: 25%;
+}
+
 .book-results {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
