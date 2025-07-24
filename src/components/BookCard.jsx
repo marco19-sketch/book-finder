@@ -1,8 +1,9 @@
-import { useRef } from "react";
-import { FaHeart } from "react-icons/fa";
+// import { useRef } from "react";
+// import { FaHeart } from "react-icons/fa";
 import "./BookCard.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
-import popSound from "../assets/heartbeat-trimmed.mp3";
+import FavoriteButton from './FavoriteButton';
+// import popSound from "../assets/heartbeat-trimmed.mp3";
 
 const languageMap = {
   en: "English",
@@ -23,9 +24,10 @@ const languageMap = {
 export default function BookCard({
   book,
   onSelect,
+  onToggleFavorite,
   t,
   isFavorite,
-  onToggleFavorite,
+  // onToggleFavorite,
 }) {
   const thumbnail =
     book.volumeInfo?.imageLinks?.thumbnail?.replace?.("https", "http") ||
@@ -42,15 +44,15 @@ export default function BookCard({
     description,
   } = book.volumeInfo || {};
 
-  const soundRef = useRef(new Audio(popSound));
+  // const soundRef = useRef(new Audio(popSound));
 
-  const handleToggle = () => {
-    const sound = soundRef.current;
-    sound.currentTime = 0;
-    sound.play();
+  // const handleToggle = () => {
+  //   const sound = soundRef.current;
+  //   sound.currentTime = 0;
+  //   sound.play();
 
-    onToggleFavorite();
-  };
+  //   onToggleFavorite();
+  // };
 
   const publishedYear =
     publishedDate && !isNaN(new Date(publishedDate))
@@ -135,7 +137,12 @@ export default function BookCard({
           )}
         </div>
 
-        <button
+        <FavoriteButton
+          isFavorite={isFavorite(book)}
+          onToggle={onToggleFavorite}
+          t={t}
+          />
+        {/* <button
           className="favorite-btn"
           onClick={handleToggle}
           onMouseEnter={() => {
@@ -156,7 +163,7 @@ export default function BookCard({
               : t("addToFavorites") || "Add to favorites"
           }>
           <FaHeart className={`heart-icon ${isFavorite ? "active" : ""}`} />
-        </button>
+        </button> */}
       </div>
     </div>
   );

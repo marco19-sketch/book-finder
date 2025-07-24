@@ -9,6 +9,9 @@ export default function BookResults({
   languageMap,
   t,
 }) {
+
+  const isFavorite = book => favorites.some(fav => fav.id === book.id);
+
   return (
     <div className="book-rslt-container" role="list">
       {books.map(book => (
@@ -20,7 +23,8 @@ export default function BookResults({
             onSelect={() => onSelect(book)}
             languageMap={languageMap}
             t={t}
-            isFavorite={favorites?.some(f => f.id === book.id)}
+            isFavorite={isFavorite}
+            // isFavorite={favorites?.some(f => f.id === book.id)}
             onToggleFavorite={() => toggleFavorite(book)}
             amazonLink={book.amazonLink}
           />

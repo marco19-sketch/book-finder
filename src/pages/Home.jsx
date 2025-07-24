@@ -8,6 +8,7 @@ import featuredBooks from "../data/featuredBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollUp } from "../utils/ScrollUp";
+import FavoriteButton from '../components/FavoriteButton';
 
 function Home({ favorites, toggleFavorite }) {
   const [bookList, setBookList] = useState([]);
@@ -110,6 +111,9 @@ function Home({ favorites, toggleFavorite }) {
     setLoading(false);
   }, []);
 
+  const isFavorite = book => favorites.some(fav => fav.id === book.id);
+
+
   return (
     <div className="home-page">
       <header>
@@ -181,6 +185,10 @@ function Home({ favorites, toggleFavorite }) {
                 "No description available"}
             </p>
           </div>
+          <FavoriteButton
+            isFavorite={isFavorite(selectedTitle)}
+            onToggle={() => toggleFavorite(selectedTitle)}
+            />
         </Modal>
       )}
     </div>

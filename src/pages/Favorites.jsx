@@ -5,8 +5,9 @@ import LanguageSwitcher from "../components/LanguageSwitcher";
 import BookResults from "../components/BookResults";
 import BackToTop from "../components/BackToTop";
 import "./Favorites.css";
+import FavoriteButton from '../components/FavoriteButton';
 
-function Favorites({ favorites, toggleFavorite, languageMap }) {
+function Favorites({ favorites, toggleFavorite, languageMap}) {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
@@ -15,6 +16,9 @@ function Favorites({ favorites, toggleFavorite, languageMap }) {
     setSelectedBook(book);
     setShowModal(true);
   };
+
+  const isFavorite = book => favorites.some(fav => fav.id === book.id);
+
 
   return (
     <div className="favorites-page">
@@ -47,6 +51,10 @@ function Favorites({ favorites, toggleFavorite, languageMap }) {
               {selectedBook.volumeInfo?.description ||
                 "No description available"}
             </p>
+            <FavoriteButton
+              isFavorite={isFavorite(selectedBook)}
+              onToggle={() => toggleFavorite(selectedBook)}
+              />
           </div>
         </Modal>
       )}
