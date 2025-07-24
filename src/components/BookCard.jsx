@@ -1,6 +1,8 @@
+import { useRef } from 'react';
 import { FaHeart } from "react-icons/fa";
 import "./BookCard.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
+import popSound from "../assets/heartbeat-trimmed.mp3";
 
 const languageMap = {
   en: "English",
@@ -39,6 +41,16 @@ export default function BookCard({
     language,
     description,
   } = book.volumeInfo || {};
+
+  const soundRef = useRef(new Audio(popSound));
+
+  const handleToggle = () => {
+    const sound = soundRef.current;
+    sound.currentTime = 0;
+    sound.play();
+
+    onToggleFavorite();
+  }
 
   const publishedYear =
     publishedDate && !isNaN(new Date(publishedDate))
@@ -125,15 +137,25 @@ export default function BookCard({
 
         <button
           className="favorite-btn"
-          onClick={onToggleFavorite}
+          onClick={handleToggle}
+          onMouseEnter={() => {
+            const sound = soundRef.current;
+            sound.currentTime = 0;
+            sound.loop = true;
+            sound.play();
+          }}
+          onMouseLeave={() => {
+            const sound = soundRef.current;
+            sound.pause();
+            sound.currentTime = 0;
+            sound.loop = false;
+          }}
           aria-label={
             isFavorite
               ? t("removeFromFavorites") || "Remove from favorites"
               : t("addToFavorites") || "Add to favorites"
           }>
           <FaHeart className={`heart-icon ${isFavorite ? "active" : ""}`} />
-
-          {/* <FaHeart color={isFavorite ? "red" : "gray"} size={24} /> */}
         </button>
       </div>
     </div>
