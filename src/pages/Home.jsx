@@ -7,7 +7,7 @@ import LoadingSkeleton from "../components/LoadingSkeleton";
 import featuredBooks from "../data/featuredBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
-import { scrollUp } from "../utils/scrollup";
+import { scrollup } from "../utils/scrollup";
 import FavoriteButton from '../components/FavoriteButton';
 
 function Home({ favorites, toggleFavorite }) {
@@ -61,7 +61,7 @@ function Home({ favorites, toggleFavorite }) {
 
       setBookList(prev => (startIndex === 0 ? items : [...prev, ...items]));
       setLoading(false);
-      scrollUp(350);
+      scrollup(350);
     } catch (error) {
       console.error("Fetch error:", error);
       setLoading(false);
