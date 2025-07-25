@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo, useEffect } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
@@ -10,8 +10,13 @@ import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollup } from "../utils/scrollup";
 import FavoriteButton from '../components/FavoriteButton';
 
-function Home({ favorites, toggleFavorite }) {
-  const [bookList, setBookList] = useState([]);
+function Home({
+  favorites,
+  toggleFavorite,
+  fetchedBooks,
+  setFetchedBooks,
+}) {
+
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -59,7 +64,7 @@ function Home({ favorites, toggleFavorite }) {
         setShowNoResultsModal(true);
       }
 
-      setBookList(prev => (startIndex === 0 ? items : [...prev, ...items]));
+      setFetchedBooks(prev => (startIndex === 0 ? items : [...prev, ...items]));
       setLoading(false);
       scrollup(350);
     } catch (error) {
@@ -67,7 +72,14 @@ function Home({ favorites, toggleFavorite }) {
       setLoading(false);
       setShowNoResultsModal(true);
     }
-  }, [activeQuery, hasSearched, activeMode, maxResult, startIndex]);
+  }, [
+    activeQuery,
+    hasSearched,
+    activeMode,
+    maxResult,
+    startIndex,
+    setFetchedBooks,
+  ]);
 
   const handleSelected = useCallback(book => {
     setShowModal(true);
@@ -76,16 +88,12 @@ function Home({ favorites, toggleFavorite }) {
 
   const uniqueBooks = useMemo(() => {
     const seen = new Set();
-    return bookList.filter(book => {
+    return fetchedBooks.filter(book => {
       if (seen.has(book.id)) return false;
       seen.add(book.id);
       return true;
     });
-  }, [bookList]);
-
-  useEffect(() => {
-    handleFetch();
-  }, [handleFetch]);
+  }, [fetchedBooks]);
 
   const handleFetchNew = () => {
     setActiveQuery(query.trim());
@@ -93,25 +101,31 @@ function Home({ favorites, toggleFavorite }) {
     setShowNoResultsModal(false);
     setStartIndex(0);
     setHasSearched(true);
+    handleFetch();
   };
 
   const resetResults = useCallback(() => {
-    setBookList([]);
     setHasSearched(false);
     setQuery("");
   }, []);
 
   const handleReset = useCallback(() => {
-    setBookList([]);
+    setFetchedBooks([]);
     setSelectedTitle(null);
     setQuery("");
     setSearchMode("intitle");
     setHasSearched(false);
     setShowNoResultsModal(false);
     setLoading(false);
-  }, []);
+  }, [setFetchedBooks]);
 
   const isFavorite = book => favorites.some(fav => fav.id === book.id);
+
+  useEffect(() => {
+    if (fetchedBooks.length > 0) {
+      setHasSearched(true);
+    }
+  }, [fetchedBooks]);
 
 
   return (
@@ -133,7 +147,9 @@ function Home({ favorites, toggleFavorite }) {
         resetResults={resetResults}
       />
 
+      {!hasSearched && (
       <h2 className="recommended-for-you">{t("recommendedForYou")}</h2>
+      )}
 
       {loading && <LoadingSkeleton t={t} />}
 
@@ -163,7 +179,13 @@ function Home({ favorites, toggleFavorite }) {
             className="load-more"
             type="button"
             ref={loadMoreRef}
-            onClick={() => setStartIndex(prev => prev + maxResult)}>
+            onClick={() => {
+              setStartIndex(prev => {
+                const newIndex = prev + maxResult;
+                setTimeout(() => handleFetch(), 0); // fetch after state updates
+                return newIndex;
+              });
+            }}>
             {t("loadMore")}
           </button>
         </>
@@ -188,7 +210,7 @@ function Home({ favorites, toggleFavorite }) {
           <FavoriteButton
             isFavorite={isFavorite(selectedTitle)}
             onToggle={() => toggleFavorite(selectedTitle)}
-            />
+          />
         </Modal>
       )}
     </div>

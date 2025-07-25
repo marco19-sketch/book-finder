@@ -5,17 +5,32 @@ import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
+import { devLog } from "./utils/devLog";
 
 export default function App() {
+
+  const [fetchedBooks, setFetchedBooks] = useState(() => {
+    const saved = localStorage.getItem("cachedBooks");
+    return saved ? JSON.parse(saved) : [];
+  });
+  //stores fetched results when moving away from Home and returning
+  useEffect(() => {
+    devLog("Saving to localStorage", fetchedBooks);
+    localStorage.setItem("cachedBooks", JSON.stringify(fetchedBooks));
+  }, [fetchedBooks]);
+
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem("favorites");
     return saved ? JSON.parse(saved) : [];
   });
 
   const { t } = useTranslation();
-
   const location = useLocation();
   const isFavoritesPage = location.pathname === "/favorites";
+
+  useEffect(() => {
+    localStorage.setItem("cachedBooks", JSON.stringify(fetchedBooks));
+  }, [fetchedBooks]);
 
   // Save favorites in localStorage whenever it changes
   useEffect(() => {
@@ -73,7 +88,12 @@ export default function App() {
         <Route
           path="/"
           element={
-            <Home favorites={favorites} toggleFavorite={toggleFavorite} />
+            <Home
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+              fetchedBooks={fetchedBooks}
+              setFetchedBooks={setFetchedBooks}
+            />
           }
         />
         <Route
