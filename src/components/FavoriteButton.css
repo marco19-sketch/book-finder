@@ -1,11 +1,18 @@
 
 .favorite-btn {
-  background-color: black;
+  background-color: transparent;
   width: 50px;
   height: 40px;
   padding: 0;
   display: block;
   margin: 10px auto;
+}
+
+.favorite-btn:focus {
+  outline: none;
+  border: 2px solid var(--main-color);
+  box-shadow: 3px 3px 6px var(--main-color);
+  
 }
 
 @keyframes pulse {

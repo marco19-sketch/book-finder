@@ -77,7 +77,8 @@
   .modal-close:focus {
     color: white;
     outline: none;
-    text-shadow: 3px 3px 6px white;
+    border: 2px solid var(--main-color);
+    box-shadow: 3px 3px 6px var(--main-color);
   }
 
   .no-detail-found {
