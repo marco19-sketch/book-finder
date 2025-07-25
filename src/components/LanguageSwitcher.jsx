@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import gbFlag from "../assets/32X24/gb.png";
+import gbFlag from "../assets/32x24/gb.png";
 import itFlag from "../assets/32x24/it.png";
 
 export default function LanguageSwitcher() {
