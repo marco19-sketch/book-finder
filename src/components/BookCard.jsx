@@ -2,7 +2,7 @@
 // import { FaHeart } from "react-icons/fa";
 import "./BookCard.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
-import FavoriteButton from './FavoriteButton';
+import FavoriteButton from "./FavoriteButton";
 // import popSound from "../assets/heartbeat-trimmed.mp3";
 
 const languageMap = {
@@ -140,30 +140,8 @@ export default function BookCard({
         <FavoriteButton
           isFavorite={isFavorite(book)}
           onToggle={onToggleFavorite}
-          t={ t }
-          />
-        {/* <button
-          className="favorite-btn"
-          onClick={handleToggle}
-          onMouseEnter={() => {
-            const sound = soundRef.current;
-            sound.currentTime = 0;
-            sound.loop = true;
-            sound.play();
-          }}
-          onMouseLeave={() => {
-            const sound = soundRef.current;
-            sound.pause();
-            sound.currentTime = 0;
-            sound.loop = false;
-          }}
-          aria-label={
-            isFavorite
-              ? t("removeFromFavorites") || "Remove from favorites"
-              : t("addToFavorites") || "Add to favorites"
-          }>
-          <FaHeart className={`heart-icon ${isFavorite ? "active" : ""}`} />
-        </button> */}
+          t={t}
+        />
       </div>
     </div>
   );

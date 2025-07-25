@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import popSound from "../assets/heartbeat-trimmed.mp3";
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import './FavoriteButton.css'
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
   const soundRef = useRef(new Audio(popSound));
