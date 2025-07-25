@@ -1,29 +1,35 @@
 .back-to-top {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    right: 4%;
+    bottom: 250px;
     border-radius: 50%;
     padding: 10px;
     font-size: 25px;
     z-index: 1000;
     background-color: var(--overlay);
     color: white;
-    opacity: 0;
-    /* transform: translateY(200px) scale(1); */
+    opacity: 0;    
     transition: opacity 0.5s ease-in-out;
-    /* transition: transform 0.5s ease, opacity 0.5s ease-in-out; */
     pointer-events: none;
 }
 
 .back-to-top.show {
-    /* transform: translateY(-50px); */
+    outline: none;
     opacity: 1;
     border: none;
     pointer-events: auto;
+    color: var(--main-color);
 }
 
 .back-to-top.show:hover {
-    /* transform: translateY(-50px) scale(1.2); */
-    border: 2px solid white;
+    border: 2px solid var(--main-color);
+    box-shadow: 3px 3px 6px var(--main-color);
 }
+
+.back-to-top.show:active {
+    transform: scale(0.9);
+    color: white;
+    border-color: white;
+}
+
 
