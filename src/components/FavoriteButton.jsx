@@ -3,6 +3,7 @@ import popSound from "../assets/heartbeat-trimmed.mp3";
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "./FavoriteButton.css";
+import {devLog} from '../utils/devLog'
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
   const soundRef = useRef(new Audio(popSound));
@@ -10,12 +11,6 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
   const isHovering = useRef(false);
 
   const { t } = useTranslation();
-
-  const devLog = (...args) => {
-    if (import.meta.env.MODE === "development") {
-      console.log(...args);
-    }
-  };
 
   useEffect(() => {
     // Tracks if the user has interacted (e.g., clicked) to allow audio playback without autoplay errors.
