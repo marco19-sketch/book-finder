@@ -42,7 +42,7 @@
 }
 
 .heart-icon:hover {
-  animation: pulse-hover 0.5s ease;
+  animation: pulse-hover 1.1s ease;
   animation-iteration-count: infinite;
 }
 

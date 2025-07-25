@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import popSound from "../assets/heartbeat-trimmed.mp3";
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-import './FavoriteButton.css'
+import "./FavoriteButton.css";
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
   const soundRef = useRef(new Audio(popSound));
@@ -10,6 +10,12 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
   const isHovering = useRef(false);
 
   const { t } = useTranslation();
+
+  const devLog = (...args) => {
+    if (import.meta.env.MODE === "development") {
+      console.log(...args);
+    }
+  };
 
   useEffect(() => {
     // Tracks if the user has interacted (e.g., clicked) to allow audio playback without autoplay errors.
@@ -38,6 +44,7 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
           sound.currentTime = 0;
           sound.loop = false;
           sound.volume = 1; // reset for next play
+          devLog("Sound faded out and paused");
         }
       }
     }, fadeInterval);
@@ -66,6 +73,7 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
       sound.play().catch(err => {
         console.warn("Play failed on hover start:", err);
       });
+      devLog("Sound is playing");
     } catch (err) {
       console.warn("Sound play error:", err);
     }
@@ -73,19 +81,20 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
 
   const handleHoverEnd = () => {
     isHovering.current = false;
+    devLog("Hover ended — starting fade out");
     fadeOutSound();
   };
 
   // Cleanup on unmount
- useEffect(() => {
-   const sound = soundRef.current;
-   return () => {
-     sound.pause();
-     sound.loop = false;
-     sound.currentTime = 0;
-     sound.volume = 1;
-   };
- }, []);
+  useEffect(() => {
+    const sound = soundRef.current;
+    return () => {
+      sound.pause();
+      sound.loop = false;
+      sound.currentTime = 0;
+      sound.volume = 1;
+    };
+  }, []);
 
   return (
     <button
