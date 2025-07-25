@@ -32,5 +32,7 @@
   "searchPlaceholder.inauthor": "Enter name...",
   "searchPlaceholder.subject": "Enter genre...",
   "selectCriteria": "Select search by...",
-  "noFavoritesYet": "No favorites yet"
+  "noFavoritesYet": "No favorites yet",
+  "englishFlag": "English language",
+  "italianFlag": "Italian language"
 }

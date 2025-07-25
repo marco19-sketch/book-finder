@@ -32,5 +32,7 @@
   "searchPlaceholder.inauthor": "Inserisci nome...",
   "searchPlaceholder.subject": "Inserisci genere...",
   "selectCriteria": "Seleziona ricerca per...",
-  "noFavoritesYet": "Ancora nessun preferito "
+  "noFavoritesYet": "Ancora nessun preferito ",
+  "englishFlag": "Lingua inglese",
+  "italianFlag": "Lingua inglese"
 }
