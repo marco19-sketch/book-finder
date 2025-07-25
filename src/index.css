@@ -183,21 +183,25 @@ nav > .favorites-active-link {
   text-decoration: underline white 2px;
 }
 
-.home:hover,
-.favorites:hover {
-  color: var(--main-color);
-  text-shadow: 6px 6px 6px white;
-  transform: scale(1.1);
-  transition: transform .3s ease;
+.italiano > img,
+.english > img {
+  transform: scale(0.8)
+}
+
+.english:hover,
+.italiano:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 8px var(--main-color);
 }
 
 
 .english,
 .italiano {
+  /* background-color: transparent; */
   background-color: var(--overlay);
-  backdrop-filter: blur(5px);
+  /* backdrop-filter: blur(5px); */
   color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   /* color: var(--text-color); */
   /* box-shadow: var(--shadow); */
   text-shadow: var(--shadow);
@@ -210,7 +214,9 @@ nav > .favorites-active-link {
   align-items: center;
   font-weight: normal;
   z-index: 2000;
+   transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 .english:hover,
 .italiano:hover {
@@ -227,22 +233,27 @@ nav > .favorites-active-link {
 
 .english.selected,
 .italiano.selected {
+  background-color: transparent;
+}
+
+.english.selected > img,
+.italiano.selected > img {
   font-weight: bold;
-  transform: scale(1.2);
+  transform: scale(1.5);
   color: white;
 }
 
 .italiano {
   position: fixed;
   top: 10px;
-  right: 10px;
-  color: white;
+  right: 20px;
+  
 }
 
 .english {
   position: fixed;
   top: 10px;
-  right: 70px;
+  right: 80px;
 }
 
 @keyframes fadeIn {
@@ -276,5 +287,26 @@ nav > .favorites-active-link {
     font-size: .9rem;
     padding: 10px 5px;
     /* background-color: transparent; */
+  }
+}
+
+@media screen and (max-width: 700px) {
+   .italiano {
+    position: fixed;
+    top: 35px;
+    right: .5%;
+    transform: scale(0.6);
+  }
+
+  .english {
+    position: fixed;
+    top: 5px;
+    right: .5%;
+    transform: scale(0.6);
+  }
+
+  .italiano.selected,
+  .english.selected {
+    transform: scale(0.8);
   }
 }
