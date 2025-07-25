@@ -15,9 +15,11 @@
 
   .modal-content {
     display: block;
-    background: black;
+    background: rgba(0, 0, 0, 0.822);
     padding: 1rem 2rem;
     border-radius: 8px;
+    border: 2px solid var(--main-color);
+    box-shadow: 3px 3px 6px;
     width: 100%;
     max-width: 500px;
     width: 90%;
@@ -82,42 +84,46 @@
   font-size: 3rem;
   text-align: center;
   text-shadow: 1px 1px 3px white;
-  border: 4px double;
   border-radius: 10px;
   padding: 20px;
 }
 
-.no-results {
-  padding: 50px;
-}
-
 .modal {
   padding: 0;
-  border: 4px double;
   padding: 10px;
   border-radius: 10px;
 }
 
-.header {
+#modal-title {
+  text-align: center;
+  margin: 10px;
+  text-shadow: 3px 3px 6px;
+}
+
+.full-description {
+  text-shadow: 3px 3px 6px;
+}
+
+/* .header {
   grid-area: header;
   text-align: center;
   padding: 0;
   margin: 0;
   text-shadow: 1px 1px 3px white;
-}
+} */
 
-.new-tab {
+/* .new-tab {
   display: inline-block;
   justify-self: start;
-}
+} */
 
-.imgSpace:hover {
+/* .imgSpace:hover {
   outline: 2px solid white;
   transform: scale(1.05);
   transition: transform 0.2s ease;
-}
+} */
 
-.details {
+/* .details {
   grid-area: details;
   text-shadow: 1px 1px 3px white;
   padding: 10px;
@@ -125,4 +131,4 @@
 
 .details > * {
   border-bottom: 1px solid;
-}
+} */

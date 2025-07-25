@@ -47,9 +47,9 @@ function Favorites({ favorites, toggleFavorite, languageMap}) {
               {selectedBook?.volumeInfo?.title || "No title"}
             </h2>
             <p className="full-description">
-              <strong>{t("fullDescription") || "Full Description"}: </strong>{" "}
+              <strong>{t("fullDescription", "Full Description")}: </strong>{" "}
               {selectedBook.volumeInfo?.description ||
-                "No description available"}
+                t('noDescription', "No description available")}
             </p>
             <FavoriteButton
               isFavorite={isFavorite(selectedBook)}

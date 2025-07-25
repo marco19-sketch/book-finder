@@ -39,7 +39,7 @@ function Home({ favorites, toggleFavorite }) {
     setLoading(true);
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       const res = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${activeMode}:${encoded}&startIndex=${startIndex}&maxResults=${maxResult}`
@@ -182,7 +182,7 @@ function Home({ favorites, toggleFavorite }) {
             <p className="full-description">
               <strong>{t("fullDescription")}:</strong>{" "}
               {selectedTitle.volumeInfo?.description ||
-                "No description available"}
+                t("noDescription", "No description available")}
             </p>
           </div>
           <FavoriteButton
