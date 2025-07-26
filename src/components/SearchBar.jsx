@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import CustomRadio from "./CustomRadio";
-import './SearchBar.css';
+import "./SearchBar.css";
 // import { devLog } from '../utils/devLog';
 
 const labelsMap = {
@@ -18,11 +18,9 @@ export default function SearchBar({
   onReset,
   placeholderMap,
   t,
-  resetResults
+  resetResults,
 }) {
   const [suggestions, setSuggestions] = useState([]);
-
-  
 
   const getSuggestions = useCallback(
     async input => {
@@ -55,8 +53,6 @@ export default function SearchBar({
     [searchMode]
   );
 
-
-
   const handleInputChange = e => {
     const value = e.target.value;
     setQuery(value);
@@ -67,10 +63,9 @@ export default function SearchBar({
     }
   };
 
-
   useEffect(() => {
     resetResults();
-  }, [searchMode, resetResults])
+  }, [searchMode, resetResults]);
 
   return (
     <div className="search-bar">
@@ -96,28 +91,22 @@ export default function SearchBar({
         placeholder={placeholderMap[searchMode] || t("selectCriteria")}
       />
 
-      {/* {suggestions.length > 0 && (
-        <ul className="suggestion-item">
-          {suggestions.map(book => (
-            <li
-              key={book.id}
-              tabIndex="0"
-              onClick={() => {
-                setQuery(book.volumeInfo?.categories[0]);
-                setSuggestions([]);
-              }}>
-              {book.volumeInfo?.categories[0]}
-            </li>
-          ))}
-        </ul>
-      )} */}
-
       {suggestions.length > 0 && (
         <ul className="suggestion-item">
           {suggestions.map((sugg, idx) => (
             <li
               key={idx}
               tabIndex="0"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setQuery(sugg);
+                  setSuggestions([]);
+                }
+                if (e.key === 'Escape') {
+                  setSuggestions([]);
+                }
+              }
+              }
               onClick={() => {
                 setQuery(sugg); // 👈 this value will be passed to Home when you click search
                 setSuggestions([]);
