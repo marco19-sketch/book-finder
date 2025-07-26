@@ -5,9 +5,10 @@ import LanguageSwitcher from "../components/LanguageSwitcher";
 import BookResults from "../components/BookResults";
 import BackToTop from "../components/BackToTop";
 import "./Favorites.css";
-import FavoriteButton from '../components/FavoriteButton';
+import FavoriteButton from "../components/FavoriteButton";
+import Footer from "../components/Footer";
 
-function Favorites({ favorites, toggleFavorite, languageMap}) {
+function Favorites({ favorites, toggleFavorite, languageMap }) {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
@@ -19,7 +20,6 @@ function Favorites({ favorites, toggleFavorite, languageMap}) {
 
   const isFavorite = book => favorites.some(fav => fav.id === book.id);
 
-
   return (
     <div className="favorites-page">
       <LanguageSwitcher />
@@ -28,7 +28,9 @@ function Favorites({ favorites, toggleFavorite, languageMap}) {
       </h1>
 
       {favorites.length === 0 ? (
-        <h2 className='no-favorites-yet' >{t("noFavoritesYet") || "No favorites yet."}</h2>
+        <h2 className="no-favorites-yet">
+          {t("noFavoritesYet") || "No favorites yet."}
+        </h2>
       ) : (
         <BookResults
           books={favorites}
@@ -49,16 +51,36 @@ function Favorites({ favorites, toggleFavorite, languageMap}) {
             <p className="full-description">
               <strong>{t("fullDescription", "Full Description")}: </strong>{" "}
               {selectedBook.volumeInfo?.description ||
-                t('noDescription', "No description available")}
+                t("noDescription", "No description available")}
             </p>
             <FavoriteButton
               isFavorite={isFavorite(selectedBook)}
               onToggle={() => toggleFavorite(selectedBook)}
-              />
+            />
           </div>
         </Modal>
       )}
       <BackToTop scrollContainerSelector=".favorites-page" />
+      <Footer
+        creditText={
+          <>
+            <p>
+              {" "}
+              Foto di
+              <a
+                rel="noreferrer noopener"
+                target="_blank"
+                href="https://unsplash.com/it/@silverkblack?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+                Vitaly Gariev
+              </a>{" "}
+              su{" "}
+              <a href="https://unsplash.com/it/foto/una-donna-seduta-su-un-divano-che-tiene-in-braccio-un-cane-g7v8HQkFIyo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+                Unsplash
+              </a>
+            </p>
+          </>
+        }
+      />
     </div>
   );
 }

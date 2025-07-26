@@ -10,6 +10,7 @@ import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollup } from "../utils/scrollup";
 import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
+import Footer from '../components/Footer';
 
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [selectedTitle, setSelectedTitle] = useState(null);
@@ -26,7 +27,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [activeQuery, setActiveQuery] = useState("");
   const [activeMode, setActiveMode] = useState("intitle");
 
-  const [suggestions, setSuggestions] = useState([])
+  const [suggestions, setSuggestions] = useState([]);
 
   const placeholderMap = {
     intitle: t("searchPlaceholder.intitle"),
@@ -112,8 +113,8 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   useEffect(() => {
     if (hasSearched) {
       devLog("useEffect fetching", startIndex);
-    //   handleFetch();
-    // }
+      //   handleFetch();
+      // }
 
       const controller = new AbortController(); //cleanup function to your useEffect to prevent memory leaks if the component unmounts during a fetch
 
@@ -142,7 +143,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     setLoading(false);
 
     setSuggestions([]);
-
   }, [setFetchedBooks]);
 
   const isFavorite = book => favorites.some(fav => fav.id === book.id);
@@ -175,7 +175,9 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       />
 
       {!hasSearched && (
-        <h2 className="trending-books">{t("trendingBooks") || 'Trending Books'}</h2>
+        <h2 className="trending-books">
+          {t("trendingBooks") || "Trending Books"}
+        </h2>
       )}
 
       {loading && <LoadingSkeleton t={t} />}
@@ -248,6 +250,16 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
           />
         </Modal>
       )}
+      <Footer
+        creditText={
+          <a
+            rel="noreferrer noopener"
+            target='_blank'
+            href="https://www.pexels.com/photo/a-woman-browsing-at-the-library-6550396/">
+            Photo by Tima Miroshnichenko:
+          </a>
+        }
+      />
     </div>
   );
 }
