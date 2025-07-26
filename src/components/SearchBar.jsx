@@ -20,9 +20,10 @@ export default function SearchBar({
   placeholderMap,
   t,
   resetResults,
-
   suggestions,
-  setSuggestions
+  setSuggestions,
+
+  handleFetchNew
 }) {
   // const [suggestions, setSuggestions] = useState([]);
 
@@ -105,15 +106,22 @@ export default function SearchBar({
                 if (e.key === 'Enter') {
                   setQuery(sugg);
                   setSuggestions([]);
+
+                  handleFetchNew(sugg);
+                  e.currentTarget.blur();
+
                 }
                 if (e.key === 'Escape') {
                   setSuggestions([]);
                 }
               }
               }
-              onClick={() => {
+              onClick={(e) => {
                 setQuery(sugg); // 👈 this value will be passed to Home when you click search
                 setSuggestions([]);
+
+                handleFetchNew(sugg);
+                e.currentTarget.blur();
               }}>
               {sugg}
             </li>

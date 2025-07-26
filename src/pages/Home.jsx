@@ -98,17 +98,22 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     });
   }, [fetchedBooks]);
 
-  const handleFetchNew = () => {
-    if (query.trim() === activeQuery && searchMode === activeMode) return;
+  const handleFetchNew = useCallback((customQuery) => {
+    const queryToUse = (customQuery ?? query ?? "").toString();
+    // const queryToUse = customQuery || query;
+
+    if (queryToUse.trim() === activeQuery && searchMode === activeMode) return;
+
     devLog("handleFetchNew fetching...", startIndex);
-    setActiveQuery(query.trim());
+    setActiveQuery(queryToUse.trim());
+    // setActiveQuery(query.trim());
     setActiveMode(searchMode);
     setShowNoResultsModal(false);
     // setStartIndex(startIndex);
     setStartIndex(0);
     setHasSearched(true);
     // handleFetch();
-  };
+  }, [activeMode, activeQuery, query, searchMode, startIndex])
 
   useEffect(() => {
     if (hasSearched) {
@@ -165,6 +170,9 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
         searchMode={searchMode}
         setSearchMode={setSearchMode}
         onSearch={handleFetchNew}
+
+        handleFetchNew={handleFetchNew}
+
         onReset={handleReset}
         placeholderMap={placeholderMap}
         t={t}
