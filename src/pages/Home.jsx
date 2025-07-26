@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo, useEffect} from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
@@ -8,15 +8,10 @@ import featuredBooks from "../data/featuredBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollup } from "../utils/scrollup";
-import FavoriteButton from '../components/FavoriteButton';
+import FavoriteButton from "../components/FavoriteButton";
+import { devLog } from "../utils/devLog";
 
-function Home({
-  favorites,
-  toggleFavorite,
-  fetchedBooks,
-  setFetchedBooks,
-}) {
-
+function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -42,7 +37,7 @@ function Home({
     if (!activeQuery) return;
     const encoded = encodeURIComponent(activeQuery.trim());
     setLoading(true);
-
+    devLog({ activeQuery, activeMode, hasSearched, startIndex });
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
 
@@ -81,6 +76,7 @@ function Home({
     setFetchedBooks,
   ]);
 
+
   const handleSelected = useCallback(book => {
     setShowModal(true);
     setSelectedTitle(book);
@@ -103,6 +99,10 @@ function Home({
     setHasSearched(true);
     handleFetch();
   };
+
+  useEffect(() => {
+      handleFetch();
+    }, [hasSearched, startIndex, handleFetch]);
 
   const resetResults = useCallback(() => {
     setHasSearched(false);
@@ -127,7 +127,6 @@ function Home({
     }
   }, [fetchedBooks]);
 
-
   return (
     <div className="home-page">
       <header>
@@ -148,7 +147,7 @@ function Home({
       />
 
       {!hasSearched && (
-      <h2 className="recommended-for-you">{t("recommendedForYou")}</h2>
+        <h2 className="recommended-for-you">{t("recommendedForYou")}</h2>
       )}
 
       {loading && <LoadingSkeleton t={t} />}

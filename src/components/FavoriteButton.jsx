@@ -3,7 +3,6 @@ import popSound from "../assets/heartbeat-trimmed.mp3";
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "./FavoriteButton.css";
-import {devLog} from '../utils/devLog'
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
   const soundRef = useRef(new Audio(popSound));
@@ -39,7 +38,6 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
           sound.currentTime = 0;
           sound.loop = false;
           sound.volume = 1; // reset for next play
-          devLog("Sound faded out and paused");
         }
       }
     }, fadeInterval);
@@ -68,7 +66,6 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
       sound.play().catch(err => {
         console.warn("Play failed on hover start:", err);
       });
-      devLog("Sound is playing");
     } catch (err) {
       console.warn("Sound play error:", err);
     }
@@ -76,7 +73,6 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
 
   const handleHoverEnd = () => {
     isHovering.current = false;
-    devLog("Hover ended — starting fade out");
     fadeOutSound();
   };
 
