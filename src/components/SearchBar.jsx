@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import CustomRadio from "./CustomRadio";
 import './SearchBar.css';
-import { devLog } from '../utils/devLog';
+// import { devLog } from '../utils/devLog';
 
 const labelsMap = {
   intitle: "Title",
@@ -18,28 +18,55 @@ export default function SearchBar({
   onReset,
   placeholderMap,
   t,
-  featuredBooks,
   resetResults
 }) {
   const [suggestions, setSuggestions] = useState([]);
 
+  
+
   const getSuggestions = useCallback(
-    input => {
-      if (!input) return [];
-      return featuredBooks.filter(book => {
-        devLog('featured book suggestions')
-        const category = book.volumeInfo?.categories[0];
-        return category?.toLowerCase().includes(input.toLowerCase());
-      });
+    async input => {
+      if (!input) return;
+      const encoded = encodeURIComponent(input.trim());
+      const url = `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&maxResults=5`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const items = data.items || [];
+
+        // Build suggestions based on search mode
+        const extracted = items
+          .map(item => {
+            const info = item.volumeInfo;
+            if (searchMode === "intitle") return info.title;
+            if (searchMode === "inauthor") return info.authors?.[0];
+            if (searchMode === "subject") return info.categories?.[0];
+            return null;
+          })
+          .filter(Boolean);
+
+        setSuggestions([...new Set(extracted)]); // remove duplicates
+      } catch (error) {
+        console.error("Suggestion fetch error:", error);
+        setSuggestions([]);
+      }
     },
-    [featuredBooks]
+    [searchMode]
   );
+
+
 
   const handleInputChange = e => {
     const value = e.target.value;
     setQuery(value);
-    setSuggestions(value.length > 1 ? getSuggestions(value) : []);
+    if (value.length > 1) {
+      getSuggestions(value);
+    } else {
+      setSuggestions([]);
+    }
   };
+
 
   useEffect(() => {
     resetResults();
@@ -69,7 +96,7 @@ export default function SearchBar({
         placeholder={placeholderMap[searchMode] || t("selectCriteria")}
       />
 
-      {suggestions.length > 0 && (
+      {/* {suggestions.length > 0 && (
         <ul className="suggestion-item">
           {suggestions.map(book => (
             <li
@@ -80,6 +107,22 @@ export default function SearchBar({
                 setSuggestions([]);
               }}>
               {book.volumeInfo?.categories[0]}
+            </li>
+          ))}
+        </ul>
+      )} */}
+
+      {suggestions.length > 0 && (
+        <ul className="suggestion-item">
+          {suggestions.map((sugg, idx) => (
+            <li
+              key={idx}
+              tabIndex="0"
+              onClick={() => {
+                setQuery(sugg); // 👈 this value will be passed to Home when you click search
+                setSuggestions([]);
+              }}>
+              {sugg}
             </li>
           ))}
         </ul>
