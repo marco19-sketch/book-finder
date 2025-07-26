@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import CustomRadio from "./CustomRadio";
+import './SearchBar.css';
 
 const labelsMap = {
   intitle: "Title",

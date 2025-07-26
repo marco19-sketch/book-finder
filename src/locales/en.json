@@ -25,7 +25,7 @@
   "language": "Language",
   "removeFromFavorites": "Remove from favorites",
   "addToFavorites": "Add to favorites",
-  "recommendedForYou": "Recommended for You",
+  "trendingBooks": "Trending Books",
   "favorites": "Favorites",
   "readMore": "read more",
   "searchPlaceholder.intitle": "Enter title...",
@@ -34,5 +34,6 @@
   "selectCriteria": "Select search by...",
   "noFavoritesYet": "No favorites yet",
   "englishFlag": "English language",
-  "italianFlag": "Italian language"
+  "italianFlag": "Italian language",
+  "noMoreResults": "No more results"
 }

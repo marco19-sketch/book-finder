@@ -168,7 +168,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       />
 
       {!hasSearched && (
-        <h2 className="recommended-for-you">{t("recommendedForYou")}</h2>
+        <h2 className="trending-books">{t("trendingBooks") || 'Trending Books'}</h2>
       )}
 
       {loading && <LoadingSkeleton t={t} />}
@@ -215,6 +215,13 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       {!loading && showNoResultsModal && (
         <Modal onClose={() => setShowNoResultsModal(false)}>
           <p className="no-results">{t("noResults")}</p>
+        </Modal>
+      )}
+      {!loading && startIndex !== 0 && showNoResultsModal && (
+        <Modal onClose={() => setShowNoResultsModal(false)}>
+          <p className="no-results">
+            {t("noMoreResults") || "No more results"}
+          </p>
         </Modal>
       )}
 
