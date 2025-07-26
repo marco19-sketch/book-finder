@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import CustomRadio from "./CustomRadio";
 import './SearchBar.css';
+import { devLog } from '../utils/devLog';
 
 const labelsMap = {
   intitle: "Title",
@@ -26,6 +27,7 @@ export default function SearchBar({
     input => {
       if (!input) return [];
       return featuredBooks.filter(book => {
+        devLog('featured book suggestions')
         const category = book.volumeInfo?.categories[0];
         return category?.toLowerCase().includes(input.toLowerCase());
       });
