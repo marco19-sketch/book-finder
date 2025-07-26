@@ -37,7 +37,12 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     if (!activeQuery) return;
     const encoded = encodeURIComponent(activeQuery.trim());
     setLoading(true);
-    devLog({ activeQuery, activeMode, hasSearched, startIndex });
+    devLog("handleFetch fetching...", {
+      activeQuery,
+      activeMode,
+      hasSearched,
+      startIndex,
+    });
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
 
@@ -76,7 +81,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     setFetchedBooks,
   ]);
 
-
   const handleSelected = useCallback(book => {
     setShowModal(true);
     setSelectedTitle(book);
@@ -92,17 +96,34 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   }, [fetchedBooks]);
 
   const handleFetchNew = () => {
+    if (query.trim() === activeQuery && searchMode === activeMode) return;
+    devLog("handleFetchNew fetching...", startIndex);
     setActiveQuery(query.trim());
     setActiveMode(searchMode);
     setShowNoResultsModal(false);
+    // setStartIndex(startIndex);
     setStartIndex(0);
     setHasSearched(true);
-    handleFetch();
+    // handleFetch();
   };
 
   useEffect(() => {
-      handleFetch();
-    }, [hasSearched, startIndex, handleFetch]);
+    if (hasSearched) {
+      devLog("useEffect fetching", startIndex);
+    //   handleFetch();
+    // }
+
+      const controller = new AbortController(); //cleanup function to your useEffect to prevent memory leaks if the component unmounts during a fetch
+
+      const fetchData = async () => {
+        await handleFetch();
+      };
+
+      fetchData();
+
+      return () => controller.abort();
+    }
+  }, [hasSearched, startIndex, handleFetch]);
 
   const resetResults = useCallback(() => {
     setHasSearched(false);
@@ -181,7 +202,8 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
             onClick={() => {
               setStartIndex(prev => {
                 const newIndex = prev + maxResult;
-                setTimeout(() => handleFetch(), 0); // fetch after state updates
+                devLog("load more fetching", startIndex);
+                // setTimeout(() => handleFetch(), 0); // fetch after state updates
                 return newIndex;
               });
             }}>
