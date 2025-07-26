@@ -35,7 +35,7 @@ html, body {
   min-width: 320px;
 }
 
-body {
+/* body {
   background-image: url("/images/pexels-tima-miroshnichenko-6550396.webp");
   background-size: cover;
   background-repeat: no-repeat;
@@ -44,7 +44,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
+} */
 
 /* === Links === */
 a {
