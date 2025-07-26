@@ -26,6 +26,8 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [activeQuery, setActiveQuery] = useState("");
   const [activeMode, setActiveMode] = useState("intitle");
 
+  const [suggestions, setSuggestions] = useState([])
+
   const placeholderMap = {
     intitle: t("searchPlaceholder.intitle"),
     inauthor: t("searchPlaceholder.inauthor"),
@@ -138,6 +140,9 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     setHasSearched(false);
     setShowNoResultsModal(false);
     setLoading(false);
+
+    setSuggestions([]);
+
   }, [setFetchedBooks]);
 
   const isFavorite = book => favorites.some(fav => fav.id === book.id);
@@ -165,6 +170,8 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
         t={t}
         featuredBooks={featuredBooks}
         resetResults={resetResults}
+        setSuggestions={setSuggestions}
+        suggestions={suggestions}
       />
 
       {!hasSearched && (

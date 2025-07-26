@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
+// import { useState, useCallback, useEffect } from "react";
 import CustomRadio from "./CustomRadio";
 import "./SearchBar.css";
 // import { devLog } from '../utils/devLog';
@@ -19,8 +20,11 @@ export default function SearchBar({
   placeholderMap,
   t,
   resetResults,
+
+  suggestions,
+  setSuggestions
 }) {
-  const [suggestions, setSuggestions] = useState([]);
+  // const [suggestions, setSuggestions] = useState([]);
 
   const getSuggestions = useCallback(
     async input => {
@@ -50,7 +54,7 @@ export default function SearchBar({
         setSuggestions([]);
       }
     },
-    [searchMode]
+    [searchMode, setSuggestions]
   );
 
   const handleInputChange = e => {
