@@ -63,22 +63,23 @@ function Favorites({ favorites, toggleFavorite, languageMap }) {
       <BackToTop scrollContainerSelector=".favorites-page" />
       <Footer
         creditText={
-          <>
-            <p>
-              {" "}
-              Foto di
-              <a
-                rel="noreferrer noopener"
-                target="_blank"
-                href="https://unsplash.com/it/@silverkblack?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
-                Vitaly Gariev
-              </a>{" "}
-              su{" "}
-              <a href="https://unsplash.com/it/foto/una-donna-seduta-su-un-divano-che-tiene-in-braccio-un-cane-g7v8HQkFIyo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
-                Unsplash
-              </a>
-            </p>
-          </>
+          <div className="fav-footer">
+            {" "}
+            Foto di
+            <a
+              rel="noreferrer noopener"
+              target="_blank"
+              href="https://unsplash.com/it/@silverkblack?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+              Vitaly Gariev
+            </a>{" "}
+            su{" "}
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://unsplash.com/it/foto/una-donna-seduta-su-un-divano-che-tiene-in-braccio-un-cane-g7v8HQkFIyo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+              Unsplash
+            </a>
+          </div>
         }
       />
     </div>

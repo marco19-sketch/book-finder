@@ -1,4 +1,3 @@
-
 .favorite-btn {
   background-color: transparent;
   width: 50px;
@@ -12,7 +11,6 @@
   outline: none;
   border: 2px solid var(--main-color);
   box-shadow: 3px 3px 6px var(--main-color);
-  
 }
 
 @keyframes pulse {
@@ -25,6 +23,38 @@
   100% {
     transform: scale(1);
   }
+}
+
+/* @keyframes pulse-hover {
+  0% {
+    transform: scale(1);
+    color: gray;
+  }
+  50% {
+    transform: scale(1.2);
+    color: red;
+  }
+  100% {
+    transform: scale(1);
+    color: gray;
+  }
+} */
+
+.heart-icon {
+  font-size: 24px;
+  color: gray;
+  transition: color 0.3s ease;
+}
+
+/* .heart-icon:hover {
+  animation: pulse-hover 1.1s ease;
+  animation-iteration-count: infinite;
+} */
+
+.heart-icon.active {
+  color: red;
+  animation: pulse 1s ease;
+  animation-iteration-count: 1;
 }
 
 @keyframes pulse-hover {
@@ -42,19 +72,9 @@
   }
 }
 
-.heart-icon {
-  font-size: 24px;
-  color: gray;
-  transition: color 0.3s ease;
-}
-
-.heart-icon:hover {
-  animation: pulse-hover 1.1s ease;
-  animation-iteration-count: infinite;
-}
-
-.heart-icon.active {
-  color: red;
-  animation: pulse 1s ease;
-  animation-iteration-count: 1;
+@media (hover: hover) {
+  .heart-icon:hover {
+    animation: pulse-hover 1.1s ease;
+    animation-iteration-count: infinite;
+  }
 }

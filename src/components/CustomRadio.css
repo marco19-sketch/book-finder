@@ -46,9 +46,9 @@
   background-color: rgb(231, 222, 222);
 }
 
-.custom-radio:hover .radio-mark {
+/* .custom-radio:hover .radio-mark {
   border-color: rgb(231, 222, 222);
-}
+} */
 
 .custom-radio:active .radio-mark {
   transform: scale(0.95);
@@ -65,12 +65,23 @@
   border-radius: 50%;
 }
 
-.custom-radio:hover input[type="radio"]:checked + .radio-mark::after {
+/* .custom-radio:hover input[type="radio"]:checked + .radio-mark::after {
   background-color: rgb(231, 222, 222);
-}
+} */
 
 @media screen and (max-width: 380px) {
   .label-container {
     display: block ; 
   }
+}
+
+@media (hover: hover) {
+.custom-radio:hover .radio-mark {
+  border-color: rgb(231, 222, 222);
+}
+
+.custom-radio:hover input[type="radio"]:checked + .radio-mark::after {
+  background-color: rgb(231, 222, 222);
+}
+
 }

@@ -10,7 +10,7 @@ import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollup } from "../utils/scrollup";
 import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
-import Footer from '../components/Footer';
+import Footer from "../components/Footer";
 
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [selectedTitle, setSelectedTitle] = useState(null);
@@ -62,7 +62,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       const data = await res.json();
       const items = data.items ?? [];
 
-      //no result modal
       if (!items || items.length === 0) {
         setShowNoResultsModal(true);
       }
@@ -98,37 +97,30 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     });
   }, [fetchedBooks]);
 
-  const handleFetchNew = useCallback((customQuery) => {
-    const queryToUse = (customQuery ?? query ?? "").toString();
-    // const queryToUse = customQuery || query;
+  const handleFetchNew = useCallback(
+    customQuery => {
+      const queryToUse = (customQuery ?? query ?? "").toString();
 
-    if (queryToUse.trim() === activeQuery && searchMode === activeMode) return;
+      if (queryToUse.trim() === activeQuery && searchMode === activeMode)
+        return;
 
-    devLog("handleFetchNew fetching...", startIndex);
-    setActiveQuery(queryToUse.trim());
-    // setActiveQuery(query.trim());
-    setActiveMode(searchMode);
-    setShowNoResultsModal(false);
-    // setStartIndex(startIndex);
-    setStartIndex(0);
-    setHasSearched(true);
-    // handleFetch();
-  }, [activeMode, activeQuery, query, searchMode, startIndex])
+      devLog("handleFetchNew fetching...", startIndex);
+      setActiveQuery(queryToUse.trim());
+      setActiveMode(searchMode);
+      setShowNoResultsModal(false);
+      setStartIndex(0);
+      setHasSearched(true);
+    },
+    [activeMode, activeQuery, query, searchMode, startIndex]
+  );
 
   useEffect(() => {
     if (hasSearched) {
-      devLog("useEffect fetching", startIndex);
-      //   handleFetch();
-      // }
-
       const controller = new AbortController(); //cleanup function to your useEffect to prevent memory leaks if the component unmounts during a fetch
-
       const fetchData = async () => {
         await handleFetch();
       };
-
       fetchData();
-
       return () => controller.abort();
     }
   }, [hasSearched, startIndex, handleFetch]);
@@ -146,7 +138,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     setHasSearched(false);
     setShowNoResultsModal(false);
     setLoading(false);
-
     setSuggestions([]);
   }, [setFetchedBooks]);
 
@@ -170,9 +161,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
         searchMode={searchMode}
         setSearchMode={setSearchMode}
         onSearch={handleFetchNew}
-
         handleFetchNew={handleFetchNew}
-
         onReset={handleReset}
         placeholderMap={placeholderMap}
         t={t}
@@ -188,7 +177,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
         </h2>
       )}
 
-      {loading && <LoadingSkeleton t={t} />}
+      {loading && <LoadingSkeleton />}
 
       {!hasSearched && (
         <BookResults
@@ -211,7 +200,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
             getAmazonLink={getAmazonLink}
             onSelect={handleSelected}
           />
-          {loading && <LoadingSkeleton t={t} />}
+          {loading && <LoadingSkeleton />}
           <button
             className="load-more"
             type="button"
@@ -219,8 +208,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
             onClick={() => {
               setStartIndex(prev => {
                 const newIndex = prev + maxResult;
-                devLog("load more fetching", startIndex);
-                // setTimeout(() => handleFetch(), 0); // fetch after state updates
                 return newIndex;
               });
             }}>
@@ -262,9 +249,9 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
         creditText={
           <a
             rel="noreferrer noopener"
-            target='_blank'
+            target="_blank"
             href="https://www.pexels.com/photo/a-woman-browsing-at-the-library-6550396/">
-            Photo by Tima Miroshnichenko:
+            Photo by Tima Miroshnichenko
           </a>
         }
       />
