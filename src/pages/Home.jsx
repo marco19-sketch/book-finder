@@ -44,10 +44,10 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       activeQuery,
       activeMode,
       hasSearched,
-      startIndex,
+      startIndex
     });
     try {
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       const res = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${activeMode}:${encoded}&startIndex=${startIndex}&maxResults=${maxResult}`
@@ -80,7 +80,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     activeMode,
     maxResult,
     startIndex,
-    setFetchedBooks,
+    setFetchedBooks
   ]);
 
   const handleSelected = useCallback(book => {

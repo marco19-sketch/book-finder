@@ -92,6 +92,7 @@ export default function App() {
             <Favorites favorites={favorites} toggleFavorite={toggleFavorite} />
           }
         />
+       
       </Routes>
       <BackToTop scrollContainerSelector="body" />
     </div>

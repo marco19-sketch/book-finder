@@ -1,15 +1,72 @@
 .site-footer {
-  text-align: center;
-  font-size: 0.75rem;
-  color: rgba(255, 253, 253, 0.712);
-  padding: 1rem 0;
-  background-color: var(--overlay);
-  width: 400px;
-  margin: 0 auto;
-  border-radius: 4px;
+  background-color: #ddd4ddc9;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+  border-top: 1px solid #ccc;
+  margin-bottom: 0;
 }
 
-.image-credit a {
-  color: inherit;
+.image-credit {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.legals {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.legals a {
+  color: #0066cc;
+  text-decoration: none;
+  margin-right: 6px;
+}
+
+
+
+.legals p {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+/* Desktop layout */
+@media (min-width: 600px) {
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .image-credit {
+    flex: 1;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  .legals {
+    flex: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    text-align: right;
+  }
+
+  .legals p {
+    flex-basis: 100%;
+    text-align: right;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (hove: hover) {
+  .legals a:hover {
   text-decoration: underline;
+}
 }
