@@ -1,6 +1,7 @@
 import { useRef, useEffect } from "react";
 import popSound from "../assets/add-to-favorite.mp3";
 import hoverSound from '../assets/heartbeat-trimmed.mp3';
+import swooshSound from '../assets/delete-favorite.mp3';
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "./FavoriteButton.css";
@@ -8,6 +9,7 @@ import "./FavoriteButton.css";
 export default function FavoriteButton({ isFavorite, onToggle }) {
   const clickSoundRef = useRef(new Audio(popSound));
   const hoverSoundRef = useRef(new Audio(hoverSound));
+  const removeSoundRef = useRef(new Audio(swooshSound));
   const hasUserInteracted = useRef(false);
   const isHovering = useRef(false);
 
@@ -26,46 +28,54 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
   }, []);
 
   const fadeOutSound = () => {
-    const sound = hoverSoundRef.current;
+    const addSound = hoverSoundRef.current;
     const fadeInterval = 100; // ms
     const fadeStep = 0.05; // volume decrement
 
     const fade = setInterval(() => {
-      if (sound.volume > fadeStep) {
-        sound.volume = Math.max(0, sound.volume - fadeStep);
+      if (addSound.volume > fadeStep) {
+        addSound.volume = Math.max(0, addSound.volume - fadeStep);
       } else {
         clearInterval(fade);
         if (!isHovering.current) {
-          sound.pause();
-          sound.currentTime = 0;
-          sound.loop = false;
-          sound.volume = 1; // reset for next play
+          addSound.pause();
+          addSound.currentTime = 0;
+          addSound.loop = false;
+          addSound.volume = 1; // reset for next play
         }
       }
     }, fadeInterval);
   };
 
   const handleToggle = () => {
-    const sound = clickSoundRef.current;
+    const addSound = clickSoundRef.current;
+    const removeSound = removeSoundRef.current;
     if (!hasUserInteracted.current) return;
-    sound.currentTime = 0;
-    sound.play().catch(err => {
+    if (!isFavorite) {
+    addSound.currentTime = 0;
+    addSound.play().catch(err => {
       console.warn("Play failed on toggle:", err);
     });
+  } else {
+    removeSound.currentTime = 0;
+    removeSound.play().catch(err => {
+      console.warn('Remove sound play failed on toggle:', err);
+    })
+  }
     onToggle?.();
   };
 
   const handleHoverStart = () => {
     if (!hasUserInteracted.current) return;
 
-    const sound = hoverSoundRef.current;
+    const addSound = hoverSoundRef.current;
     isHovering.current = true;
 
     try {
-      sound.currentTime = 0;
-      sound.volume = 1;
-      sound.loop = true;
-      sound.play().catch(err => {
+      addSound.currentTime = 0;
+      addSound.volume = 1;
+      addSound.loop = true;
+      addSound.play().catch(err => {
         console.warn("Play failed on hover start:", err);
       });
     } catch (err) {
@@ -80,12 +90,12 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
 
   // Cleanup on unmount
   useEffect(() => {
-    const sound = hoverSoundRef.current;
+    const addSound = hoverSoundRef.current;
     return () => {
-      sound.pause();
-      sound.loop = false;
-      sound.currentTime = 0;
-      sound.volume = 1;
+      addSound.pause();
+      addSound.loop = false;
+      addSound.currentTime = 0;
+      addSound.volume = 1;
     };
   }, []);
 

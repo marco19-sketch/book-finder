@@ -8,7 +8,7 @@ import "./Favorites.css";
 import FavoriteButton from "../components/FavoriteButton";
 import Footer from "../components/Footer";
 
-function Favorites({ favorites, toggleFavorite}) {
+function Favorites({ favorites, toggleFavorite }) {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
