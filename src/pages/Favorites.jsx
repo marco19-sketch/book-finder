@@ -65,21 +65,33 @@ function Favorites({ favorites, toggleFavorite }) {
       <Footer
         creditText={
           <div className="fav-footer">
-            {" "}
-            Foto di
-            <a
-              rel="noreferrer noopener"
-              target="_blank"
-              href="https://unsplash.com/it/@silverkblack?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
-              Vitaly Gariev
-            </a>{" "}
-            su{" "}
-            <a
-              rel="noopener noreferrer"
-              target="_blank"
-              href="https://unsplash.com/it/foto/una-donna-seduta-su-un-divano-che-tiene-in-braccio-un-cane-g7v8HQkFIyo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
-              Unsplash
-            </a>
+            <p>
+              Sound effects obtained from{" "}
+              <a
+                href="https://www.zapsplat.com"
+                target="_blank"
+                rel="noopener noreferrer">
+                ZapSplat
+              </a>
+            </p>
+
+            <p>
+              {" "}
+              Foto di
+              <a
+                rel="noreferrer noopener"
+                target="_blank"
+                href="http://bit.ly/3IMARbi">
+                Vitaly Gariev
+              </a>{" "}
+              su{" "}
+              <a
+                rel="noopener noreferrer"
+                target="_blank"
+                href="http://bit.ly/3IMB0LS">
+                Unsplash
+              </a>
+            </p>
           </div>
         }
       />

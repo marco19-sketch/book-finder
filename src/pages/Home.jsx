@@ -249,22 +249,16 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       <Footer
         creditText={
           <>
-            Sound Effect by{" "}
             <p>
+              Sound effects obtained from{" "}
               <a
-                rel="noreferrer noopener"
+                href="https://www.zapsplat.com"
                 target="_blank"
-                href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=351398">
-                Universfield
-              </a>{" "}
-              from{" "}
-              <a
-                rel="noreferrer noopener"
-                target="_blank"
-                href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=351398">
-                Pixabay
+                rel="noopener noreferrer">
+                ZapSplat
               </a>
             </p>
+
             <a
               rel="noreferrer noopener"
               target="_blank"
