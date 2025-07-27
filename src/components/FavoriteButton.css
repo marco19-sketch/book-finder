@@ -4,7 +4,7 @@
   height: 40px;
   padding: 0;
   display: block;
-  margin: 10px auto;
+  margin: 0 auto;
 }
 
 .favorite-btn:focus {

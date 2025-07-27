@@ -74,12 +74,13 @@ export default function BookCard({
       ) : (
         <p className="no-thumbnail-para">No cover image available</p>
       )}
-
+      <div className='book-card-fav-btn'>
       <FavoriteButton
         isFavorite={isFavorite(book)}
         onToggle={onToggleFavorite}
         t={t}
       />
+      </div>
       </div>
       <div className="book-detail">
         <p>

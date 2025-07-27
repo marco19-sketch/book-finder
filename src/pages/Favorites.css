@@ -40,3 +40,7 @@
   opacity: 0;
   transform: scale(0.95);
 }
+
+.fav-page-modal-fav-btn {
+  margin: 5px auto 5px;
+}

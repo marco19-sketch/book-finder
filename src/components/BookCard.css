@@ -56,8 +56,8 @@
   transform: scale(1.1);
 }
 
-button.favorite-btn {
-  margin: 30px 0;
+.book-card-fav-btn {
+  margin: 19px 0;
 }
 
 .book-detail {

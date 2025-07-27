@@ -53,6 +53,7 @@ function Favorites({ favorites, toggleFavorite }) {
               {selectedBook.volumeInfo?.description ||
                 t("noDescription", "No description available")}
             </p>
+
             <FavoriteButton
               isFavorite={isFavorite(selectedBook)}
               onToggle={() => toggleFavorite(selectedBook)}
