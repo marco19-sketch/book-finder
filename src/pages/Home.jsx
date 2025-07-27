@@ -44,7 +44,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       activeQuery,
       activeMode,
       hasSearched,
-      startIndex
+      startIndex,
     });
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -80,7 +80,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     activeMode,
     maxResult,
     startIndex,
-    setFetchedBooks
+    setFetchedBooks,
   ]);
 
   const handleSelected = useCallback(book => {
@@ -152,100 +152,102 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   return (
     <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
       {/* <div className="home-page"> */}
-      <header>
-        <h1 className="main-title">{t("title")}</h1>
-      </header>
+      <div className="main-container">
+        <header>
+          <h1 className="main-title">{t("title")}</h1>
+        </header>
 
-      <SearchBar
-        query={query}
-        setQuery={setQuery}
-        searchMode={searchMode}
-        setSearchMode={setSearchMode}
-        onSearch={handleFetchNew}
-        handleFetchNew={handleFetchNew}
-        onReset={handleReset}
-        placeholderMap={placeholderMap}
-        t={t}
-        featuredBooks={featuredBooks}
-        resetResults={resetResults}
-        setSuggestions={setSuggestions}
-        suggestions={suggestions}
-      />
-
-      {!hasSearched && (
-        <h2 className="trending-books">
-          {t("trendingBooks") || "Trending Books"}
-        </h2>
-      )}
-
-      {loading && <LoadingSkeleton />}
-
-      {!hasSearched && (
-        <BookResults
-          books={featuredBooks}
-          favorites={favorites}
-          toggleFavorite={toggleFavorite}
+        <SearchBar
+          query={query}
+          setQuery={setQuery}
+          searchMode={searchMode}
+          setSearchMode={setSearchMode}
+          onSearch={handleFetchNew}
+          handleFetchNew={handleFetchNew}
+          onReset={handleReset}
+          placeholderMap={placeholderMap}
           t={t}
-          getAmazonLink={getAmazonLink}
-          onSelect={handleSelected}
+          featuredBooks={featuredBooks}
+          resetResults={resetResults}
+          setSuggestions={setSuggestions}
+          suggestions={suggestions}
         />
-      )}
 
-      {uniqueBooks.length > 0 && (
-        <>
+        {!hasSearched && (
+          <h2 className="trending-books">
+            {t("trendingBooks") || "Trending Books"}
+          </h2>
+        )}
+
+        {loading && <LoadingSkeleton />}
+
+        {!hasSearched && (
           <BookResults
-            books={uniqueBooks}
+            books={featuredBooks}
             favorites={favorites}
             toggleFavorite={toggleFavorite}
             t={t}
             getAmazonLink={getAmazonLink}
             onSelect={handleSelected}
           />
-          {loading && <LoadingSkeleton />}
-          <button
-            className="load-more"
-            type="button"
-            ref={loadMoreRef}
-            onClick={() => {
-              setStartIndex(prev => {
-                const newIndex = prev + maxResult;
-                return newIndex;
-              });
-            }}>
-            {t("loadMore")}
-          </button>
-        </>
-      )}
+        )}
 
-      {!loading && showNoResultsModal && (
-        <Modal onClose={() => setShowNoResultsModal(false)}>
-          <p className="no-results">{t("noResults")}</p>
-        </Modal>
-      )}
-      {!loading && startIndex !== 0 && showNoResultsModal && (
-        <Modal onClose={() => setShowNoResultsModal(false)}>
-          <p className="no-results">
-            {t("noMoreResults") || "No more results"}
-          </p>
-        </Modal>
-      )}
+        {uniqueBooks.length > 0 && (
+          <>
+            <BookResults
+              books={uniqueBooks}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+              t={t}
+              getAmazonLink={getAmazonLink}
+              onSelect={handleSelected}
+            />
+            {loading && <LoadingSkeleton />}
+            <button
+              className="load-more"
+              type="button"
+              ref={loadMoreRef}
+              onClick={() => {
+                setStartIndex(prev => {
+                  const newIndex = prev + maxResult;
+                  return newIndex;
+                });
+              }}>
+              {t("loadMore")}
+            </button>
+          </>
+        )}
 
-      {showModal && selectedTitle && (
-        <Modal onClose={() => setShowModal(false)}>
-          <div className="modal">
-            <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
-            <p className="full-description">
-              <strong>{t("fullDescription")}:</strong>{" "}
-              {selectedTitle.volumeInfo?.description ||
-                t("noDescription", "No description available")}
+        {!loading && showNoResultsModal && (
+          <Modal onClose={() => setShowNoResultsModal(false)}>
+            <p className="no-results">{t("noResults")}</p>
+          </Modal>
+        )}
+        {!loading && startIndex !== 0 && showNoResultsModal && (
+          <Modal onClose={() => setShowNoResultsModal(false)}>
+            <p className="no-results">
+              {t("noMoreResults") || "No more results"}
             </p>
-          </div>
-          <FavoriteButton
-            isFavorite={isFavorite(selectedTitle)}
-            onToggle={() => toggleFavorite(selectedTitle)}
-          />
-        </Modal>
-      )}
+          </Modal>
+        )}
+
+        {showModal && selectedTitle && (
+          <Modal onClose={() => setShowModal(false)}>
+            <div className="modal">
+              <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
+              <p className="full-description">
+                <strong>{t("fullDescription")}:</strong>{" "}
+                {selectedTitle.volumeInfo?.description ||
+                  t("noDescription", "No description available")}
+              </p>
+            </div>
+            <FavoriteButton
+              isFavorite={isFavorite(selectedTitle)}
+              onToggle={() => toggleFavorite(selectedTitle)}
+            />
+          </Modal>
+        )}
+      </div>
       <Footer
         creditText={
           <>

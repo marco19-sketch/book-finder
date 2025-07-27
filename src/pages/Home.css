@@ -9,6 +9,10 @@
   flex-direction: column;
 }
 
+.main-container {
+  flex: 1;
+}
+
 .wait-cursor {
   cursor: wait !important;
 }
