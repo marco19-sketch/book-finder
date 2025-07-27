@@ -1,14 +1,15 @@
-import { Routes, Route, NavLink, useLocation } from "react-router-dom";
+// import { Routes, Route, NavLink, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
+import NavBar from "./components/NavBar";
 import { devLog } from "./utils/devLog";
 
 export default function App() {
-
   const [fetchedBooks, setFetchedBooks] = useState(() => {
     const saved = localStorage.getItem("cachedBooks");
     return saved ? JSON.parse(saved) : [];
@@ -68,20 +69,9 @@ export default function App() {
       <a href="#main-content" className="skip-link">
         {t("skipToMain")}
       </a>
-      <nav>
-        <NavLink
-          className={({ isActive }) => (isActive ? "home-active-link" : "home")}
-          to="/">
-          Home
-        </NavLink>
-        <NavLink
-          className={({ isActive }) =>
-            isActive ? "favorites-active-link" : "favorites"
-          }
-          to="/favorites">
-          {t("favorites")} ({favorites.length})
-        </NavLink>
-      </nav>
+
+      <NavBar favorites={favorites} t={t} />
+
       <LanguageSwitcher />
 
       <Routes>
