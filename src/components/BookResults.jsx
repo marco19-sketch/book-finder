@@ -6,7 +6,6 @@ export default function BookResults({
   onSelect,
   favorites,
   toggleFavorite,
-  languageMap,
   t,
 }) {
 
@@ -21,7 +20,7 @@ export default function BookResults({
           <BookCard
             book={book}
             onSelect={() => onSelect(book)}
-            languageMap={languageMap}
+            // languageMap={languageMap}
             t={t}
             isFavorite={isFavorite}
             
