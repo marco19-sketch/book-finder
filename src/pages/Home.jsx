@@ -150,7 +150,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   }, [fetchedBooks]);
 
   return (
-    <div className={`home-page ${loading ? 'wait-cursor' : ''}`}>
+    <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
       {/* <div className="home-page"> */}
       <header>
         <h1 className="main-title">{t("title")}</h1>
@@ -248,12 +248,30 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       )}
       <Footer
         creditText={
-          <a
-            rel="noreferrer noopener"
-            target="_blank"
-            href="https://www.pexels.com/photo/a-woman-browsing-at-the-library-6550396/">
-            Photo by Tima Miroshnichenko
-          </a>
+          <>
+            Sound Effect by{" "}
+            <p>
+              <a
+                rel="noreferrer noopener"
+                target="_blank"
+                href="https://pixabay.com/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=351398">
+                Universfield
+              </a>{" "}
+              from{" "}
+              <a
+                rel="noreferrer noopener"
+                target="_blank"
+                href="https://pixabay.com/sound-effects/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=351398">
+                Pixabay
+              </a>
+            </p>
+            <a
+              rel="noreferrer noopener"
+              target="_blank"
+              href="https://www.pexels.com/photo/a-woman-browsing-at-the-library-6550396/">
+              Photo by Tima Miroshnichenko
+            </a>
+          </>
         }
       />
     </div>

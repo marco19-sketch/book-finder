@@ -1,11 +1,13 @@
 import { useRef, useEffect } from "react";
-import popSound from "../assets/heartbeat-trimmed.mp3";
+import popSound from "../assets/add-to-favorite.mp3";
+import hoverSound from '../assets/heartbeat-trimmed.mp3';
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "./FavoriteButton.css";
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
-  const soundRef = useRef(new Audio(popSound));
+  const clickSoundRef = useRef(new Audio(popSound));
+  const hoverSoundRef = useRef(new Audio(hoverSound));
   const hasUserInteracted = useRef(false);
   const isHovering = useRef(false);
 
@@ -24,7 +26,7 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
   }, []);
 
   const fadeOutSound = () => {
-    const sound = soundRef.current;
+    const sound = hoverSoundRef.current;
     const fadeInterval = 100; // ms
     const fadeStep = 0.05; // volume decrement
 
@@ -44,7 +46,7 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
   };
 
   const handleToggle = () => {
-    const sound = soundRef.current;
+    const sound = clickSoundRef.current;
     if (!hasUserInteracted.current) return;
     sound.currentTime = 0;
     sound.play().catch(err => {
@@ -56,7 +58,7 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
   const handleHoverStart = () => {
     if (!hasUserInteracted.current) return;
 
-    const sound = soundRef.current;
+    const sound = hoverSoundRef.current;
     isHovering.current = true;
 
     try {
@@ -78,7 +80,7 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
 
   // Cleanup on unmount
   useEffect(() => {
-    const sound = soundRef.current;
+    const sound = hoverSoundRef.current;
     return () => {
       sound.pause();
       sound.loop = false;
