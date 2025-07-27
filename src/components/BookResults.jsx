@@ -24,7 +24,7 @@ export default function BookResults({
             languageMap={languageMap}
             t={t}
             isFavorite={isFavorite}
-            // isFavorite={favorites?.some(f => f.id === book.id)}
+            
             onToggleFavorite={() => toggleFavorite(book)}
             amazonLink={book.amazonLink}
           />

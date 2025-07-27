@@ -68,11 +68,7 @@
   cursor: pointer;
 }
 
-/* .modal-close:hover {
-  color: white;
-  text-shadow: 3px 3px 6px yellow;
-  transform: scale(1.2);
-} */
+
 
 .modal-close:focus {
   color: white;

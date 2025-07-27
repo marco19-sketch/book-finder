@@ -21,11 +21,6 @@
   color: var(--main-color);
 }
 
-/* .back-to-top.show:hover {
-    border: 2px solid var(--main-color);
-    box-shadow: 3px 3px 6px var(--main-color);
-} */
-
 .back-to-top.show:active {
   transform: scale(0.9);
   color: white;

@@ -7,14 +7,12 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* attribution: 'Foto di <a href="https://unsplash.com/it/@silverkblack?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Vitaly Gariev</a> su <a href="https://unsplash.com/it/foto/una-donna-seduta-su-un-divano-che-tiene-in-braccio-un-cane-g7v8HQkFIyo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-      ' */
 }
 
 /*independent scroll from home page*/
 .favorites-page {
-  height: 100vh; /* fill viewport */
-  overflow-y: auto; /* enable scrolling */
+  height: 100vh; /* full viewport */
+  overflow-y: auto; 
   overscroll-behavior: contain; /* prevent body scroll chaining */
 }
 

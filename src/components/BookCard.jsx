@@ -1,9 +1,6 @@
-// import { useRef } from "react";
-// import { FaHeart } from "react-icons/fa";
 import "./BookCard.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
 import FavoriteButton from "./FavoriteButton";
-// import popSound from "../assets/heartbeat-trimmed.mp3";
 
 const languageMap = {
   en: "English",
@@ -27,7 +24,6 @@ export default function BookCard({
   onToggleFavorite,
   t,
   isFavorite,
-  // onToggleFavorite,
 }) {
   const thumbnail =
     book.volumeInfo?.imageLinks?.thumbnail?.replace?.("https", "http") ||
@@ -43,16 +39,6 @@ export default function BookCard({
     language,
     description,
   } = book.volumeInfo || {};
-
-  // const soundRef = useRef(new Audio(popSound));
-
-  // const handleToggle = () => {
-  //   const sound = soundRef.current;
-  //   sound.currentTime = 0;
-  //   sound.play();
-
-  //   onToggleFavorite();
-  // };
 
   const publishedYear =
     publishedDate && !isNaN(new Date(publishedDate))

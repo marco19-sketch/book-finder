@@ -8,7 +8,7 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     typeof window !== "undefined" && window.innerWidth < 500
   ); //'to avoid errors'
 
-  const containerRef = useRef(null); //trying and keep if it works
+  const containerRef = useRef(null); 
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 500);
@@ -20,9 +20,8 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
   useEffect(() => {
     if (isMobile) return;
 
-    // const container = document.querySelector(scrollContainerSelector);
    
-    const container = //trying and keep it it works
+    const container = 
       document.querySelector(scrollContainerSelector) ||
       document.documentElement;
     containerRef.current = container;
@@ -35,7 +34,7 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     };
 
     container.addEventListener("scroll", toggleVisibility);
-    toggleVisibility(); //keep if it works. Checks initial position
+    toggleVisibility(); 
 
     return () => {
       container.removeEventListener("scroll", toggleVisibility);
@@ -45,8 +44,7 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
   if (isMobile) return null;
 
   const scrollToTop = () => {
-    const container = containerRef.current; //keep if it works
-    // const container = document.querySelector(scrollContainerSelector);
+    const container = containerRef.current; 
     if (container) {
       container.scrollTo({
         top: 0,

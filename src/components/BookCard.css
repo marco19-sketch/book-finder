@@ -34,11 +34,6 @@
   outline: none;
 }
 
-/* .thumb-btn:hover {
-  outline: none;
-  border: none;
-} */
-
 .thumbnail {
   height: 300px;
   display: block;
@@ -56,10 +51,7 @@
   transform: scale(1.1);
 }
 
-/* .thumbnail:hover {
-  outline: 1px solid yellow;
-  transform: scale(1.08);
-} */
+
 
 .book-detail {
   grid-area: details;
@@ -103,13 +95,7 @@ button.read-more {
   transition: width 0.3s ease;
 }
 
-/* .buy-now:hover {
-  color: orange;
-}
 
-.buy-now:hover::after {
-  width: 100%;
-} */
 
 @media screen and (max-width: 800px) {
   .single-book {

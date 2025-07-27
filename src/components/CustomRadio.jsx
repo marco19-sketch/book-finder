@@ -1,4 +1,3 @@
-import React from "react";
 import "./CustomRadio.css";
 
 const CustomRadio = ({ label, name, value, checked, onChange }) => {

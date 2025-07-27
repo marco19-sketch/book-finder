@@ -1,8 +1,7 @@
 import { useCallback, useEffect } from "react";
-// import { useState, useCallback, useEffect } from "react";
 import CustomRadio from "./CustomRadio";
 import "./SearchBar.css";
-// import { devLog } from '../utils/devLog';
+
 
 const labelsMap = {
   intitle: "Title",
@@ -25,7 +24,7 @@ export default function SearchBar({
 
   handleFetchNew
 }) {
-  // const [suggestions, setSuggestions] = useState([]);
+  
 
   const getSuggestions = useCallback(
     async input => {

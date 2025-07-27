@@ -9,11 +9,6 @@
   font-size: 1.2rem;
 }
 
-/* .label-container label:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
-} */
-
 .input-element,
 .btn-element,
 .reset-btn {
@@ -28,7 +23,7 @@
 .reset-btn:focus {
   outline: 3px solid white;
   outline-offset: 3px;
-} 
+}
 
 .input-element {
   width: 300px;
@@ -55,9 +50,7 @@
   cursor: pointer;
   padding: 8px;
 }
-/* .suggestion-item li:hover {
-  transform: scale(1.1);
-} */
+
 .btn-element,
 .reset-btn {
   background-color: var(--main-color);
@@ -66,31 +59,24 @@
   text-shadow: 3px 3px 6px rgb(113, 30, 136);
 }
 
-/* .btn-element:hover,
-.reset-btn:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
-} */
-
 .btn-element:active,
 .reset-btn:active {
   transform: scale(0.9);
 }
 
 @media (hover: hover) {
-
   .label-container label:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
-}
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
 
-.suggestion-item li:hover {
-  transform: scale(1.1);
-}
+  .suggestion-item li:hover {
+    transform: scale(1.1);
+  }
 
-.btn-element:hover,
-.reset-btn:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease;
-}
+  .btn-element:hover,
+  .reset-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
 }
