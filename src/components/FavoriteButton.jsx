@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import popSound from "../assets/add-to-favorite.mp3";
 import hoverSound from '../assets/heartbeat-trimmed.mp3';
-import swooshSound from '../assets/delete-favorite.mp3';
+import swooshSound from '../assets/whoosh_zapsplat.mp3';
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "./FavoriteButton.css";
