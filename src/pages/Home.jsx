@@ -47,7 +47,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       startIndex,
     });
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 3000));
 
       const res = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${activeMode}:${encoded}&startIndex=${startIndex}&maxResults=${maxResult}`
@@ -150,7 +150,8 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   }, [fetchedBooks]);
 
   return (
-    <div className="home-page">
+    <div className={`home-page ${loading ? 'wait-cursor' : ''}`}>
+      {/* <div className="home-page"> */}
       <header>
         <h1 className="main-title">{t("title")}</h1>
       </header>
