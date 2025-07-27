@@ -55,6 +55,7 @@ export default function BookCard({
       tabIndex="0">
       <h2 className="single-book-title">{title}</h2>
 
+      <div className='cover-favorite-btn'>
       {hasThumbnail ? (
         <button
           className="thumb-btn"
@@ -74,6 +75,12 @@ export default function BookCard({
         <p className="no-thumbnail-para">No cover image available</p>
       )}
 
+      <FavoriteButton
+        isFavorite={isFavorite(book)}
+        onToggle={onToggleFavorite}
+        t={t}
+      />
+      </div>
       <div className="book-detail">
         <p>
           <strong>{t("author") || "Author(s)"}:</strong>{" "}
@@ -123,11 +130,11 @@ export default function BookCard({
           )}
         </div>
 
-        <FavoriteButton
+        {/* <FavoriteButton
           isFavorite={isFavorite(book)}
           onToggle={onToggleFavorite}
           t={t}
-        />
+        /> */}
       </div>
     </div>
   );
