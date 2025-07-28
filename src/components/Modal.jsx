@@ -34,7 +34,7 @@ export default function Modal({ onClose, children }) {
             onClick={onClose}
             className="modal-close"
             aria-label="Close modal">
-            ×
+            <span>&times;</span>
           </button>
           {children}
         </div>
