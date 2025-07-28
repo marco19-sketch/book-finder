@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 import CustomRadio from "./CustomRadio";
 import "./SearchBar.css";
+// import { devLog } from "../utils/devLog";
 
 
 const labelsMap = {
@@ -21,7 +22,6 @@ export default function SearchBar({
   resetResults,
   suggestions,
   setSuggestions,
-
   handleFetchNew
 }) {
   
@@ -105,7 +105,6 @@ export default function SearchBar({
                 if (e.key === 'Enter') {
                   setQuery(sugg);
                   setSuggestions([]);
-
                   handleFetchNew(sugg);
                   e.currentTarget.blur();
 
@@ -118,7 +117,6 @@ export default function SearchBar({
               onClick={(e) => {
                 setQuery(sugg); // 👈 this value will be passed to Home when you click search
                 setSuggestions([]);
-
                 handleFetchNew(sugg);
                 e.currentTarget.blur();
               }}>
@@ -128,7 +126,9 @@ export default function SearchBar({
         </ul>
       )}
 
-      <button className="btn-element" type="button" onClick={onSearch}>
+      <button className="btn-element" type="button" onClick={() => { onSearch(query);
+        setSuggestions([]);
+      }}>
         {t("startSearch")}
       </button>
       <button className="reset-btn" type="button" onClick={onReset}>

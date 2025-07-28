@@ -104,14 +104,15 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       if (queryToUse.trim() === activeQuery && searchMode === activeMode)
         return;
 
-      devLog("handleFetchNew fetching...", startIndex);
+      devLog('queryToUse', queryToUse);
       setActiveQuery(queryToUse.trim());
       setActiveMode(searchMode);
       setShowNoResultsModal(false);
       setStartIndex(0);
       setHasSearched(true);
     },
-    [activeMode, activeQuery, query, searchMode, startIndex]
+    [activeMode, activeQuery, query, searchMode]
+    // [activeMode, activeQuery, query, searchMode, startIndex]
   );
 
   useEffect(() => {
@@ -172,7 +173,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
           setSuggestions={setSuggestions}
           suggestions={suggestions}
         />
-
+        
         {!hasSearched && (
           <h2 className="trending-books">
             {t("trendingBooks") || "Trending Books"}
