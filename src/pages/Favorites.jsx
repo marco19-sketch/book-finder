@@ -64,7 +64,8 @@ function Favorites({ favorites, toggleFavorite }) {
       <BackToTop scrollContainerSelector=".favorites-page" />
       <Footer
         creditText={
-          <div className="fav-footer">
+          <div className="media-credits">
+          {/* <div className="fav-footer"> */}
             <p>
               Sound effects obtained from{" "}
               <a

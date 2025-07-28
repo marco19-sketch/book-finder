@@ -1,6 +1,9 @@
+// import { useEffect, useState } from 'react';
 import "./BookCard.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
 import FavoriteButton from "./FavoriteButton";
+import { useThumbnail } from '../utils/useThumbnail';
+// import { devLog } from "../utils/devLog";
 
 const languageMap = {
   en: "English",
@@ -25,11 +28,8 @@ export default function BookCard({
   t,
   isFavorite,
 }) {
-  const thumbnail =
-    book.volumeInfo?.imageLinks?.thumbnail?.replace?.("https", "http") ||
-    "https://via.placeholder.com/128x195?text=No+Image";
-  const hasThumbnail =
-    thumbnail !== "https://via.placeholder.com/128x195?text=No+Image";
+
+  const thumbnail = useThumbnail(book);
 
   const {
     title = "Untitled",
@@ -38,7 +38,76 @@ export default function BookCard({
     categories = "N/A",
     language,
     description,
+    copiesSold,
   } = book.volumeInfo || {};
+
+// const [thumbnail, setThumbnail] = useState(
+//   "https://via.placeholder.com/128x195?text=No+Image"
+// );
+
+// const volumeInfo = book.volumeInfo || {};
+// const googleThumb = volumeInfo.imageLinks?.thumbnail?.replace?.(
+//   "https",
+//   "http"
+// );
+// const identifiers = volumeInfo.industryIdentifiers || [];
+
+// // Try to find ISBN-13 first, fallback to any identifier
+// const isbn =
+//   identifiers.find(id => id.type === "ISBN_13")?.identifier ||
+//   identifiers.find(id => id.identifier)?.identifier;
+
+// useEffect(() => {
+//   let isCancelled = false;
+
+//   const loadImage = async () => {
+//     if (!isbn) {
+//       if (googleThumb && !isCancelled) setThumbnail(googleThumb);
+//       return;
+//     }
+
+//     const openLibUrl = `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
+
+//     const img = new Image();
+//     img.src = openLibUrl;
+
+//     img.onload = () => {
+//       if (!isCancelled) {
+//         if (img.width > 1) {
+//           setThumbnail(openLibUrl);
+//         } else if (googleThumb) {
+//           setThumbnail(googleThumb);
+//         }
+//       }
+//     };
+
+//     img.onerror = () => {
+//       if (!isCancelled && googleThumb) {
+//         setThumbnail(googleThumb);
+//       }
+//     };
+//   };
+
+//   loadImage();
+
+//   return () => {
+//     isCancelled = true;
+//   };
+// }, [isbn, googleThumb]);
+
+  
+
+  const hasThumbnail =
+    thumbnail !== "https://via.placeholder.com/128x195?text=No+Image";
+
+  const formatCopiesSold = () => {
+    if (!copiesSold) return "N/A";
+    if (copiesSold >= 1000000) {
+      return (copiesSold / 1000000).toLocaleString() + " " + "Millions";
+    } else {
+      return copiesSold.toLocaleString() || "N/A";
+    }
+  };
 
   const publishedYear =
     publishedDate && !isNaN(new Date(publishedDate))
@@ -55,32 +124,32 @@ export default function BookCard({
       tabIndex="0">
       <h2 className="single-book-title">{title}</h2>
 
-      <div className='cover-favorite-btn'>
-      {hasThumbnail ? (
-        <button
-          className="thumb-btn"
-          onClick={() => onSelect(book)}
-          onKeyDown={e =>
-            (e.key === "Enter" || e.key === " ") && onSelect(book)
-          }
-          aria-label="View book full description">
-          <img
-            tabIndex="0"
-            className="thumbnail"
-            src={thumbnail}
-            alt={`Cover of ${title}`}
+      <div className="cover-favorite-btn">
+        {hasThumbnail ? (
+          <button
+            className="thumb-btn"
+            onClick={() => onSelect(book)}
+            onKeyDown={e =>
+              (e.key === "Enter" || e.key === " ") && onSelect(book)
+            }
+            aria-label="View book full description">
+            <img
+              tabIndex="0"
+              className="thumbnail"
+              src={thumbnail}
+              alt={`Cover of ${title}`}
+            />
+          </button>
+        ) : (
+          <p className="no-thumbnail-para">No cover image available</p>
+        )}
+        <div className="book-card-fav-btn">
+          <FavoriteButton
+            isFavorite={isFavorite(book)}
+            onToggle={onToggleFavorite}
+            t={t}
           />
-        </button>
-      ) : (
-        <p className="no-thumbnail-para">No cover image available</p>
-      )}
-      <div className='book-card-fav-btn'>
-      <FavoriteButton
-        isFavorite={isFavorite(book)}
-        onToggle={onToggleFavorite}
-        t={t}
-      />
-      </div>
+        </div>
       </div>
       <div className="book-detail">
         <p>
@@ -94,11 +163,15 @@ export default function BookCard({
           <strong>{t("genre") || "Genre"}:</strong>{" "}
           {Array.isArray(categories) ? categories.join(", ") : categories}
         </p>
+       
         <p>
           <strong>{t("language") || "Language"}:</strong>{" "}
           {languageMap[language] || language}
         </p>
-
+        <p>
+          <strong>{t("copiesSold") || "Copies sold"}:</strong>{" "}
+          {formatCopiesSold(copiesSold) || "N/A"}
+        </p>
         <p>
           <strong>{t("description") || "Description"}:</strong>{" "}
           {description ? (
@@ -130,12 +203,6 @@ export default function BookCard({
             <p>{t("noPurchaseAvailable") || "No purchase available."}</p>
           )}
         </div>
-
-        {/* <FavoriteButton
-          isFavorite={isFavorite(book)}
-          onToggle={onToggleFavorite}
-          t={t}
-        /> */}
       </div>
     </div>
   );

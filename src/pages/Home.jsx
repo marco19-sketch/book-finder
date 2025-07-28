@@ -4,7 +4,7 @@ import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
 import BookResults from "../components/BookResults";
 import LoadingSkeleton from "../components/LoadingSkeleton";
-import featuredBooks from "../data/featuredBooks";
+import trendingBooks from "../data/trendingBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollup } from "../utils/scrollup";
@@ -104,7 +104,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       if (queryToUse.trim() === activeQuery && searchMode === activeMode)
         return;
 
-      devLog('queryToUse', queryToUse);
+      devLog("queryToUse", queryToUse);
       setActiveQuery(queryToUse.trim());
       setActiveMode(searchMode);
       setShowNoResultsModal(false);
@@ -152,7 +152,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
   return (
     <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
-      {/* <div className="home-page"> */}
+      
       <div className="main-container">
         <header>
           <h1 className="main-title">{t("title")}</h1>
@@ -168,12 +168,12 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
           onReset={handleReset}
           placeholderMap={placeholderMap}
           t={t}
-          featuredBooks={featuredBooks}
+          trendingBooks={trendingBooks}
           resetResults={resetResults}
           setSuggestions={setSuggestions}
           suggestions={suggestions}
         />
-        
+
         {!hasSearched && (
           <h2 className="trending-books">
             {t("trendingBooks") || "Trending Books"}
@@ -184,7 +184,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
         {!hasSearched && (
           <BookResults
-            books={featuredBooks}
+            books={trendingBooks}
             favorites={favorites}
             toggleFavorite={toggleFavorite}
             t={t}
@@ -251,7 +251,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       </div>
       <Footer
         creditText={
-          <>
+          <div className="media-credits">
             <p>
               Sound effects obtained from{" "}
               <a
@@ -268,7 +268,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
               href="https://www.pexels.com/photo/a-woman-browsing-at-the-library-6550396/">
               Photo by Tima Miroshnichenko
             </a>
-          </>
+          </div>
         }
       />
     </div>

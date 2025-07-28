@@ -41,6 +41,7 @@
 
 .thumbnail {
   height: 300px;
+  max-width: 200px;
   display: block;
   margin: 10px 0 10px 2%;;
   object-fit: cover;
@@ -63,9 +64,8 @@
 .book-detail {
   grid-area: details;
   text-shadow: 1px 1px 6px;
-  padding: 10px;
   align-self: center;
-  padding: 0 30px 0 0;
+  padding: 0 30px 0 10px;
   color: var(--main-color);
 }
 

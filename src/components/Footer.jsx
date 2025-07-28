@@ -3,7 +3,7 @@ import "./Footer.css";
 export default function Footer({ creditText }) {
   return (
     <footer className="site-footer">
-      <div className="image-credit">{creditText}</div>
+      <div className="media-credits">{creditText}</div>
       <div className="legals">
         <div className="legal-links">
           <a
