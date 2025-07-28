@@ -79,11 +79,11 @@
 #modal-title {
   text-align: center;
   margin: 10px;
-  text-shadow: 3px 3px 6px;
+  text-shadow: 3px 3px 10px;
 }
 
 .full-description {
-  text-shadow: 3px 3px 6px;
+  text-shadow: 1px 1px 5px;
 }
 
 @media (hover: hover) {

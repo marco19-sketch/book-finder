@@ -9,10 +9,10 @@
 
 /* === Global Variables === */
 :root {
-  --main-color: rgb(235, 193, 103);
+  --main-color: rgb(224, 168, 46);
   --text-color: rgb(115, 6, 4);
   --shadow: 4px 4px 8px rgb(7, 6, 7);
-  --overlay: rgba(0, 0, 0, 0.507);
+  --overlay: rgba(0, 0, 0, 0.61);
 
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

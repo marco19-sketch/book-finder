@@ -32,7 +32,7 @@
 .custom-radio .radio-mark {
   height: 15px;
   width: 15px;
-  border: 2px solid #555;
+  border: 2px solid var(--text-color);
   border-radius: 50%;
   box-shadow: var(--shadow);
   position: relative;
@@ -62,7 +62,7 @@
   left: 2px;
   height: 7px;
   width: 7px;
-  background-color: #555;
+  background-color: var(--text-color);
   border-radius: 50%;
 }
 
