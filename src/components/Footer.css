@@ -65,7 +65,7 @@
   }
 }
 
-@media (hove: hover) {
+@media (hover: hover) {
   .legals a:hover {
   text-decoration: underline;
 }
