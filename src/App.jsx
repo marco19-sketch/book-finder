@@ -1,14 +1,17 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import { Suspense, lazy } from "react";
 const Favorites = lazy(() => import("./pages/Favorites"));
+const Home = lazy(() => import('./pages/Home'));
 // import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import NavBar from "./components/NavBar";
+import LoadingSkeleton from './components/LoadingSkeleton';
 import { devLog } from "./utils/devLog";
+import Footer from "./components/Footer";
 
 export default function App() {
   const [fetchedBooks, setFetchedBooks] = useState(() => {
@@ -81,31 +84,33 @@ export default function App() {
         <NavBar favorites={favorites} t={t} />
 
         <LanguageSwitcher />
-
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Home
-                favorites={favorites}
-                toggleFavorite={toggleFavorite}
-                fetchedBooks={fetchedBooks}
-                setFetchedBooks={setFetchedBooks}
-              />
-            }
-          />
-          <Route
-            path="/favorites"
-            element={
-              <Favorites
-                favorites={favorites}
-                toggleFavorite={toggleFavorite}
-              />
-            }
-          />
-        </Routes>
+        <Suspense fallback={<LoadingSkeleton />}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  favorites={favorites}
+                  toggleFavorite={toggleFavorite}
+                  fetchedBooks={fetchedBooks}
+                  setFetchedBooks={setFetchedBooks}
+                />
+              }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <Favorites
+                  favorites={favorites}
+                  toggleFavorite={toggleFavorite}
+                />
+              }
+            />
+          </Routes>
+        </Suspense>
       </div>
       <BackToTop scrollContainerSelector="body" />
+      <Footer />
     </div>
   );
 }

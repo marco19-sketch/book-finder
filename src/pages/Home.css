@@ -1,5 +1,6 @@
 .home-page {
   background-image: url("/src/assets/images/pexels-tima-miroshnichenko-6550396.webp");
+  /* background-image: url("/src/assets/images/pexels-tima-miroshnichenko-6550396.webp"); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -11,9 +12,9 @@
 
 
     /* height: 100vh; */
-    height: auto;
+    /* height: auto;
   overflow-y: auto;
-  overscroll-behavior: contain;
+  overscroll-behavior: contain; */
 
  
 }

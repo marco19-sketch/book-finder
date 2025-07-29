@@ -89,11 +89,6 @@ button:focus-visible {
   border: 0;
 }
 
-#root {
-  margin: auto;
-  width: 100%;
-}
-
 .skip-link {
   position: absolute;
   top: -40px;
@@ -112,6 +107,16 @@ button:focus-visible {
   top: 10px;
 }
 
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  flex: 1;
+}
+
 h1.main-title {
   color: var(--main-color);
   background-color: transparent !important;
@@ -120,46 +125,32 @@ h1.main-title {
   font-size: 4rem;
   line-height: 1.1;
   margin: 60px auto 30px;
+  /* min-height: 4.5rem; */
 }
 
 .italiano > img,
 .english > img {
-  transform: scale(0.8);
+  width: 32px;
+  height: 24px;
 }
 
 .english,
 .italiano {
   background-color: var(--overlay);
-  color: white;
   border-radius: 5px;
-  text-shadow: var(--shadow);
   width: 50px;
   height: 30px;
   display: flex;
   justify-content: center;
-  padding-bottom: 13px;
   align-items: center;
-  font-weight: normal;
   z-index: 2000;
   transition: transform 0.2s ease, background-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
-.english:active,
-.italiano:active {
-  transform: scale(0.9);
-}
-
-.english.selected,
-.italiano.selected {
-  background-color: transparent;
-}
-
 .english.selected > img,
 .italiano.selected > img {
-  font-weight: bold;
   transform: scale(1.5);
-  color: white;
 }
 
 .italiano {
@@ -172,6 +163,11 @@ h1.main-title {
   position: fixed;
   top: 10px;
   right: 80px;
+}
+
+footer {
+  height: 9vh;
+  flex-shrink: 0;
 }
 
 @keyframes fadeIn {
@@ -221,15 +217,6 @@ h1.main-title {
 
   .english:hover,
   .italiano:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 8px var(--main-color);
-  }
-
-  .english:hover,
-  .italiano:hover {
     transform: scale(1.4);
-    font-weight: bold;
-    border: none;
-    color: white;
   }
 }

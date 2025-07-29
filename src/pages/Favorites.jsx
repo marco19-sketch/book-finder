@@ -6,7 +6,7 @@ import BookResults from "../components/BookResults";
 import BackToTop from "../components/BackToTop";
 import "./Favorites.css";
 import FavoriteButton from "../components/FavoriteButton";
-import Footer from "../components/Footer";
+
 
 function Favorites({ favorites, toggleFavorite }) {
   const { t } = useTranslation();
@@ -64,43 +64,7 @@ function Favorites({ favorites, toggleFavorite }) {
         )}
         <BackToTop scrollContainerSelector=".favorites-page" />
       </div>
-      <Footer
-        creditText={
-          <div className="media-credits">
-            {/* <div className="fav-footer"> */}
-            <p>
-              Sound effects obtained from{" "}
-              <a
-                href="https://www.zapsplat.com"
-                target="_blank"
-                rel="noopener noreferrer">
-                ZapSplat
-              </a>
-            </p>
-
-            <p>
-              {" "}
-              Foto di
-              <a
-                rel="noreferrer noopener"
-                target="_blank"
-                href="http://bit.ly/3IMARbi">
-                Vitaly Gariev
-              </a>{" "}
-              su{" "}
-              <a
-                rel="noopener noreferrer"
-                target="_blank"
-                href="http://bit.ly/3IMB0LS">
-                Unsplash
-              </a>
-            </p>
-            <p style={{ fontStyle: "italic", fontSize: "12px" }}>
-              As an Amazon Associate, I earn from qualifying purchases
-            </p>
-          </div>
-        }
-      />
+      
     </div>
   );
 }

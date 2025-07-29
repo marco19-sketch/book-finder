@@ -11,7 +11,7 @@ import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollup } from "../utils/scrollup";
 import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
-import Footer from "../components/Footer";
+
 
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const BookResults = lazy(() => import("../components/BookResults"));
@@ -256,31 +256,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
             </Modal>
           )}
         </div>
-        <Footer
-          creditText={
-            <div className="media-credits">
-              <p>
-                Sound effects obtained from{" "}
-                <a
-                  href="https://www.zapsplat.com"
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  ZapSplat
-                </a>
-              </p>
-
-              <a
-                rel="noreferrer noopener"
-                target="_blank"
-                href="http://bit.ly/456zxY7">
-                Photo by Tima Miroshnichenko
-              </a>
-              <p style={{ fontStyle: "italic", fontSize: "12px" }}>
-                As an Amazon Associate, I earn from qualifying purchases
-              </p>
-            </div>
-          }
-        />
+       
       </div>
     </>
   );
