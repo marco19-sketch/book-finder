@@ -46,3 +46,9 @@
 .fav-page-modal-fav-btn {
   margin: 5px auto 5px;
 }
+
+@media screen and (max-width: 550px) {
+  .favorites-page {
+    background-image: url('/src/assets/images/small-vitaly-gariev-unsplash.webp');
+  }
+}

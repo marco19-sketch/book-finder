@@ -1,22 +1,11 @@
 .home-page {
   background-image: url("/src/assets/images/pexels-tima-miroshnichenko-6550396.webp");
-  /* background-image: url("/src/assets/images/pexels-tima-miroshnichenko-6550396.webp"); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
-
-
-
-    /* height: 100vh; */
-    /* height: auto;
-  overflow-y: auto;
-  overscroll-behavior: contain; */
-
- 
 }
 
 .main-container {
@@ -83,6 +72,10 @@
     display: block;
     margin-bottom: 20px;
     height: fit-content;
+  }
+
+  .home-page {
+    background-image: url("/src/assets/images/small-pexels-tima-miroshnichenko.webp");
   }
 }
 
