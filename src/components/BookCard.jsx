@@ -62,7 +62,7 @@ export default function BookCard({
   return (
     <div
       className="single-book"
-      role="article"
+      role="listitem"
       aria-label={`Book: ${title}`}
       tabIndex="0">
       <h2 className="single-book-title">{title}</h2>

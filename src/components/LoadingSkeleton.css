@@ -1,13 +1,14 @@
 .loading {
-  border: 2px solid grey;
+  border: 1px solid grey;
   background-color: transparent;
   border-radius: 50% !important;
-  border-bottom: 4px solid #0077cc;
-  width: 40px;
-  height: 40px;
-  margin: 10px auto;
+  border-bottom: 3px solid #0077cc;
+  width: 20px;
+  height: 20px;
+  margin: 5px auto;
   animation: spin 1s linear infinite;
-  box-shadow: var(--shadow);
+  will-change: transform;
+  /* box-shadow: var(--shadow); */
 }
 
 @keyframes spin {
