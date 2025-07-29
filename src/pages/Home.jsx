@@ -47,10 +47,12 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       startIndex,
     });
     try {
+      const q = `${activeMode}:${encoded}`;
       await new Promise(resolve => setTimeout(resolve, 500));
 
       const res = await fetch(
-        `https://www.googleapis.com/books/v1/volumes?q=${activeMode}:${encoded}&startIndex=${startIndex}&maxResults=${maxResult}`
+        `https://www.googleapis.com/books/v1/volumes?q=${q}&startIndex=${startIndex}&maxResults=${maxResult}`
+        // `https://www.googleapis.com/books/v1/volumes?q=${activeMode}:${encoded}&startIndex=${startIndex}&maxResults=${maxResult}`
       );
 
       if (!res.ok) {
@@ -112,7 +114,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       setHasSearched(true);
     },
     [activeMode, activeQuery, query, searchMode]
-    // [activeMode, activeQuery, query, searchMode, startIndex]
   );
 
   useEffect(() => {
@@ -152,7 +153,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
   return (
     <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
-      
       <div className="main-container">
         <header>
           <h1 className="main-title">{t("title")}</h1>
@@ -265,9 +265,12 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
             <a
               rel="noreferrer noopener"
               target="_blank"
-              href="https://www.pexels.com/photo/a-woman-browsing-at-the-library-6550396/">
+              href="http://bit.ly/456zxY7">
               Photo by Tima Miroshnichenko
             </a>
+            <p style={{ fontStyle: "italic", fontSize: "12px" }}>
+              As an Amazon Associate, I earn from qualifying purchases
+            </p>
           </div>
         }
       />

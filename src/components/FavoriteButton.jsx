@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import popSound from "../assets/add-to-favorite.mp3";
 import hoverSound from "../assets/heartbeat-trimmed.mp3";
 import swooshSound from "../assets/whoosh_zapsplat.mp3";
-import popUpSound from "../assets/zapsplat_pop_up.mp3";
+import popUpSound from "../assets/zapsplat_soft_click.mp3";
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "./FavoriteButton.css";

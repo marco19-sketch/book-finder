@@ -65,7 +65,7 @@ function Favorites({ favorites, toggleFavorite }) {
       <Footer
         creditText={
           <div className="media-credits">
-          {/* <div className="fav-footer"> */}
+            {/* <div className="fav-footer"> */}
             <p>
               Sound effects obtained from{" "}
               <a
@@ -92,6 +92,9 @@ function Favorites({ favorites, toggleFavorite }) {
                 href="http://bit.ly/3IMB0LS">
                 Unsplash
               </a>
+            </p>
+            <p style={{ fontStyle: "italic", fontSize: '12px' }}>
+              As an Amazon Associate, I earn from qualifying purchases
             </p>
           </div>
         }
