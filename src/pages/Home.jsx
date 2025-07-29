@@ -2,7 +2,8 @@ import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
-import BookResults from "../components/BookResults";
+import { Suspense, lazy } from "react";
+// import BookResults from "../components/BookResults";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import trendingBooks from "../data/trendingBooks";
 import "./Home.css";
@@ -13,6 +14,8 @@ import { devLog } from "../utils/devLog";
 import Footer from "../components/Footer";
 
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
+  const BookResults = lazy(() => import("../components/BookResults"));
+
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -152,129 +155,134 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   }, [fetchedBooks]);
 
   return (
-    <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
-      <div className="main-container">
-        <header>
-          <h1 className="main-title">{t("title")}</h1>
-        </header>
-
-        <SearchBar
-          query={query}
-          setQuery={setQuery}
-          searchMode={searchMode}
-          setSearchMode={setSearchMode}
-          onSearch={handleFetchNew}
-          handleFetchNew={handleFetchNew}
-          onReset={handleReset}
-          placeholderMap={placeholderMap}
-          t={t}
-          trendingBooks={trendingBooks}
-          resetResults={resetResults}
-          setSuggestions={setSuggestions}
-          suggestions={suggestions}
-        />
-
-        {!hasSearched && (
-          <h2 className="trending-books">
-            {t("trendingBooks") || "Trending Books"}
-          </h2>
-        )}
-
-        {loading && <LoadingSkeleton />}
-
-        {!hasSearched && (
-          <BookResults
-            books={trendingBooks}
-            favorites={favorites}
-            toggleFavorite={toggleFavorite}
+    <>
+      {/* <header>
+        <h1 className="main-title">{t("title")}</h1>
+      </header> */}
+      <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
+        <div className="main-container">
+          <SearchBar
+            query={query}
+            setQuery={setQuery}
+            searchMode={searchMode}
+            setSearchMode={setSearchMode}
+            onSearch={handleFetchNew}
+            handleFetchNew={handleFetchNew}
+            onReset={handleReset}
+            placeholderMap={placeholderMap}
             t={t}
-            getAmazonLink={getAmazonLink}
-            onSelect={handleSelected}
+            trendingBooks={trendingBooks}
+            resetResults={resetResults}
+            setSuggestions={setSuggestions}
+            suggestions={suggestions}
           />
-        )}
 
-        {uniqueBooks.length > 0 && (
-          <>
-            <BookResults
-              books={uniqueBooks}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-              t={t}
-              getAmazonLink={getAmazonLink}
-              onSelect={handleSelected}
-            />
-            {loading && <LoadingSkeleton />}
-            <button
-              className="load-more"
-              type="button"
-              ref={loadMoreRef}
-              onClick={() => {
-                setStartIndex(prev => {
-                  const newIndex = prev + maxResult;
-                  return newIndex;
-                });
-              }}>
-              {t("loadMore")}
-            </button>
-          </>
-        )}
+          {!hasSearched && (
+            <h2 className="trending-books">
+              {t("trendingBooks") || "Trending Books"}
+            </h2>
+          )}
 
-        {!loading && showNoResultsModal && (
-          <Modal onClose={() => setShowNoResultsModal(false)}>
-            <p className="no-results">{t("noResults")}</p>
-          </Modal>
-        )}
-        {!loading && startIndex !== 0 && showNoResultsModal && (
-          <Modal onClose={() => setShowNoResultsModal(false)}>
-            <p className="no-results">
-              {t("noMoreResults") || "No more results"}
-            </p>
-          </Modal>
-        )}
+          {loading && <LoadingSkeleton />}
 
-        {showModal && selectedTitle && (
-          <Modal onClose={() => setShowModal(false)}>
-            <div className="modal">
-              <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
-              <p className="full-description">
-                <strong>{t("fullDescription")}:</strong>{" "}
-                {selectedTitle.volumeInfo?.description ||
-                  t("noDescription", "No description available")}
+          {!hasSearched && (
+            <Suspense fallback={<LoadingSkeleton />}>
+              <BookResults
+                books={trendingBooks}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+                t={t}
+                getAmazonLink={getAmazonLink}
+                onSelect={handleSelected}
+              />
+            </Suspense>
+          )}
+
+          {uniqueBooks.length > 0 && (
+            <Suspense fallback={<LoadingSkeleton />}>
+              <>
+                <BookResults
+                  books={uniqueBooks}
+                  favorites={favorites}
+                  toggleFavorite={toggleFavorite}
+                  t={t}
+                  getAmazonLink={getAmazonLink}
+                  onSelect={handleSelected}
+                />
+                {loading && <LoadingSkeleton />}
+                <button
+                  className="load-more"
+                  type="button"
+                  ref={loadMoreRef}
+                  onClick={() => {
+                    setStartIndex(prev => {
+                      const newIndex = prev + maxResult;
+                      return newIndex;
+                    });
+                  }}>
+                  {t("loadMore")}
+                </button>
+              </>
+            </Suspense>
+          )}
+
+          {!loading && showNoResultsModal && (
+            <Modal onClose={() => setShowNoResultsModal(false)}>
+              <p className="no-results">{t("noResults")}</p>
+            </Modal>
+          )}
+          {!loading && startIndex !== 0 && showNoResultsModal && (
+            <Modal onClose={() => setShowNoResultsModal(false)}>
+              <p className="no-results">
+                {t("noMoreResults") || "No more results"}
+              </p>
+            </Modal>
+          )}
+
+          {showModal && selectedTitle && (
+            <Modal onClose={() => setShowModal(false)}>
+              <div className="modal">
+                <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
+                <p className="full-description">
+                  <strong>{t("fullDescription")}:</strong>{" "}
+                  {selectedTitle.volumeInfo?.description ||
+                    t("noDescription", "No description available")}
+                </p>
+              </div>
+              <FavoriteButton
+                isFavorite={isFavorite(selectedTitle)}
+                onToggle={() => toggleFavorite(selectedTitle)}
+              />
+            </Modal>
+          )}
+        </div>
+        <Footer
+          creditText={
+            <div className="media-credits">
+              <p>
+                Sound effects obtained from{" "}
+                <a
+                  href="https://www.zapsplat.com"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  ZapSplat
+                </a>
+              </p>
+
+              <a
+                rel="noreferrer noopener"
+                target="_blank"
+                href="http://bit.ly/456zxY7">
+                Photo by Tima Miroshnichenko
+              </a>
+              <p style={{ fontStyle: "italic", fontSize: "12px" }}>
+                As an Amazon Associate, I earn from qualifying purchases
               </p>
             </div>
-            <FavoriteButton
-              isFavorite={isFavorite(selectedTitle)}
-              onToggle={() => toggleFavorite(selectedTitle)}
-            />
-          </Modal>
-        )}
+          }
+        />
       </div>
-      <Footer
-        creditText={
-          <div className="media-credits">
-            <p>
-              Sound effects obtained from{" "}
-              <a
-                href="https://www.zapsplat.com"
-                target="_blank"
-                rel="noopener noreferrer">
-                ZapSplat
-              </a>
-            </p>
-
-            <a
-              rel="noreferrer noopener"
-              target="_blank"
-              href="http://bit.ly/456zxY7">
-              Photo by Tima Miroshnichenko
-            </a>
-            <p style={{ fontStyle: "italic", fontSize: "12px" }}>
-              As an Amazon Associate, I earn from qualifying purchases
-            </p>
-          </div>
-        }
-      />
-    </div>
+    </>
   );
 }
 export default Home;

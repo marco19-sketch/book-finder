@@ -4,23 +4,25 @@
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
+
 
 /*independent scroll from home page*/
-.favorites-page {
-  height: 100vh; /* full viewport */
+  min-height: 100vh; 
   overflow-y: auto; 
   overscroll-behavior: contain; /* prevent body scroll chaining */
+}
+
+.favorites-main-container {
+  flex: 1;
 }
 
 .favorites-header {
   text-align: center;
   color: var(--main-color);
   text-shadow: var(--shadow);
-  margin: 60px auto 20px;
+  margin: 0 auto 20px;
   font-size: 3rem;
 }
 

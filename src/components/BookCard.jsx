@@ -2,7 +2,7 @@
 import "./BookCard.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
 import FavoriteButton from "./FavoriteButton";
-import { useThumbnail } from '../utils/useThumbnail';
+import { useThumbnail } from "../utils/useThumbnail";
 // import { devLog } from "../utils/devLog";
 
 const languageMap = {
@@ -28,7 +28,6 @@ export default function BookCard({
   t,
   isFavorite,
 }) {
-
   const thumbnail = useThumbnail(book);
 
   const {
@@ -40,62 +39,6 @@ export default function BookCard({
     description,
     copiesSold,
   } = book.volumeInfo || {};
-
-// const [thumbnail, setThumbnail] = useState(
-//   "https://via.placeholder.com/128x195?text=No+Image"
-// );
-
-// const volumeInfo = book.volumeInfo || {};
-// const googleThumb = volumeInfo.imageLinks?.thumbnail?.replace?.(
-//   "https",
-//   "http"
-// );
-// const identifiers = volumeInfo.industryIdentifiers || [];
-
-// // Try to find ISBN-13 first, fallback to any identifier
-// const isbn =
-//   identifiers.find(id => id.type === "ISBN_13")?.identifier ||
-//   identifiers.find(id => id.identifier)?.identifier;
-
-// useEffect(() => {
-//   let isCancelled = false;
-
-//   const loadImage = async () => {
-//     if (!isbn) {
-//       if (googleThumb && !isCancelled) setThumbnail(googleThumb);
-//       return;
-//     }
-
-//     const openLibUrl = `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
-
-//     const img = new Image();
-//     img.src = openLibUrl;
-
-//     img.onload = () => {
-//       if (!isCancelled) {
-//         if (img.width > 1) {
-//           setThumbnail(openLibUrl);
-//         } else if (googleThumb) {
-//           setThumbnail(googleThumb);
-//         }
-//       }
-//     };
-
-//     img.onerror = () => {
-//       if (!isCancelled && googleThumb) {
-//         setThumbnail(googleThumb);
-//       }
-//     };
-//   };
-
-//   loadImage();
-
-//   return () => {
-//     isCancelled = true;
-//   };
-// }, [isbn, googleThumb]);
-
-  
 
   const hasThumbnail =
     thumbnail !== "https://via.placeholder.com/128x195?text=No+Image";
@@ -138,6 +81,11 @@ export default function BookCard({
               className="thumbnail"
               src={thumbnail}
               alt={`Cover of ${title}`}
+
+
+              loading='lazy'
+              width='200'
+              height='300'
             />
           </button>
         ) : (
@@ -163,7 +111,7 @@ export default function BookCard({
           <strong>{t("genre") || "Genre"}:</strong>{" "}
           {Array.isArray(categories) ? categories.join(", ") : categories}
         </p>
-       
+
         <p>
           <strong>{t("language") || "Language"}:</strong>{" "}
           {languageMap[language] || language}

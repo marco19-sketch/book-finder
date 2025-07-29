@@ -41,7 +41,7 @@
 
 .thumbnail {
   height: 300px;
-  max-width: 200px;
+  width: 200px;
   display: block;
   margin: 10px 0 10px 2%;;
   object-fit: cover;

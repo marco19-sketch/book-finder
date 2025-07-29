@@ -1,7 +1,9 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Home from "./pages/Home";
-import Favorites from "./pages/Favorites";
+import { Suspense, lazy } from "react";
+const Favorites = lazy(() => import("./pages/Favorites"));
+// import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
@@ -68,31 +70,41 @@ export default function App() {
       <a href="#main-content" className="skip-link">
         {t("skipToMain")}
       </a>
+      <div
+        className={`page-wrapper ${
+          isFavoritesPage ? "favorites-page" : "home-page"
+        }`}>
+        <header>
+          <h1 className="main-title">{t("title")}</h1>
+        </header>
 
-      <NavBar favorites={favorites} t={t} />
+        <NavBar favorites={favorites} t={t} />
 
-      <LanguageSwitcher />
+        <LanguageSwitcher />
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-              fetchedBooks={fetchedBooks}
-              setFetchedBooks={setFetchedBooks}
-            />
-          }
-        />
-        <Route
-          path="/favorites"
-          element={
-            <Favorites favorites={favorites} toggleFavorite={toggleFavorite} />
-          }
-        />
-       
-      </Routes>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+                fetchedBooks={fetchedBooks}
+                setFetchedBooks={setFetchedBooks}
+              />
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <Favorites
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+              />
+            }
+          />
+        </Routes>
+      </div>
       <BackToTop scrollContainerSelector="body" />
     </div>
   );

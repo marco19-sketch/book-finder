@@ -22,46 +22,48 @@ function Favorites({ favorites, toggleFavorite }) {
 
   return (
     <div className="favorites-page">
-      <LanguageSwitcher />
-      <h1 className="favorites-header">
-        {t("yourFavorites") || "Your Favorites"}:
-      </h1>
-
-      {favorites.length === 0 ? (
-        <h2 className="no-favorites-yet">
-          {t("noFavoritesYet") || "No favorites yet."}
+      <div className="favorites-main-container">
+        <LanguageSwitcher />
+        <h2 className="favorites-header">
+          {t("yourFavorites") || "Your Favorites"}:
         </h2>
-      ) : (
-        <BookResults
-          books={favorites}
-          favorites={favorites}
-          onSelect={handleSelect}
-          toggleFavorite={toggleFavorite}
-          // languageMap={languageMap}
-          t={t}
-        />
-      )}
 
-      {showModal && selectedBook && (
-        <Modal onClose={() => setShowModal(false)}>
-          <div className="modal">
-            <h2 id="modal-title" className="header">
-              {selectedBook?.volumeInfo?.title || "No title"}
-            </h2>
-            <p className="full-description">
-              <strong>{t("fullDescription", "Full Description")}: </strong>{" "}
-              {selectedBook.volumeInfo?.description ||
-                t("noDescription", "No description available")}
-            </p>
+        {favorites.length === 0 ? (
+          <h2 className="no-favorites-yet">
+            {t("noFavoritesYet") || "No favorites yet."}
+          </h2>
+        ) : (
+          <BookResults
+            books={favorites}
+            favorites={favorites}
+            onSelect={handleSelect}
+            toggleFavorite={toggleFavorite}
+            // languageMap={languageMap}
+            t={t}
+          />
+        )}
 
-            <FavoriteButton
-              isFavorite={isFavorite(selectedBook)}
-              onToggle={() => toggleFavorite(selectedBook)}
-            />
-          </div>
-        </Modal>
-      )}
-      <BackToTop scrollContainerSelector=".favorites-page" />
+        {showModal && selectedBook && (
+          <Modal onClose={() => setShowModal(false)}>
+            <div className="modal">
+              <h2 id="modal-title" className="header">
+                {selectedBook?.volumeInfo?.title || "No title"}
+              </h2>
+              <p className="full-description">
+                <strong>{t("fullDescription", "Full Description")}: </strong>{" "}
+                {selectedBook.volumeInfo?.description ||
+                  t("noDescription", "No description available")}
+              </p>
+
+              <FavoriteButton
+                isFavorite={isFavorite(selectedBook)}
+                onToggle={() => toggleFavorite(selectedBook)}
+              />
+            </div>
+          </Modal>
+        )}
+        <BackToTop scrollContainerSelector=".favorites-page" />
+      </div>
       <Footer
         creditText={
           <div className="media-credits">
@@ -93,7 +95,7 @@ function Favorites({ favorites, toggleFavorite }) {
                 Unsplash
               </a>
             </p>
-            <p style={{ fontStyle: "italic", fontSize: '12px' }}>
+            <p style={{ fontStyle: "italic", fontSize: "12px" }}>
               As an Amazon Associate, I earn from qualifying purchases
             </p>
           </div>
