@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import LanguageSwitcher from "../components/LanguageSwitcher";
@@ -6,12 +6,22 @@ import BookResults from "../components/BookResults";
 import BackToTop from "../components/BackToTop";
 import "./Favorites.css";
 import FavoriteButton from "../components/FavoriteButton";
-
+import BookCardMinimal from "../components/BookCardMinimal";
 
 function Favorites({ favorites, toggleFavorite }) {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [showFullList, setShowFullList] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowFullList(true);
+    }, 100); // oppure usa requestIdleCallback se vuoi ottimizzare di più
+
+    return () => clearTimeout(timeout);
+  }, []);
+
 
   const handleSelect = book => {
     setSelectedBook(book);
@@ -33,16 +43,23 @@ function Favorites({ favorites, toggleFavorite }) {
             {t("noFavoritesYet") || "No favorites yet."}
           </h2>
         ) : (
-          <BookResults
-            books={favorites}
-            favorites={favorites}
-            onSelect={handleSelect}
-            toggleFavorite={toggleFavorite}
-            // languageMap={languageMap}
-            t={t}
-          />
+          <>
+            {!showFullList ? (
+              <div className="book-results-minimal">
+                <BookCardMinimal book={favorites[0]} onSelect={handleSelect} />
+              </div>
+            ) : (
+              <BookResults
+                books={favorites}
+                favorites={favorites}
+                onSelect={handleSelect}
+                toggleFavorite={toggleFavorite}
+                // languageMap={languageMap}
+                t={t}
+              />
+            )}
+          </>
         )}
-
         {showModal && selectedBook && (
           <Modal onClose={() => setShowModal(false)}>
             <div className="modal">
@@ -64,7 +81,6 @@ function Favorites({ favorites, toggleFavorite }) {
         )}
         <BackToTop scrollContainerSelector=".favorites-page" />
       </div>
-      
     </div>
   );
 }
