@@ -8,19 +8,40 @@ import "./Favorites.css";
 import FavoriteButton from "../components/FavoriteButton";
 import BookCardMinimal from "../components/BookCardMinimal";
 
+
+function requestIdleCallbackWithFallback(callback) {
+  if ("requestIdleCallback" in window) {
+    return requestIdleCallback(callback);
+  } else {
+    return setTimeout(callback, 1); // fallback per Safari
+  }
+}
+
+function cancelIdleCallbackWithFallback(id) {
+  if ("cancelIdleCallback" in window) {
+    cancelIdleCallback(id);
+  } else {
+    clearTimeout(id);
+  }
+}
+
+
+
+
 function Favorites({ favorites, toggleFavorite }) {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showFullList, setShowFullList] = useState(false);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShowFullList(true);
-    }, 100); // oppure usa requestIdleCallback se vuoi ottimizzare di più
+useEffect(() => {
+  const idleCallback = requestIdleCallbackWithFallback(() =>
+    setShowFullList(true)
+  );
+  return () => cancelIdleCallbackWithFallback(idleCallback);
+}, []);
 
-    return () => clearTimeout(timeout);
-  }, []);
+
 
 
   const handleSelect = book => {
