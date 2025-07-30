@@ -13,7 +13,7 @@ export default function BookResults({
 
   return (
     <div className="book-rslt-container" role="list">
-      {books.map(book => (
+      {books.map((book, index) => (
         <div
           className={`book-results ${book.removing ? "removing" : ""}`}
           key={book.id}>
@@ -23,7 +23,7 @@ export default function BookResults({
             // languageMap={languageMap}
             t={t}
             isFavorite={isFavorite}
-            
+            isHighPriority={index === 0} // 👈 pass this to BookCard
             onToggleFavorite={() => toggleFavorite(book)}
             amazonLink={book.amazonLink}
           />

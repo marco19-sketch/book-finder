@@ -27,6 +27,7 @@ export default function BookCard({
   onToggleFavorite,
   t,
   isFavorite,
+  isHighPriority,
 }) {
   const thumbnail = useThumbnail(book);
 
@@ -81,11 +82,11 @@ export default function BookCard({
               className="thumbnail"
               src={thumbnail}
               alt={`Cover of ${title}`}
-
-
-              loading='lazy'
-              width='200'
-              height='300'
+              loading={isHighPriority ? "eager" : "lazy"}
+              fetchpriority={isHighPriority ? "high" : "auto"} // 👈 this is key
+              // loading='lazy'
+              width="200"
+              height="300"
             />
           </button>
         ) : (
