@@ -94,6 +94,7 @@
     padding-bottom: 0;
     transform: translateZ(0);
     will-change: transform;
+    background-size: 100% auto;
   }
 }
 
