@@ -7,6 +7,8 @@
   margin-bottom: 0;
   height: 30vh;
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 
 .media-credits {

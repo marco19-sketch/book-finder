@@ -51,6 +51,7 @@
   .favorites-page {
     background-image: url('/src/assets/images/small-vitaly-gariev-unsplash.webp');
   }
+
 }
 
 @media screen and (max-width: 600px) {
