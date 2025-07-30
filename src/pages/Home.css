@@ -84,9 +84,9 @@
   flex-direction: column;
   }
 
-  /* .main-container {
-    padding-bottom: 15vh;
-  } */
+  .main-container {
+    padding-bottom: 30vh;
+  }
 }
 
 @media (hover: hover) {

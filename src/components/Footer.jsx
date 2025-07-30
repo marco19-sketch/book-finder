@@ -70,7 +70,7 @@ export default function Footer() {
             Copyright
           </a>
         </div>
-        <p>
+        <p className='copyright'>
           © 2025 Marco Brusca. All rights reserved.{" "}
           <a href="mailto:marco19_70@hotmail.it" rel="me">
             Contact me
