@@ -165,10 +165,10 @@ h1.main-title {
   right: 80px;
 }
 
-footer {
+/* footer {
   height: 9vh;
   flex-shrink: 0;
-}
+} */
 
 @keyframes fadeIn {
   from {

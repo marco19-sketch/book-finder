@@ -76,7 +76,17 @@
 
   .home-page {
     background-image: url("/src/assets/images/small-pexels-tima-miroshnichenko.webp");
+     background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
   }
+
+  /* .main-container {
+    padding-bottom: 15vh;
+  } */
 }
 
 @media (hover: hover) {
