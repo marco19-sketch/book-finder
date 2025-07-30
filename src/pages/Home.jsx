@@ -13,8 +13,10 @@ import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
 
 
+const BookResults = lazy(() => import("../components/BookResults"));
+
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
-  const BookResults = lazy(() => import("../components/BookResults"));
+  // const BookResults = lazy(() => import("../components/BookResults"));
 
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -120,6 +122,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   );
 
   useEffect(() => {
+    
     if (hasSearched) {
       const controller = new AbortController(); //cleanup function to your useEffect to prevent memory leaks if the component unmounts during a fetch
       const fetchData = async () => {
@@ -149,6 +152,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const isFavorite = book => favorites.some(fav => fav.id === book.id);
 
   useEffect(() => {
+    // devLog("Home mounted useEffect 2");
     if (fetchedBooks.length > 0) {
       setHasSearched(true);
     }
@@ -256,7 +260,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
             </Modal>
           )}
         </div>
-       
       </div>
     </>
   );

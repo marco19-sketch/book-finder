@@ -14,6 +14,12 @@ import { devLog } from "./utils/devLog";
 import Footer from "./components/Footer";
 
 export default function App() {
+
+
+  
+
+
+
   const [fetchedBooks, setFetchedBooks] = useState(() => {
     const saved = localStorage.getItem("cachedBooks");
     return saved ? JSON.parse(saved) : [];
