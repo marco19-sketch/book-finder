@@ -3,7 +3,8 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: scroll;
+  /* background-attachment: fixed; */
   display: flex;
   flex-direction: column;
 
@@ -92,9 +93,9 @@
     background-repeat: no-repeat;
     pointer-events: none;
     padding-bottom: 0;
-    transform: translateZ(0);
+    /* transform: translateZ(0);
     will-change: transform;
-    background-size: 100% auto;
+    background-size: 100% auto; */
   }
 }
 
