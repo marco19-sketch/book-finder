@@ -76,7 +76,7 @@
     height: fit-content;
   }
 
-  /* .home-page {
+  .home-page {
     position: relative;
     z-index: 0;
   }
@@ -92,34 +92,8 @@
     background-repeat: no-repeat;
     pointer-events: none;
     padding-bottom: 0;
-  } */
-
-
-  .home-page {
-    position: relative;
-    overflow: hidden;
-    background: none !important; /* Remove original background */
-  }
-
-  .home-page::before {
-    content: "";
-    position: absolute; /* Changed from fixed to absolute */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    background-image: url("/src/assets/images/small-pexels-tima-miroshnichenko.webp");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    /* Fix for mobile viewport units */
-    height: 100vh;
-    height: 100dvh;
-    width: 100vw;
   }
 }
-
 
 @media (hover: hover) {
   .read-more:hover {
