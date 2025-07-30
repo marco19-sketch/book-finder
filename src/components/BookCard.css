@@ -59,6 +59,8 @@
 
 .book-card-fav-btn {
   margin: 19px 0;
+  width: 50px;
+  height: 300px;
 }
 
 .book-detail {

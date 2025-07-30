@@ -12,7 +12,7 @@ import { scrollup } from "../utils/scrollup";
 import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
 
-import mobileBg from "../assets/images/small-pexels-tima-miroshnichenko.webp";
+import mobileBg from "../assets/images/small-pexels-tima-miroshnichenko2.webp";
 
 
 const BookResults = lazy(() => import("../components/BookResults"));
