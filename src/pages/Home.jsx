@@ -4,7 +4,7 @@ import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
 import { Suspense, lazy } from "react";
 // import BookResults from "../components/BookResults";
-import LoadingSkeleton from "../components/LoadingSkeleton";
+// import LoadingSkeleton from "../components/LoadingSkeleton";
 import trendingBooks from "../data/trendingBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
@@ -12,12 +12,12 @@ import { scrollup } from "../utils/scrollup";
 import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
 
+import mobileBg from "../assets/images/small-pexels-tima-miroshnichenko.webp";
+
 
 const BookResults = lazy(() => import("../components/BookResults"));
 
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
-  // const BookResults = lazy(() => import("../components/BookResults"));
-
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -33,6 +33,28 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [activeMode, setActiveMode] = useState("intitle");
 
   const [suggestions, setSuggestions] = useState([]);
+
+
+
+
+
+
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 550);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+ 
+
+
+
+
+
 
   const placeholderMap = {
     intitle: t("searchPlaceholder.intitle"),
@@ -122,7 +144,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   );
 
   useEffect(() => {
-    
     if (hasSearched) {
       const controller = new AbortController(); //cleanup function to your useEffect to prevent memory leaks if the component unmounts during a fetch
       const fetchData = async () => {
@@ -160,9 +181,16 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
   return (
     <>
-      {/* <header>
-        <h1 className="main-title">{t("title")}</h1>
-      </header> */}
+      {isMobile && (
+        <img
+          src={mobileBg}
+          alt=""
+          aria-hidden="true"
+          className="mobile-background"
+          decoding="async"
+          fetchpriority="low"
+        />
+      )}
       <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
         <div className="main-container">
           <SearchBar
@@ -187,47 +215,47 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
             </h2>
           )}
 
-          {loading && <LoadingSkeleton />}
+          {/* {loading && <LoadingSkeleton />} */}
 
           {!hasSearched && (
-            <Suspense fallback={<LoadingSkeleton />}>
+            // <Suspense fallback={<LoadingSkeleton />}>
+            <BookResults
+              books={trendingBooks}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+              t={t}
+              getAmazonLink={getAmazonLink}
+              onSelect={handleSelected}
+            />
+            // </Suspense>
+          )}
+
+          {uniqueBooks.length > 0 && (
+            // <Suspense fallback={<LoadingSkeleton />}>
+            <>
               <BookResults
-                books={trendingBooks}
+                books={uniqueBooks}
                 favorites={favorites}
                 toggleFavorite={toggleFavorite}
                 t={t}
                 getAmazonLink={getAmazonLink}
                 onSelect={handleSelected}
               />
-            </Suspense>
-          )}
-
-          {uniqueBooks.length > 0 && (
-            <Suspense fallback={<LoadingSkeleton />}>
-              <>
-                <BookResults
-                  books={uniqueBooks}
-                  favorites={favorites}
-                  toggleFavorite={toggleFavorite}
-                  t={t}
-                  getAmazonLink={getAmazonLink}
-                  onSelect={handleSelected}
-                />
-                {loading && <LoadingSkeleton />}
-                <button
-                  className="load-more"
-                  type="button"
-                  ref={loadMoreRef}
-                  onClick={() => {
-                    setStartIndex(prev => {
-                      const newIndex = prev + maxResult;
-                      return newIndex;
-                    });
-                  }}>
-                  {t("loadMore")}
-                </button>
-              </>
-            </Suspense>
+              {/* {loading && <LoadingSkeleton />} */}
+              <button
+                className="load-more"
+                type="button"
+                ref={loadMoreRef}
+                onClick={() => {
+                  setStartIndex(prev => {
+                    const newIndex = prev + maxResult;
+                    return newIndex;
+                  });
+                }}>
+                {t("loadMore")}
+              </button>
+            </>
+            // </Suspense>
           )}
 
           {!loading && showNoResultsModal && (
