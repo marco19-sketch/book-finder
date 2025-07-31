@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-   "postbuild": "critical dist/index.html --inline --base dist --css assets/index-C2d-NLH9.css --width 375 --height 667 > dist/index.critical.html && move /Y dist\\index.critical.html dist\\index.html",
- "lint": "eslint .",
+    "postbuild": "node postbuild.cjs",
+    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -27,11 +27,13 @@
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
     "critical": "^7.2.1",
+    "cross-var": "^1.1.0",
     "eslint": "^9.29.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
     "rollup-plugin-visualizer": "^6.0.3",
+    "shx": "^0.4.0",
     "vite": "^7.0.0"
   }
 }
