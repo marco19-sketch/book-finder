@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "postbuild": "critical dist/index.html --inline --base dist --width 375 --height 667",
-    "lint": "eslint .",
+   "postbuild": "critical dist/index.html --inline --base dist --css assets/index-C2d-NLH9.css --width 375 --height 667 > dist/index.critical.html && move /Y dist\\index.critical.html dist\\index.html",
+ "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
