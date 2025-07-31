@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // import Home from "./pages/Home";
 import { Suspense, lazy } from "react";
 const Favorites = lazy(() => import("./pages/Favorites"));
-const Home = lazy(() => import('./pages/Home'));
+const Home = lazy(() => import("./pages/Home"));
 // import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
@@ -14,12 +14,6 @@ import { devLog } from "./utils/devLog";
 import Footer from "./components/Footer";
 
 export default function App() {
-
-
-  
-
-
-
   const [fetchedBooks, setFetchedBooks] = useState(() => {
     const saved = localStorage.getItem("cachedBooks");
     return saved ? JSON.parse(saved) : [];
@@ -83,7 +77,6 @@ export default function App() {
         className={`page-wrapper ${
           isFavoritesPage ? "favorites-page" : "home-page"
         }`}>
-         
         {/* <header>
           <h1 className="main-title">{t("title")}</h1>
         </header> */}
@@ -91,7 +84,7 @@ export default function App() {
         <NavBar favorites={favorites} t={t} />
 
         <LanguageSwitcher />
-        {/* <Suspense fallback={<LoadingSkeleton />}> */}
+        <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route
               path="/"
@@ -114,7 +107,7 @@ export default function App() {
               }
             />
           </Routes>
-        {/* </Suspense> */}
+        </Suspense>
       </div>
       <BackToTop scrollContainerSelector="body" />
       <Footer />
