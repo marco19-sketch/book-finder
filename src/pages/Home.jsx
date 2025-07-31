@@ -14,7 +14,6 @@ import { devLog } from "../utils/devLog";
 
 import mobileBg from "../assets/images/small-pexels-tima-miroshnichenko2.webp";
 
-
 const BookResults = lazy(() => import("../components/BookResults"));
 
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
@@ -34,12 +33,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
   const [suggestions, setSuggestions] = useState([]);
 
-
-
-
-
-
-
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -48,13 +41,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
- 
-
-
-
-
-
 
   const placeholderMap = {
     intitle: t("searchPlaceholder.intitle"),
@@ -181,6 +167,11 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
   return (
     <>
+      {/* Provo a rimettere h1 main qui */}
+      <header>
+        <h1 className="main-title">{t("title")}</h1>
+      </header>
+
       {isMobile && (
         <img
           src={mobileBg}

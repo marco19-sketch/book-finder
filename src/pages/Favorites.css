@@ -22,7 +22,7 @@
   text-align: center;
   color: var(--main-color);
   text-shadow: var(--shadow);
-  margin: 0 auto 20px;
+  margin: 80px auto 60px;
   font-size: 3rem;
 }
 
@@ -49,13 +49,8 @@
 
 @media screen and (max-width: 550px) {
   .favorites-page {
-    background-image: url('/src/assets/images/small-vitaly-gariev-unsplash.webp');
+    background-image: url('/src/assets/images/smaller-vitaly-gariev-unsplash.webp');
   }
 
 }
 
-/* @media screen and (max-width: 600px) {
-  .favorite-main-container {
-    padding-bottom: 30vh;
-  }
-} */

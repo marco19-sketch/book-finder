@@ -23,6 +23,19 @@
   pointer-events: none !important;
 }
 
+h1.main-title {
+  color: var(--main-color);
+  background-color: transparent;
+  text-align: center;
+  text-shadow: var(--shadow);
+  font-size: 4rem;
+  line-height: 1.1;
+  margin: 60px auto 30px;
+  height: 4.5rem;
+  position: relative;
+  z-index: 1;
+}
+
 .trending-books {
   text-align: center;
   color: var(--main-color);

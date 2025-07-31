@@ -117,21 +117,18 @@ button:focus-visible {
   flex: 1;
 }
 
-h1.main-title {
+/* h1.main-title {
   color: var(--main-color);
   background-color: transparent;
-  /* background-color: transparent !important; */
   text-align: center;
   text-shadow: var(--shadow);
   font-size: 4rem;
   line-height: 1.1;
   margin: 60px auto 30px;
-  min-height: 4.5rem;
-
-
+  height: 4.5rem;
   position: relative;
   z-index: 1;
-}
+} */
 
 .italiano > img,
 .english > img {

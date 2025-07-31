@@ -84,9 +84,9 @@ export default function App() {
           isFavoritesPage ? "favorites-page" : "home-page"
         }`}>
          
-        <header>
+        {/* <header>
           <h1 className="main-title">{t("title")}</h1>
-        </header>
+        </header> */}
 
         <NavBar favorites={favorites} t={t} />
 

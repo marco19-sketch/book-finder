@@ -34,16 +34,13 @@
   margin-right: 20px;
 }
 
-
-
 .legals p {
-  /* margin-top: 1rem; */
   font-size: 0.8rem;
 }
 
-/* .copyright {
-  margin-top: 0;
-} */
+.copyright {
+  margin-bottom: .5rem;
+}
 
 /* Desktop layout */
 @media screen and (min-width: 600px) {
@@ -52,7 +49,7 @@
     justify-content: space-between;
     align-items: flex-start;
     text-align: left;
-    height: 15vh;
+    height: 17vh;
   }
 
   .image-credit {
@@ -80,13 +77,10 @@
 
 @media (hover: hover) {
   .legals a:hover {
-  /* .legals a:hover { */
-  text-decoration: underline #0066cc;
-  /* text-decoration-color:  */
-}
+    text-decoration: underline #0066cc;
+  }
 
-.media-credits a:hover {
-  text-decoration: underline #0066cc;
-  /* text-decoration-color:  */
-}
+  .media-credits a:hover {
+    text-decoration: underline #0066cc;
+  }
 }
