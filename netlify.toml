@@ -1,0 +1,4 @@
+[[headers]]
+  for = "/favorites"
+  [headers.values]
+    X-Robots-Tag = "all"
