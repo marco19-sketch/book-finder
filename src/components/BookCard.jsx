@@ -84,7 +84,7 @@ export default function BookCard({
               alt={`Cover of ${title}`}
               loading={isHighPriority ? "eager" : "lazy"}
               fetchpriority={isHighPriority ? "high" : "auto"} // 👈 this is key
-              // loading='lazy'
+             
               width="200"
               height="300"
             />

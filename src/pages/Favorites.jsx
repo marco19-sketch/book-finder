@@ -75,7 +75,6 @@ useEffect(() => {
                 favorites={favorites}
                 onSelect={handleSelect}
                 toggleFavorite={toggleFavorite}
-                // languageMap={languageMap}
                 t={t}
               />
             )}

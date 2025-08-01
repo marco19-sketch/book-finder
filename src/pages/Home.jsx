@@ -65,7 +65,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
       const res = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=${q}&startIndex=${startIndex}&maxResults=${maxResult}`
-        // `https://www.googleapis.com/books/v1/volumes?q=${activeMode}:${encoded}&startIndex=${startIndex}&maxResults=${maxResult}`
+      
       );
 
       if (!res.ok) {

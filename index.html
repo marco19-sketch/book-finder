@@ -19,6 +19,13 @@
       name="description"
       content="Find books by title, author or subject using the Open Library API. Explore, search, and discover your next read." />
     <title>Book Finder | Search and Discover Books</title>
+    <!-- Preconnect to Google Books API -->
+    <link rel="preconnect" href="https://www.googleapis.com" />
+    <link rel="dns-prefetch" href="https://www.googleapis.com" />
+
+    <!-- Preconnect to Open Library images -->
+    <link rel="preconnect" href="https://covers.openlibrary.org" />
+    <link rel="dns-prefetch" href="https://covers.openlibrary.org" />
     <link
       rel="preload"
       as="image"
@@ -39,7 +46,8 @@
       as="image"
       href="/src/assets/images/smaller-vitaly-gariev-unsplash.webp"
       type="image/webp" />
-    <!-- href="/images/pexels-tima-miroshnichenko-6550396.jpg" /> -->
+
+    <link rel="preconnect" href="https://www.google-analytics.com" />
     <!-- Google tag (gtag.js) -->
     <script
       async

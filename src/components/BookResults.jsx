@@ -20,7 +20,7 @@ export default function BookResults({
           <BookCard
             book={book}
             onSelect={() => onSelect(book)}
-            // languageMap={languageMap}
+            
             t={t}
             isFavorite={isFavorite}
             isHighPriority={index === 0} // 👈 pass this to BookCard
