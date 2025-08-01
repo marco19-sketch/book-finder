@@ -1,17 +1,17 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-// import Home from "./pages/Home";
 import { Suspense, lazy } from "react";
 const Favorites = lazy(() => import("./pages/Favorites"));
 const Home = lazy(() => import("./pages/Home"));
-// import Favorites from "./pages/Favorites";
 import { useTranslation } from "react-i18next";
-import LanguageSwitcher from "./components/LanguageSwitcher";
+// import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
-import NavBar from "./components/NavBar";
-// import LoadingSkeleton from './components/LoadingSkeleton';
+// import NavBar from "./components/NavBar";
 import { devLog } from "./utils/devLog";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
+const NavBar = lazy(() => import("./components/NavBar"));
+const Footer = lazy(() => import("./components/Footer"));
+const LanguageSwitcher = lazy(() => import("./components/LanguageSwitcher"));
 
 export default function App() {
   const [fetchedBooks, setFetchedBooks] = useState(() => {
@@ -77,13 +77,10 @@ export default function App() {
         className={`page-wrapper ${
           isFavoritesPage ? "favorites-page" : "home-page"
         }`}>
-        {/* <header>
-          <h1 className="main-title">{t("title")}</h1>
-        </header> */}
-
-        <NavBar favorites={favorites} t={t} />
-
-        <LanguageSwitcher />
+        <Suspense fallback={null}>
+          <NavBar favorites={favorites} t={t} />
+          <LanguageSwitcher />
+        </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route
@@ -109,8 +106,10 @@ export default function App() {
           </Routes>
         </Suspense>
       </div>
-      <BackToTop scrollContainerSelector="body" />
-      <Footer />
+      <Suspense fallback={null}>
+        <BackToTop scrollContainerSelector="body" />
+        <Footer />
+      </Suspense>
     </div>
   );
 }

@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
 import { Suspense, lazy } from "react";
-// import BookResults from "../components/BookResults";
-// import LoadingSkeleton from "../components/LoadingSkeleton";
 import trendingBooks from "../data/trendingBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
