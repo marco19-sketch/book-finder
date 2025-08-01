@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import gbFlag from "../assets/images/32x24/gb.png";
-import itFlag from "../assets/images/32x24/it.png";
+import gbFlag from "../assets/images/32x24/gb.webp";
+import itFlag from "../assets/images/32x24/it.webp";
 
 export default function LanguageSwitcher() {
   const { t, i18n } = useTranslation();
