@@ -9,7 +9,7 @@ import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollup } from "../utils/scrollup";
 import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
-import BookResults from '..components/BookResults';
+import BookResults from '../components/BookResults';
 
 import mobileBg from "../assets/images/small-pexels-tima-miroshnichenko2.webp";
 
