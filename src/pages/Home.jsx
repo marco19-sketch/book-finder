@@ -174,11 +174,12 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
       {isMobile && (
         <img
           src={mobileBg}
-          alt=""
+          alt=" "
           aria-hidden="true"
           className="mobile-background"
           decoding="async"
-          fetchpriority="low"
+          fetchpriority="high"
+          loading='eager'
         />
       )}
       <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
