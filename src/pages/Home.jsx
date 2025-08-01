@@ -167,7 +167,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
     <>
       {/* Provo a rimettere h1 main qui */}
       <header>
-        <h1 className="main-title">{t("title")}</h1>
+        <h1 className="main-title">{t("title") || 'Book Finder'}</h1>
       </header>
 
       {isMobile && (
@@ -241,7 +241,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
                     return newIndex;
                   });
                 }}>
-                {t("loadMore")}
+                {t("loadMore") || 'Load more'}
               </button>
             </>
             // </Suspense>
@@ -249,7 +249,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
           {!loading && showNoResultsModal && (
             <Modal onClose={() => setShowNoResultsModal(false)}>
-              <p className="no-results">{t("noResults")}</p>
+              <p className="no-results">{t("noResults") || 'No results found'}</p>
             </Modal>
           )}
           {!loading && startIndex !== 0 && showNoResultsModal && (
@@ -265,7 +265,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
               <div className="modal">
                 <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
                 <p className="full-description">
-                  <strong>{t("fullDescription")}:</strong>{" "}
+                  <strong>{t("fullDescription") || 'Full Description'}:</strong>{" "}
                   {selectedTitle.volumeInfo?.description ||
                     t("noDescription", "No description available")}
                 </p>
