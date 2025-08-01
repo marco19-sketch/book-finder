@@ -2,17 +2,18 @@ import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
-import { Suspense, lazy } from "react";
+// import { Suspense, lazy } from "react";
 import trendingBooks from "../data/trendingBooks";
 import "./Home.css";
 import { getAmazonLink } from "../utils/getAmazonLink";
 import { scrollup } from "../utils/scrollup";
 import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
+import BookResults from '..components/BookResults';
 
 import mobileBg from "../assets/images/small-pexels-tima-miroshnichenko2.webp";
 
-const BookResults = lazy(() => import("../components/BookResults"));
+// const BookResults = lazy(() => import("../components/BookResults"));
 
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [selectedTitle, setSelectedTitle] = useState(null);
@@ -207,7 +208,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
           {/* {loading && <LoadingSkeleton />} */}
 
           {!hasSearched && (
-            // <Suspense fallback={<LoadingSkeleton />}>
+            
             <BookResults
               books={trendingBooks}
               favorites={favorites}
@@ -216,11 +217,11 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
               getAmazonLink={getAmazonLink}
               onSelect={handleSelected}
             />
-            // </Suspense>
+            
           )}
 
           {uniqueBooks.length > 0 && (
-            // <Suspense fallback={<LoadingSkeleton />}>
+          
             <>
               <BookResults
                 books={uniqueBooks}
@@ -230,7 +231,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
                 getAmazonLink={getAmazonLink}
                 onSelect={handleSelected}
               />
-              {/* {loading && <LoadingSkeleton />} */}
               <button
                 className="load-more"
                 type="button"
