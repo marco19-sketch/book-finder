@@ -1,9 +1,10 @@
 // import { useEffect, useState } from 'react';
 import "./BookCard.css";
-import { getAmazonLink } from "../utils/getAmazonLink";
+// import { getAmazonLink } from "../utils/getAmazonLink";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "../utils/useThumbnail";
 // import { devLog } from "../utils/devLog";
+// import AmazonLink from "./AmazonLink";
 
 const languageMap = {
   en: "English",
@@ -58,7 +59,7 @@ export default function BookCard({
       ? new Date(publishedDate).getFullYear()
       : "Unknown";
 
-  const amazonLink = getAmazonLink(book);
+  // const amazonLink = getAmazonLink(book);
 
   return (
     <div
@@ -84,7 +85,6 @@ export default function BookCard({
               alt={`Cover of ${title}`}
               loading={isHighPriority ? "eager" : "lazy"}
               fetchpriority={isHighPriority ? "high" : "auto"} // 👈 this is key
-             
               width="200"
               height="300"
             />
@@ -139,7 +139,10 @@ export default function BookCard({
           )}
         </p>
 
-        <div className="buy-now-container">
+        <div className="amazon-buy-link-container">
+          {/* <AmazonLink title={title} author={authors} /> */}
+        </div>
+        {/* <div className="buy-now-container">
           {amazonLink ? (
             <a
               href={amazonLink}
@@ -151,7 +154,7 @@ export default function BookCard({
           ) : (
             <p>{t("noPurchaseAvailable") || "No purchase available."}</p>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
