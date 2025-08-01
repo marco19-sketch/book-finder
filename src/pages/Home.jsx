@@ -166,7 +166,6 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
 
   return (
     <>
-      {/* Provo a rimettere h1 main qui */}
       <header>
         <h1 className="main-title">Book Finder</h1>
         {/* <h1 className="main-title">{t("title") || 'Book Finder'}</h1> */}
