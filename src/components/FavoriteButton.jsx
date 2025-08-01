@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import popSound from "../assets/add-to-favorite.mp3";
-import hoverSound from "../assets/heartbeat-trimmed.mp3";
+
 import swooshSound from "../assets/whoosh_zapsplat.mp3";
 import popUpSound from "../assets/zapsplat_soft_click.mp3";
 import { FaHeart } from "react-icons/fa";
@@ -10,11 +10,9 @@ import "./FavoriteButton.css";
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
   const clickSoundRef = useRef(new Audio(popSound));
-  const hoverSoundRef = useRef(new Audio(hoverSound));
   const removeSoundRef = useRef(new Audio(swooshSound));
   const remove2SoundRef = useRef(new Audio(popUpSound));
   const hasUserInteracted = useRef(false);
-  const isHovering = useRef(false);
 
   const { t } = useTranslation();
   const location = useLocation();
@@ -31,26 +29,6 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
       document.removeEventListener("click", markInteraction);
     };
   }, []);
-
-  const fadeOutSound = () => {
-    const addSound = hoverSoundRef.current;
-    const fadeInterval = 100; // ms
-    const fadeStep = 0.05; // volume decrement
-
-    const fade = setInterval(() => {
-      if (addSound.volume > fadeStep) {
-        addSound.volume = Math.max(0, addSound.volume - fadeStep);
-      } else {
-        clearInterval(fade);
-        if (!isHovering.current) {
-          addSound.pause();
-          addSound.currentTime = 0;
-          addSound.loop = false;
-          addSound.volume = 1; // reset for next play
-        }
-      }
-    }, fadeInterval);
-  };
 
   const handleToggle = () => {
     const addSound = clickSoundRef.current;
@@ -76,46 +54,10 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
     onToggle?.();
   };
 
-  const handleHoverStart = () => {
-    if (!hasUserInteracted.current) return;
-
-    const addSound = hoverSoundRef.current;
-    isHovering.current = true;
-
-    try {
-      addSound.currentTime = 0;
-      addSound.volume = 1;
-      addSound.loop = true;
-      addSound.play().catch(err => {
-        console.warn("Play failed on hover start:", err);
-      });
-    } catch (err) {
-      console.warn("Sound play error:", err);
-    }
-  };
-
-  const handleHoverEnd = () => {
-    isHovering.current = false;
-    fadeOutSound();
-  };
-
-  // Cleanup on unmount
-  useEffect(() => {
-    const addSound = hoverSoundRef.current;
-    return () => {
-      addSound.pause();
-      addSound.loop = false;
-      addSound.currentTime = 0;
-      addSound.volume = 1;
-    };
-  }, []);
-
   return (
     <button
       className="favorite-btn"
       onClick={handleToggle}
-      onMouseEnter={handleHoverStart}
-      onMouseLeave={handleHoverEnd}
       aria-label={
         isFavorite
           ? t("removeFromFavorites") || "Remove from favorites"
