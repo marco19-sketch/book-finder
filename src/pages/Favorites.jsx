@@ -7,7 +7,7 @@ import BackToTop from "../components/BackToTop";
 import "./Favorites.css";
 import FavoriteButton from "../components/FavoriteButton";
 import BookCardMinimal from "../components/BookCardMinimal";
-
+import mobileBgFav from "../assets/images/smaller-vitaly-gariev-unsplash.webp";
 
 function requestIdleCallbackWithFallback(callback) {
   if ("requestIdleCallback" in window) {
@@ -25,24 +25,27 @@ function cancelIdleCallbackWithFallback(id) {
   }
 }
 
-
-
-
 function Favorites({ favorites, toggleFavorite }) {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showFullList, setShowFullList] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-useEffect(() => {
-  const idleCallback = requestIdleCallbackWithFallback(() =>
-    setShowFullList(true)
-  );
-  return () => cancelIdleCallbackWithFallback(idleCallback);
-}, []);
+  useEffect(() => {
+    console.log('fav background img mounting')
+    const checkMobile = () => setIsMobile(window.innerWidth <= 550);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-
-
+  useEffect(() => {
+    const idleCallback = requestIdleCallbackWithFallback(() =>
+      setShowFullList(true)
+    );
+    return () => cancelIdleCallbackWithFallback(idleCallback);
+  }, []);
 
   const handleSelect = book => {
     setSelectedBook(book);
@@ -53,6 +56,15 @@ useEffect(() => {
 
   return (
     <div className="favorites-page">
+      {console.log('mobile bg fa', mobileBgFav)}
+      {isMobile && (
+        <img
+          src={mobileBgFav}
+          alt=""
+          aria-hidden="true"
+          className="fav-mobile-background"
+        />
+      )}
       <div className="favorites-main-container">
         <LanguageSwitcher />
         <h2 className="favorites-header">

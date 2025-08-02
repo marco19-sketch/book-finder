@@ -35,6 +35,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    console.log('home background mounted')
     const checkMobile = () => setIsMobile(window.innerWidth <= 550);
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -170,7 +171,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
         <h1 className="main-title">Book Finder</h1>
         {/* <h1 className="main-title">{t("title") || 'Book Finder'}</h1> */}
       </header>
-
+      {console.log('home mobile bg', mobileBg)}
       {isMobile && (
         <img
           src={mobileBg}

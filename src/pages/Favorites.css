@@ -49,10 +49,20 @@
 
 @media screen and (max-width: 550px) {
   .favorites-page {
-    background-image: url('/src/assets/images/smaller-vitaly-gariev-unsplash.webp');
+    background-image: none;
+    
+    /* background-image: url('/src/assets/images/smaller-vitaly-gariev-unsplash.webp'); */
 
     /*trying to stop weird zoom-effect on mobile*/
-    background-position: fixed;
+    /* background-position: fixed; */
+  }
+
+  .fav-mobile-background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
   }
 
 }
