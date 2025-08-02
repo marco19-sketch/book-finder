@@ -78,6 +78,7 @@ export default function BookCard({
               (e.key === "Enter" || e.key === " ") && onSelect(book)
             }
             aria-label="View book full description">
+              {console.log('thumbnail', thumbnail)}
             <img
               tabIndex="0"
               className="thumbnail"

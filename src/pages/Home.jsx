@@ -179,7 +179,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
           aria-hidden="true"
           className="mobile-background"
           decoding="async"
-          fetchpriority="high"
+          fetchPriority="high"
           loading='eager'
         />
       )}

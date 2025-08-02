@@ -50,11 +50,8 @@
 @media screen and (max-width: 550px) {
   .favorites-page {
     background-image: none;
-    
-    /* background-image: url('/src/assets/images/smaller-vitaly-gariev-unsplash.webp'); */
-
     /*trying to stop weird zoom-effect on mobile*/
-    /* background-position: fixed; */
+    /*so moving the background image to jsx <img> stopped the zoom-effect*/
   }
 
   .fav-mobile-background {

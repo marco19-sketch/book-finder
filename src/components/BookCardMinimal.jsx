@@ -28,7 +28,7 @@ const BookCardMinimal = ({ book, onSelect }) => {
             src={thumbnail}
             alt={`Cover of ${title}`}
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             width="200"
             height="300"
           />
