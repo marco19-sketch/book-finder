@@ -55,7 +55,7 @@ export default function App() {
         );
         //physical removal after delay
         setTimeout(() => {
-          console.log("Removing book:", book.id);
+          
           setFavorites(prev => prev.filter(fav => fav.id !== book.id));
         }, 300);
       } else {

@@ -33,7 +33,7 @@ function Favorites({ favorites, toggleFavorite }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    console.log('fav background img mounting')
+    
     const checkMobile = () => setIsMobile(window.innerWidth <= 550);
     checkMobile();
     window.addEventListener("resize", checkMobile);
@@ -56,7 +56,7 @@ function Favorites({ favorites, toggleFavorite }) {
 
   return (
     <div className="favorites-page">
-      {console.log('mobile bg fa', mobileBgFav)}
+      
       {isMobile && (
         <img
           src={mobileBgFav}

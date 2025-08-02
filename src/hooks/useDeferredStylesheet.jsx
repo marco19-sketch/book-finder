@@ -1,5 +1,5 @@
 // src/hooks/useDeferredStylesheet.js
-// used to load of css only when needed (boost performance LCP)
+// used to load css only when needed (boost performance LCP)
 import { useEffect } from "react";
 
 export default function useDeferredStylesheet(href) {

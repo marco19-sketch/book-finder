@@ -11,7 +11,7 @@ const AmazonLink = ({ title, author}) => {
     };
 
     const link = generateAmazonLink(title, author);
-    console.log('amazon link', link)
+    
     return (
       <a
         href={link}
@@ -19,7 +19,7 @@ const AmazonLink = ({ title, author}) => {
         rel="noopener noreferrer"
         className="amazon-buy-link"
         onClick={() => {
-          console.log("Clicked Amazon link for:", title);
+          console.log("Clicked Amazon link for:", title, '\nlink url', link);
         }}>
         🔗 Acquista su Amazon
       </a>

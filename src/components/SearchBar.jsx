@@ -1,8 +1,6 @@
 import { useCallback, useEffect } from "react";
 import CustomRadio from "./CustomRadio";
 import "./SearchBar.css";
-// import { devLog } from "../utils/devLog";
-
 
 const labelsMap = {
   intitle: "Title",
@@ -22,20 +20,20 @@ export default function SearchBar({
   resetResults,
   suggestions,
   setSuggestions,
-  handleFetchNew
+  handleFetchNew,
 }) {
-  
-
   const getSuggestions = useCallback(
     async input => {
       if (!input) return;
       const encoded = encodeURIComponent(input.trim());
-      const url = `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&maxResults=5`;
-
+      const url = `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&maxResults=10`;
+      // const url = `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&maxResults=5`;
+      console.log('suggestions url', url)
       try {
         const res = await fetch(url);
         const data = await res.json();
         const items = data.items || [];
+        console.log('titles', items.map(c => c.volumeInfo?.title))
 
         // Build suggestions based on search mode
         const extracted = items
@@ -43,7 +41,7 @@ export default function SearchBar({
             const info = item.volumeInfo;
             if (searchMode === "intitle") return info.title;
             if (searchMode === "inauthor") return info.authors?.[0];
-            if (searchMode === "subject") return info.categories?.[0];
+            // if (searchMode === "subject") return info.categories?.[0];
             return null;
           })
           .filter(Boolean);
@@ -74,7 +72,8 @@ export default function SearchBar({
   return (
     <div className="search-bar">
       <div className="label-container">
-        {["intitle", "inauthor", "subject"].map(mode => (
+        {["intitle", "inauthor"].map(mode => (
+        // {["intitle", "inauthor", "subject"].map(mode => (
           <CustomRadio
             key={mode}
             label={t(`searchBy${labelsMap[mode]}`)}
@@ -93,6 +92,11 @@ export default function SearchBar({
         value={query}
         onChange={handleInputChange}
         placeholder={placeholderMap[searchMode] || t("selectCriteria")}
+        onKeyDown={e => {
+          if (e.key === 'Escape') {
+            setSuggestions([]);
+          }
+        }}
       />
 
       {suggestions.length > 0 && (
@@ -101,20 +105,18 @@ export default function SearchBar({
             <li
               key={idx}
               tabIndex="0"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+              onKeyDown={e => {
+                if (e.key === "Enter") {
                   setQuery(sugg);
                   setSuggestions([]);
                   handleFetchNew(sugg);
                   e.currentTarget.blur();
-
                 }
-                if (e.key === 'Escape') {
+                if (e.key === "Escape") {
                   setSuggestions([]);
                 }
-              }
-              }
-              onClick={(e) => {
+              }}
+              onClick={e => {
                 setQuery(sugg); // 👈 this value will be passed to Home when you click search
                 setSuggestions([]);
                 handleFetchNew(sugg);
@@ -126,9 +128,13 @@ export default function SearchBar({
         </ul>
       )}
 
-      <button className="btn-element" type="button" onClick={() => { onSearch(query);
-        setSuggestions([]);
-      }}>
+      <button
+        className="btn-element"
+        type="button"
+        onClick={() => {
+          onSearch(query);
+          setSuggestions([]);
+        }}>
         {t("startSearch")}
       </button>
       <button className="reset-btn" type="button" onClick={onReset}>
