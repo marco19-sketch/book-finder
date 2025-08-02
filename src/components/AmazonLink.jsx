@@ -6,12 +6,12 @@ const AmazonLink = ({ title, author}) => {
     const generateAmazonLink = (title, author) => {
         const baseUrl = 'https://www.amazon.it/s';
         const query = encodeURIComponent(`${title} ${author || ''}`);
-        const tag = 'your-affiliate-id';
+        const tag = "bookfinderita-21 ";
         return `${baseUrl}?k=${query}&tag=${tag}`;
     };
 
     const link = generateAmazonLink(title, author);
-
+    console.log('amazon link', link)
     return (
       <a
         href={link}

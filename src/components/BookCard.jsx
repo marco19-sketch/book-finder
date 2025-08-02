@@ -1,10 +1,10 @@
-// import { useEffect, useState } from 'react';
+
 import "./BookCard.css";
-// import { getAmazonLink } from "../utils/getAmazonLink";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "../utils/useThumbnail";
-// import { devLog } from "../utils/devLog";
-// import AmazonLink from "./AmazonLink";
+import AmazonLink from './AmazonLink';
+
+
 
 const languageMap = {
   en: "English",
@@ -48,7 +48,7 @@ export default function BookCard({
   const formatCopiesSold = () => {
     if (!copiesSold) return "N/A";
     if (copiesSold >= 1000000) {
-      return (copiesSold / 1000000).toLocaleString() + " " + "Millions";
+      return (copiesSold / 1000000).toLocaleString() + " " + t("Millions");
     } else {
       return copiesSold.toLocaleString() || "N/A";
     }
@@ -59,7 +59,7 @@ export default function BookCard({
       ? new Date(publishedDate).getFullYear()
       : "Unknown";
 
-  // const amazonLink = getAmazonLink(book);
+ 
 
   return (
     <div
@@ -141,7 +141,8 @@ export default function BookCard({
         </p>
 
         <div className="amazon-buy-link-container">
-          {/* <AmazonLink title={title} author={authors} /> */}
+          <AmazonLink title={title} author={authors} />
+          
         </div>
         {/* <div className="buy-now-container">
           {amazonLink ? (
