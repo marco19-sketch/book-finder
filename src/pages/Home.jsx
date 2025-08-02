@@ -2,10 +2,10 @@ import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
-// import { Suspense, lazy } from "react";
+
 import trendingBooks from "../data/trendingBooks";
 import "./Home.css";
-import { getAmazonLink } from "../utils/getAmazonLink";
+
 import { scrollup } from "../utils/scrollup";
 import FavoriteButton from "../components/FavoriteButton";
 import { devLog } from "../utils/devLog";
@@ -13,7 +13,7 @@ import BookResults from '../components/BookResults';
 
 import mobileBg from "../assets/images/small-pexels-tima-miroshnichenko2.webp";
 
-// const BookResults = lazy(() => import("../components/BookResults"));
+
 
 function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const [selectedTitle, setSelectedTitle] = useState(null);
@@ -159,7 +159,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
   const isFavorite = book => favorites.some(fav => fav.id === book.id);
 
   useEffect(() => {
-    // devLog("Home mounted useEffect 2");
+    
     if (fetchedBooks.length > 0) {
       setHasSearched(true);
     }
@@ -216,7 +216,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
               favorites={favorites}
               toggleFavorite={toggleFavorite}
               t={t}
-              getAmazonLink={getAmazonLink}
+             
               onSelect={handleSelected}
             />
             
@@ -230,7 +230,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
                 favorites={favorites}
                 toggleFavorite={toggleFavorite}
                 t={t}
-                getAmazonLink={getAmazonLink}
+               
                 onSelect={handleSelected}
               />
               <button
@@ -246,7 +246,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
                 {t("loadMore") || 'Load more'}
               </button>
             </>
-            // </Suspense>
+           
           )}
 
           {!loading && showNoResultsModal && (
