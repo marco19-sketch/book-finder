@@ -145,6 +145,10 @@ button.read-more {
   .book-detail {
     padding: 0 50px 0 50px;
   }
+
+  .amazon-buy-link-container {
+  font-size: 0.8rem;
+}
 }
 
 @media (hover: hover) {
