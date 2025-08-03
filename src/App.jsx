@@ -7,11 +7,8 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import NavBar from "./components/NavBar";
-import { devLog } from "./utils/devLog";
-// import Footer from "./components/Footer";
-// const NavBar = lazy(() => import("./components/NavBar"));
 const Footer = lazy(() => import("./components/Footer"));
-// const LanguageSwitcher = lazy(() => import("./components/LanguageSwitcher"));
+
 
 export default function App() {
   const [fetchedBooks, setFetchedBooks] = useState(() => {
@@ -20,7 +17,6 @@ export default function App() {
   });
   //stores fetched results when moving away from Home and returning
   useEffect(() => {
-    devLog("Saving to localStorage", fetchedBooks);
     localStorage.setItem("cachedBooks", JSON.stringify(fetchedBooks));
   }, [fetchedBooks]);
 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import CustomRadio from "./CustomRadio";
 import "./SearchBar.css";
 
@@ -22,48 +22,102 @@ export default function SearchBar({
   setSuggestions,
   handleFetchNew,
 }) {
+
+  const debounceTimeout = useRef(null);
+
+  // const getSuggestions = useCallback(
+  //   async input => {
+  //     if (!input) return;
+  //     const encoded = encodeURIComponent(input.trim());
+  //     const url = `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&maxResults=5`;
+  //     // const url = `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&maxResults=5`;
+  //     console.log('suggestions url', url)
+  //     try {
+  //       const res = await fetch(url);
+  //       const data = await res.json();
+  //       const items = data.items || [];
+  //       console.log('titles', items.map(c => c.volumeInfo?.title))
+
+  //       // Build suggestions based on search mode
+  //       const extracted = items
+  //         .map(item => {
+  //           const info = item.volumeInfo;
+  //           if (searchMode === "intitle") return info.title;
+  //           if (searchMode === "inauthor") return info.authors?.[0];
+  //           // if (searchMode === "subject") return info.categories?.[0];
+  //           return null;
+  //         })
+  //         .filter(Boolean);
+
+  //       setSuggestions([...new Set(extracted)]); // remove duplicates
+  //     } catch (error) {
+  //       console.error("Suggestion fetch error:", error);
+  //       setSuggestions([]);
+  //     }
+  //   },
+  //   [searchMode, setSuggestions]
+  // );
+
   const getSuggestions = useCallback(
     async input => {
       if (!input) return;
       const encoded = encodeURIComponent(input.trim());
-      const url = `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&maxResults=10`;
-      // const url = `https://www.googleapis.com/books/v1/volumes?q=${searchMode}:${encoded}&maxResults=5`;
-      console.log('suggestions url', url)
+      const url = `https://openlibrary.org/search.json?q=${encoded}&limit=10`;
+      console.log("suggestions url", url);
+
       try {
         const res = await fetch(url);
         const data = await res.json();
-        const items = data.items || [];
-        console.log('titles', items.map(c => c.volumeInfo?.title))
+        const docs = data.docs || [];
+        console.log('data docs', data.docs)
 
-        // Build suggestions based on search mode
-        const extracted = items
-          .map(item => {
-            const info = item.volumeInfo;
-            if (searchMode === "intitle") return info.title;
-            if (searchMode === "inauthor") return info.authors?.[0];
-            // if (searchMode === "subject") return info.categories?.[0];
+        const extracted = docs
+          .map(doc => {
+            if (searchMode === "intitle") return doc.title;
+            if (searchMode === "inauthor") return doc.author_name?.[0];
             return null;
           })
           .filter(Boolean);
 
-        setSuggestions([...new Set(extracted)]); // remove duplicates
-      } catch (error) {
-        console.error("Suggestion fetch error:", error);
+        const unique = [...new Set(extracted)].slice(0, 7);
+        setSuggestions(unique);
+      } catch (err) {
+        console.error("Open Library suggestion fetch error:", err);
         setSuggestions([]);
       }
     },
     [searchMode, setSuggestions]
   );
 
+
+
+  // const handleInputChange = e => {
+  //   const value = e.target.value;
+  //   setQuery(value);
+  //   if (value.length > 1) {
+  //     getSuggestions(value);
+  //   } else {
+  //     setSuggestions([]);
+  //   }
+  // };
+
+  
+
   const handleInputChange = e => {
     const value = e.target.value;
     setQuery(value);
+
+    clearTimeout(debounceTimeout.current);
+
     if (value.length > 1) {
-      getSuggestions(value);
+      debounceTimeout.current = setTimeout(() => {
+        getSuggestions(value);
+      }, 600); // ⏱️ adjust delay as needed
     } else {
       setSuggestions([]);
     }
   };
+
 
   useEffect(() => {
     resetResults();
