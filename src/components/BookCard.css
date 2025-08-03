@@ -147,6 +147,10 @@ button.read-more {
   }
 
   .amazon-buy-link-container {
+  width: 100%;
+}
+
+.copies-sold {
   font-size: 0.8rem;
 }
 }

@@ -120,7 +120,7 @@ export default function BookCard({
         </p>
         <p>
           <strong>{t("copiesSold") || "Copies sold"}:</strong>{" "}
-          {formatCopiesSold(copiesSold) || "N/A"}
+          <span className='copies-sold'>{formatCopiesSold(copiesSold) || "N/A"}</span>
         </p>
         <p>
           <strong>{t("description") || "Description"}:</strong>{" "}
