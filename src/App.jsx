@@ -7,26 +7,7 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import NavBar from "./components/NavBar";
-// const Footer = lazy(() => import("./components/Footer"));
-
-function FooterLoader() {
-  const [showFooter, setShowFooter] = useState(false);
-  const [LazyFooter, setLazyFooter] = useState(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      import("./components/Footer").then(module => {
-        setLazyFooter(() => module.default);
-        setShowFooter(true);
-      });
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  return showFooter && LazyFooter ? <LazyFooter /> : null;
-}
-
+import FooterLoader from './components/FooterLoader';
 
 
 export default function App() {
