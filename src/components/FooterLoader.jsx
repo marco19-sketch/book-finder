@@ -5,7 +5,7 @@ function FooterLoader() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      import("./components/Footer").then(mod => {
+      import("./Footer").then(mod => {
         setFooterComponent(() => mod.default);
       });
     }, 3000);
