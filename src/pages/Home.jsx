@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import SearchBar from "../components/SearchBar";
 
-import trendingBooks from "../data/trendingBooks";
+import itaTrendingBooks from "../data/itaTrendingBooks";
 import "./Home.css";
 
 import { scrollup } from "../utils/scrollup";
@@ -195,7 +195,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
             onReset={handleReset}
             placeholderMap={placeholderMap}
             t={t}
-            trendingBooks={trendingBooks}
+            itaTrendingBooks={itaTrendingBooks}
             resetResults={resetResults}
             setSuggestions={setSuggestions}
             suggestions={suggestions}
@@ -212,7 +212,7 @@ function Home({ favorites, toggleFavorite, fetchedBooks, setFetchedBooks }) {
           {!hasSearched && (
             
             <BookResults
-              books={trendingBooks}
+              books={itaTrendingBooks}
               favorites={favorites}
               toggleFavorite={toggleFavorite}
               t={t}
