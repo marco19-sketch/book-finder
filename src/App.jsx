@@ -70,6 +70,7 @@ export default function App() {
         {t("skipToMain")}
       </a>
       <div
+        fetchPriority='high'
         className={`page-wrapper ${
           isFavoritesPage ? "favorites-page" : "home-page"
         }`}>
