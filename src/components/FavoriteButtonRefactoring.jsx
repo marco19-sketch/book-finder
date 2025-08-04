@@ -1,65 +1,56 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import popSound from "../assets/add-to-favorite.mp3";
+
+import swooshSound from "../assets/whoosh_zapsplat.mp3";
+import popUpSound from "../assets/zapsplat_soft_click.mp3";
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "./FavoriteButton.css";
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
-  const clickSoundRef = useRef(null);
-  const removeSoundRef = useRef(null);
-  const remove2SoundRef = useRef(null);
+  const clickSoundRef = useRef(new Audio(popSound));
+  const removeSoundRef = useRef(new Audio(swooshSound));
+  const remove2SoundRef = useRef(new Audio(popUpSound));
   const hasUserInteracted = useRef(false);
-  const [soundsReady, setSoundsReady] = useState(false);
 
   const { t } = useTranslation();
   const location = useLocation();
   const isFavoritesPage = location.pathname === "/favorites";
 
   useEffect(() => {
+    // Tracks if the user has interacted (e.g., clicked) to allow audio playback without autoplay errors.
     const markInteraction = () => {
       hasUserInteracted.current = true;
-
-      // Lazy load audio only after user interaction
-      import("../assets/add-to-favorite.mp3").then(({ default: popSound }) => {
-        clickSoundRef.current = new Audio(popSound);
-      });
-      import("../assets/whoosh_zapsplat.mp3").then(
-        ({ default: swooshSound }) => {
-          removeSoundRef.current = new Audio(swooshSound);
-        }
-      );
-      import("../assets/zapsplat_soft_click.mp3").then(
-        ({ default: popUpSound }) => {
-          remove2SoundRef.current = new Audio(popUpSound);
-        }
-      );
-
-      setSoundsReady(true);
       document.removeEventListener("click", markInteraction);
     };
-
     document.addEventListener("click", markInteraction);
-    return () => document.removeEventListener("click", markInteraction);
+    return () => {
+      document.removeEventListener("click", markInteraction);
+    };
   }, []);
 
   const handleToggle = () => {
-    if (!hasUserInteracted.current || !soundsReady) return;
-
     const addSound = clickSoundRef.current;
     const removeSound = removeSoundRef.current;
     const remove2Sound = remove2SoundRef.current;
-
-    if (!isFavorite && addSound) {
+    if (!hasUserInteracted.current) return;
+    if (!isFavorite) {
       addSound.currentTime = 0;
-      addSound.play().catch(console.warn);
-    } else if (isFavorite && isFavoritesPage && removeSound) {
+      addSound.play().catch(err => {
+        console.warn("Play failed on toggle:", err);
+      });
+    } else if (isFavorite && isFavoritesPage) {
       removeSound.currentTime = 0;
-      removeSound.play().catch(console.warn);
-    } else if (remove2Sound) {
+      removeSound.play().catch(err => {
+        console.warn("Remove sound play failed on toggle:", err);
+      });
+    } else {
       remove2Sound.currentTime = 0;
-      remove2Sound.play().catch(console.warn);
+      remove2Sound.play().catch(err => {
+        console.warn("Remove 2nd sound play failed on toggle:", err);
+      });
     }
-
     onToggle?.();
   };
 
