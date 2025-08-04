@@ -7,22 +7,26 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import NavBar from "./components/NavBar";
-const Footer = lazy(() => import("./components/Footer"));
+// const Footer = lazy(() => import("./components/Footer"));
 
 function FooterLoader() {
   const [showFooter, setShowFooter] = useState(false);
+  const [LazyFooter, setLazyFooter] = useState(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowFooter(true), 3000);
+    const timer = setTimeout(() => {
+      import("./components/Footer").then(module => {
+        setLazyFooter(() => module.default);
+        setShowFooter(true);
+      });
+    }, 3000);
+
     return () => clearTimeout(timer);
   }, []);
 
-  return showFooter ? (
-    <Suspense fallback={null}>
-      <Footer />
-    </Suspense>
-  ) : null;
+  return showFooter && LazyFooter ? <LazyFooter /> : null;
 }
+
 
 
 export default function App() {
