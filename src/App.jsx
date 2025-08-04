@@ -9,6 +9,21 @@ import BackToTop from "./components/BackToTop";
 import NavBar from "./components/NavBar";
 const Footer = lazy(() => import("./components/Footer"));
 
+function FooterLoader() {
+  const [showFooter, setShowFooter] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowFooter(true), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return showFooter ? (
+    <Suspense fallback={null}>
+      <Footer />
+    </Suspense>
+  ) : null;
+}
+
 
 export default function App() {
   const [fetchedBooks, setFetchedBooks] = useState(() => {
@@ -102,9 +117,9 @@ export default function App() {
         </Suspense>
       </div>
       <BackToTop scrollContainerSelector="body" />
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      
+        <FooterLoader />
+      
     </div>
   );
 }
