@@ -14,10 +14,8 @@
   cursor: pointer;
   gap: 8px;
   font-size: 1rem;
-  /* text-shadow: var(--shadow); */
-  /* text-shadow: 1px 1px 4px rgba(0,0,0,.7); */
+  text-shadow: var(--shadow);
   color: var(--text-color);
-  
   width: 180px;
 }
 
@@ -50,8 +48,6 @@
   /*this too, focus with tab*/
   background-color: rgb(231, 222, 222);
 }
-
-
 
 .custom-radio:active .radio-mark {
   transform: scale(0.95);
