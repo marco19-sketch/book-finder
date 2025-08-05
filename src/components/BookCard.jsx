@@ -78,9 +78,8 @@ export default function BookCard({
               (e.key === "Enter" || e.key === " ") && onSelect(book)
             }
             aria-label="View book full description">
-           
             <img
-              id={isHighPriority ? 'lcp-cover' : undefined}
+              id={isHighPriority ? "lcp-cover" : undefined}
               tabIndex="0"
               className="thumbnail"
               src={thumbnail}
@@ -121,7 +120,9 @@ export default function BookCard({
         </p>
         <p>
           <strong>{t("copiesSold") || "Copies sold"}:</strong>{" "}
-          <span className='copies-sold'>{formatCopiesSold(copiesSold) || "N/A"}</span>
+          <span className="copies-sold">
+            {formatCopiesSold(copiesSold) || "N/A"}
+          </span>
         </p>
         <p>
           <strong>{t("description") || "Description"}:</strong>{" "}
@@ -143,7 +144,8 @@ export default function BookCard({
 
         <div className="amazon-buy-link-container">
           <AmazonLink title={title} author={authors} />
-          
+          <p className='affiliate-para'>Affiliate link</p>
+          {/* <p style={{ fontSize: "0.75rem", margin: 0  }}>Affiliate link</p> */}
         </div>
         {/* <div className="buy-now-container">
           {amazonLink ? (

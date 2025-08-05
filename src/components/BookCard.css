@@ -79,37 +79,16 @@ button.read-more {
   outline: white;
 }
 
-/* .buy-now-container {
-  display: block;
-  width: fit-content;
-  margin: 20px auto;
-} */
-
-/*underline slide-in*/
-
-/* .buy-now {
-  position: relative;
-  color: yellow;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.buy-now::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 0;
-  height: 2px;
-  background-color: yellow;
-  transition: width 0.3s ease;
-} */
-
 
 .amazon-buy-link-container {
   display: block;
   width: fit-content;
   margin: 20px auto;
+}
+
+.affiliate-para {
+  font-size: .75rem;
+  text-align: center;
 }
 
 /*underline slide-in*/
@@ -150,6 +129,8 @@ button.read-more {
   width: 100%;
   text-align: center;
 }
+
+
 
 .copies-sold {
   font-size: 0.8rem;
