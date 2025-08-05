@@ -1,18 +1,7 @@
-// import { useEffect } from "react";
 import './Footer.css';
 
 export default function Footer() {
-//   useEffect(() => {
-//     const link = document.createElement("link");
-//     link.rel = "stylesheet";
-//     link.href = "/assets/Footer-C7u_bGPQ.css"; // Replace with actual path
-//     link.type = "text/css";
-//     link.media = "all";
-//     document.head.appendChild(link);
-//     return () => {
-//       document.head.removeChild(link);
-//     };
-//   }, []);
+
 
   return (
     <footer className="site-footer">
@@ -50,9 +39,9 @@ export default function Footer() {
             Unsplash
           </a>
         </p>
-        <p style={{ fontStyle: "italic", fontSize: "12px" }}>
+        {/* <p style={{ fontStyle: "italic", fontSize: "12px" }}>
           As an Amazon Associate, I earn from qualifying purchases
-        </p>
+        </p> */}
       </div>
       <div className="legals">
         <div className="legal-links">
@@ -68,12 +57,12 @@ export default function Footer() {
             rel="noopener noreferrer">
             Terms of Use
           </a>
-          <a
+          {/* <a
             href="/legal/amazon-disclaimer.html"
             target="_blank"
             rel="noopener noreferrer">
             Amazon Affiliate Disclaimer
-          </a>
+          </a> */}
           <a
             href="/legal/copyright.html"
             target="_blank"
