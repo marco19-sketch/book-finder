@@ -14,8 +14,10 @@
   cursor: pointer;
   gap: 8px;
   font-size: 1rem;
-  text-shadow: var(--shadow);
+  /* text-shadow: var(--shadow); */
+  /* text-shadow: 1px 1px 4px rgba(0,0,0,.7); */
   color: var(--text-color);
+  
   width: 180px;
 }
 
