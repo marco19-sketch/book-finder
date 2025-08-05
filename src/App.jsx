@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import NavBar from "./components/NavBar";
-import FooterLoader from './components/FooterLoader';
+import Footer from './components/Footer';
+// import FooterLoader from './components/FooterLoader';
 
 
 export default function App() {
@@ -103,7 +104,7 @@ export default function App() {
       </div>
       <BackToTop scrollContainerSelector="body" />
       
-        <FooterLoader />
+        <Footer />
       
     </div>
   );
