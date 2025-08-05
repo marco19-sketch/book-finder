@@ -1,17 +1,18 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
+import './Footer.css';
 
 export default function Footer() {
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "/assets/Footer-C7u_bGPQ.css"; // Replace with actual path
-    link.type = "text/css";
-    link.media = "all";
-    document.head.appendChild(link);
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, []);
+//   useEffect(() => {
+//     const link = document.createElement("link");
+//     link.rel = "stylesheet";
+//     link.href = "/assets/Footer-C7u_bGPQ.css"; // Replace with actual path
+//     link.type = "text/css";
+//     link.media = "all";
+//     document.head.appendChild(link);
+//     return () => {
+//       document.head.removeChild(link);
+//     };
+//   }, []);
 
   return (
     <footer className="site-footer">
