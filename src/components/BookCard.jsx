@@ -86,7 +86,7 @@ export default function BookCard({
               src={thumbnail}
               alt={`Cover of ${title}`}
               loading={isHighPriority ? "eager" : "lazy"}
-              fetchPriority={isHighPriority ? "high" : "auto"} // 👈 this is key
+              fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
               width="200"
               height="300"
             />
