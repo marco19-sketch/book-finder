@@ -9,9 +9,10 @@ import BackToTop from "./components/BackToTop";
 import NavBar from "./components/NavBar";
 // import Footer from './components/Footer';
 import FooterLoader from './components/FooterLoader';
-
+import useGoogleAnalytics from './hooks/useGoogleAnalytics';
 
 export default function App() {
+  useGoogleAnalytics();
   const [fetchedBooks, setFetchedBooks] = useState(() => {
     const saved = localStorage.getItem("cachedBooks");
     return saved ? JSON.parse(saved) : [];
