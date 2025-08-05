@@ -7,6 +7,9 @@ const BookCardMinimal = ({ book, onSelect }) => {
     book.volumeInfo?.imageLinks?.thumbnail ||
     "https://via.placeholder.com/200x300?text=No+Cover";
 
+    console.log("Rendering BookCardMinimal for", title);
+
+
   return (
     <div
       className="single-book"
