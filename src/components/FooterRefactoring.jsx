@@ -1,18 +1,6 @@
-import { useEffect } from "react";
+import "./Footer.css";
 
 export default function Footer() {
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "/assets/Footer-C7u_bGPQ.css"; // Replace with actual path
-    link.type = "text/css";
-    link.media = "all";
-    document.head.appendChild(link);
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, []);
-
   return (
     <footer className="site-footer">
       <div className="media-credits">
@@ -32,6 +20,8 @@ export default function Footer() {
           href="http://bit.ly/456zxY7">
           Photo by Tima Miroshnichenko
         </a>
+        
+       
         <p>
           {" "}
           Foto di
@@ -80,7 +70,7 @@ export default function Footer() {
             Copyright
           </a>
         </div>
-        <p className="copyright">
+        <p className='copyright'>
           © 2025 Marco Brusca. All rights reserved.{" "}
           <a href="mailto:marco19_70@hotmail.it" rel="me">
             Contact me
@@ -90,4 +80,3 @@ export default function Footer() {
     </footer>
   );
 }
-
