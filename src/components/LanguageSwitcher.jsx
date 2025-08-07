@@ -22,12 +22,13 @@ export default function LanguageSwitcher() {
           src={`/flags/32x24/gb.webp`}
           srcSet={`/flags/32x24/gb.webp 1x, /flags/48x36/gb.webp 2x`}
           alt={t("englishFlag")}
+          fetchPriority="high"
+          loading="eager"
         />
       </button>
       <button
         className={`italiano ${i18n.language === "it" ? "selected" : ""}`}
         onClick={() => changeLanguage("it")}>
-
         {/* <img src={itFlag} alt={t("italianFlag")} /> */}
         <img
           // loading="lazy"
@@ -36,6 +37,8 @@ export default function LanguageSwitcher() {
           src={`/flags/32x24/it.webp`}
           srcSet={`/flags/32x24/it.webp 1x, /flags/48x36/it.webp 2x`}
           alt={t("italianFlag")}
+          fetchPriority="high"
+          loading="eager"
         />
       </button>
     </div>
